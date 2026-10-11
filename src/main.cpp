@@ -37,6 +37,7 @@
 #include "components/UITheme.h"
 #include "fontIds.h"
 #include "inkhome/NoSdCardActivity.h"
+#include "inkhome/SdState.h"
 #include "platform/UsbSerialJtagHandoff.h"
 #include "util/ButtonNavigator.h"
 #include "util/ScreenshotUtil.h"
@@ -406,7 +407,7 @@ void setup() {
 
   // SD Card Initialization
   // We need 6 open files concurrently when parsing a new chapter
-  if (!Storage.begin()) {
+  if (inkhome::simulateNoSd() || !Storage.begin()) {
     LOG_ERR("MAIN", "SD card initialization failed");
     setupDisplayAndFonts(isSilentReboot);
     // Inkhome: stay usable without a card (defaults in RAM, nothing saved).

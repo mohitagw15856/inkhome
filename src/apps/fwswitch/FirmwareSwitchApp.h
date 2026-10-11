@@ -5,8 +5,6 @@
 // it only rewrites the boot selection in otadata (ota_boot::switchTo).
 // Works without an SD card. Heap: none beyond the activity.
 
-#include <esp_app_desc.h>
-
 #include <memory>
 
 #include "activities/Activity.h"

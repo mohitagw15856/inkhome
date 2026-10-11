@@ -5,9 +5,12 @@
 #include <I18n.h>
 #include <Logging.h>
 #include <Memory.h>
+#ifndef SIMULATOR
+#include <esp_app_desc.h>
 #include <esp_ota_ops.h>
 #include <esp_partition.h>
 #include <esp_system.h>
+#endif
 
 #include <cstdio>
 #include <cstring>
@@ -17,10 +20,13 @@
 #include "components/UITheme.h"
 #include "fontIds.h"
 #include "inkhome/InkhomeConfig.h"
+#ifndef SIMULATOR
 #include "network/OtaBootSwitch.h"
+#endif
 
 namespace inkhome::fwswitch {
 
+#ifndef SIMULATOR
 namespace {
 
 constexpr uint8_t ESP_IMAGE_MAGIC = 0xE9;
@@ -33,6 +39,7 @@ void copyField(char* out, const size_t outSize, const char* in, const size_t inS
 }
 
 }  // namespace
+#endif
 
 std::unique_ptr<Activity> create(GfxRenderer& renderer, MappedInputManager& mappedInput) {
   return makeUniqueNoThrow<FirmwareSwitchActivity>(renderer, mappedInput);
@@ -46,6 +53,13 @@ void FirmwareSwitchActivity::onEnter() {
 
 void FirmwareSwitchActivity::inspectSlots() {
   state = State::NoOtherFirmware;
+#ifdef SIMULATOR
+  // The simulator has no flash partitions; show the dual-boot layout for screenshots.
+  snprintf(runningLabel, sizeof(runningLabel), "app0");
+  snprintf(otherLabel, sizeof(otherLabel), "app1");
+  snprintf(otherName, sizeof(otherName), "%s", tr(STR_FW_SWITCH_STOCK));
+  state = State::Ready;
+#else
   const esp_partition_t* running = esp_ota_get_running_partition();
   if (running) copyField(runningLabel, sizeof(runningLabel), running->label, sizeof(running->label));
 
@@ -70,9 +84,14 @@ void FirmwareSwitchActivity::inspectSlots() {
   }
   LOG_INF("FWSW", "Running %s; other %s holds %s %s", runningLabel, otherLabel, otherName, otherVersion);
   state = State::Ready;
+#endif
 }
 
 void FirmwareSwitchActivity::doSwitch() {
+#ifdef SIMULATOR
+  state = State::Failed;
+  requestUpdate();
+#else
   const esp_partition_t* other = esp_ota_get_next_update_partition(nullptr);
   if (!ota_boot::switchTo(other)) {
     LOG_ERR("FWSW", "Boot switch to %s failed", otherLabel);
@@ -87,6 +106,7 @@ void FirmwareSwitchActivity::doSwitch() {
   LOG_INF("FWSW", "Restarting into %s", otherLabel);
   delay(300);
   esp_restart();
+#endif
 }
 
 void FirmwareSwitchActivity::loop() {

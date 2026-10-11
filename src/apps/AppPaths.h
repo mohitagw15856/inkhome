@@ -2,6 +2,8 @@
 
 #include <HalStorage.h>
 
+#include "inkhome/SdState.h"
+
 #include <cstdio>
 
 namespace inkhome::apps {
@@ -15,8 +17,9 @@ constexpr char STATE_ROOT[] = "/.crosspoint/apps";
 inline void contentDir(const char* id, char* out, size_t outSize) { snprintf(out, outSize, "%s/%s", CONTENT_ROOT, id); }
 inline void stateDir(const char* id, char* out, size_t outSize) { snprintf(out, outSize, "%s/%s", STATE_ROOT, id); }
 
-// Creates both folders for an app; cheap when they already exist.
+// Creates both folders for an app; cheap when they already exist. No-op without a card.
 inline void ensureDirs(const char* id) {
+  if (!sdMounted()) return;
   char path[64];
   contentDir(id, path, sizeof(path));
   Storage.mkdir(path, true);
