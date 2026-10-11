@@ -22,6 +22,8 @@ class OtaUpdater {
     INTERNAL_UPDATE_ERROR,
     OOM_ERROR,
     WRONG_DEVICE_ERROR,
+    // Inkhome: the other slot holds stock (or other) firmware that an update would overwrite.
+    PROTECTED_SLOT_ERROR,
   };
 
   size_t getOtaSize() const { return otaSize; }

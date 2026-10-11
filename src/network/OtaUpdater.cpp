@@ -19,6 +19,7 @@
 #include "FirmwareFlasher.h"
 #include "inkhome/InkhomeConfig.h"
 #include "inkhome/InkhomeVersion.h"
+#include "inkhome/SlotGuard.h"
 
 namespace {
 constexpr const char* latestReleaseUrl = inkhome::RELEASE_API_URL;
@@ -110,6 +111,9 @@ const std::string& OtaUpdater::getLatestVersion() const { return latestVersion; 
 OtaUpdater::OtaUpdaterError OtaUpdater::installUpdate(ProgressCallback onProgress, void* ctx) {
   if (!isUpdateNewer()) {
     return UPDATE_OLDER_ERROR;
+  }
+  if (inkhome::otherSlotHoldsOtherFirmware()) {
+    return PROTECTED_SLOT_ERROR;
   }
 
   // esp_https_ota is hardwired to esp-tls/mbedTLS, whose precompiled build on this

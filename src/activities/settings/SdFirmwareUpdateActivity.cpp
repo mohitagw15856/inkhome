@@ -12,6 +12,7 @@
 #include "activities/util/ConfirmationActivity.h"
 #include "components/UITheme.h"
 #include "fontIds.h"
+#include "inkhome/SlotGuard.h"
 #include "network/FirmwareFlasher.h"
 
 void SdFirmwareUpdateActivity::onEnter() {
@@ -82,6 +83,11 @@ bool SdFirmwareUpdateActivity::validateFirmware() {
   if (!dest) {
     LOG_ERR("FW", "no next-update partition available");
     errorMessage = tr(STR_INVALID_FIRMWARE);
+    return false;
+  }
+  // Inkhome: never overwrite stock firmware kept in the other slot.
+  if (inkhome::otherSlotHoldsOtherFirmware()) {
+    errorMessage = tr(STR_UPDATE_KEEPS_OTHER_FW);
     return false;
   }
   const size_t partitionLimit = dest->size;
