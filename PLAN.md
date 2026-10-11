@@ -179,13 +179,17 @@ report ([SIZES](docs/inkhome/SIZES.md)) and on-device checks
 | `chore/simulator-screenshots` | Simulator config, screenshots, button smoke test |
 | `feat/apps-inkrecipes` | Recipes (InkRecipes), web flasher that keeps stock |
 | `docs/readme-screens` | README screenshots, checklists, size report |
+| `feat/stats-core` | Reading stats (roadmap 2.1 and the heatmap, 2.3) |
+| `feat/sleep-stats-overlay` | Custom + stats sleep screen (roadmap 2.2) |
 
 Sleep wallpaper: upstream's Custom mode is untouched and new sleep modes
 (stats overlay, roadmap 2.2) will be appended beside it.
 
-Not done yet, in order: the roadmap below from 2.1. The reading-stats port
-(2.1) is the largest single item (about 4,200 lines in vCodex) and is the
-next branch.
+Not done yet, in order: the roadmap below from 2.4 (InkVerse), then
+achievements, text darkness and the remaining inkkit apps. Reading stats is a
+lean reimplementation of vCodex's format rather than a copy of its 4,200
+lines; progress percentages, Sync Day and per-book correction are not in it
+yet.
 
 ## 4a. Phase 1 scope (as planned)
 

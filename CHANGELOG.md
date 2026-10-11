@@ -16,6 +16,10 @@ docs/inkhome/TESTING.md.
 - If Found app (ported from CPR-vCodex).
 - Switch firmware app: restart into the stock firmware from the reader.
 - No-SD-card menu instead of a static error screen.
+- Reading stats app, compatible with CPR-vCodex's reading_stats.json
+  (format 6), with a heatmap, streaks, per-book time, export and import.
+- Custom + stats sleep screen: your wallpaper with a reading card, beside the
+  unchanged Custom mode.
 - Simulator config, screenshot script and button smoke test.
 - Inkhome unit tests (`test/inkhome/`) and flasher tests in CI.
 
