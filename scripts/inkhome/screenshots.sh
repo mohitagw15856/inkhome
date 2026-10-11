@@ -54,20 +54,24 @@ shoot() {
 }
 
 # Home list order without recent books: Browse Files, Library, Apps, File Transfer, Settings.
+# Apps order: Reading stats, Recipes, If Found, Switch firmware.
 APPS='900:DOWN;1200:DOWN;1500:ENTER'
+RECIPES="$APPS;2100:DOWN;2400:ENTER"
 shoot simulator_x3 x3-home        '2600:QUIT'
 shoot simulator_x3 x3-apps        "$APPS;3200:QUIT"
-shoot simulator_x3 x3-recipes     "$APPS;2100:ENTER;3800:QUIT"
-shoot simulator_x3 x3-recipe      "$APPS;2100:ENTER;2800:ENTER;4400:QUIT"
-shoot simulator_x3 x3-cooking     "$APPS;2100:ENTER;2800:ENTER;3500:UP;3900:ENTER;4600:ENTER;6400:QUIT"
-shoot simulator_x3 x3-iffound     "$APPS;2100:DOWN;2400:ENTER;4000:QUIT"
-shoot simulator_x3 x3-fwswitch    "$APPS;2100:DOWN;2400:DOWN;2700:ENTER;4300:QUIT"
+shoot simulator_x3 x3-stats       "$APPS;2100:ENTER;3800:QUIT"
+shoot simulator_x3 x3-recipes     "$RECIPES;4000:QUIT"
+shoot simulator_x3 x3-recipe      "$RECIPES;3100:ENTER;4700:QUIT"
+shoot simulator_x3 x3-cooking     "$RECIPES;3100:ENTER;3800:UP;4200:ENTER;4900:ENTER;6700:QUIT"
+shoot simulator_x3 x3-iffound     "$APPS;2100:DOWN;2400:DOWN;2700:ENTER;4300:QUIT"
+shoot simulator_x3 x3-fwswitch    "$APPS;2100:DOWN;2400:DOWN;2700:DOWN;3000:ENTER;4600:QUIT"
 shoot simulator_x3 x3-no-sd       '2600:QUIT' INKHOME_SIM_NO_SD=1
 shoot simulator    x4-home        '2600:QUIT'
 shoot simulator    x4-apps        "$APPS;3200:QUIT"
+shoot simulator    x4-stats       "$APPS;2100:ENTER;3800:QUIT"
 
 # Back out of every app to the launcher and Home again: a key path that hangs fails here.
-shoot simulator_x3 x3-roundtrip   "$APPS;2100:ENTER;2800:BACK;3300:DOWN;3600:ENTER;4200:BACK;4700:DOWN;5000:ENTER;5600:BACK;6100:BACK;7600:QUIT"
+shoot simulator_x3 x3-roundtrip   "$APPS;2100:ENTER;2800:BACK;3300:DOWN;3600:ENTER;4200:BACK;4700:DOWN;5000:ENTER;5600:BACK;6100:DOWN;6400:ENTER;7000:BACK;7500:BACK;9000:QUIT"
 grep -q 'Entering activity: Home' "$WORK/x3-roundtrip.log" || { echo "FAIL roundtrip: never returned Home"; exit 1; }
 rm -f "$OUT/x3-roundtrip.png"
 echo "Screenshots in $OUT"
