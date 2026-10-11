@@ -23,7 +23,7 @@ activities draw with `GfxRenderer` and read buttons through
 // src/apps/AppRegistry.cpp
 #include "apps/<id>/<Name>App.h"
 constexpr std::array<AppDescriptor, N> APPS{{
-    <name>::descriptor(),
+    <name>::DESCRIPTOR,
 }};
 ```
 

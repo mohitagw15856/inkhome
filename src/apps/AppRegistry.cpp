@@ -3,12 +3,16 @@
 #include <array>
 #include <cassert>
 
+#include "apps/iffound/IfFoundApp.h"
+
 namespace inkhome::apps {
 
 namespace {
 
 // Launcher order. Add an app by including its header and appending its descriptor.
-constexpr std::array<AppDescriptor, 0> APPS{};
+constexpr std::array<AppDescriptor, 1> APPS{{
+    iffound::DESCRIPTOR,
+}};
 
 bool isAvailable(const AppDescriptor& app) { return app.isAvailable == nullptr || app.isAvailable(); }
 

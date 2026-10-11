@@ -2,6 +2,8 @@
 # test/CMakeLists.txt only carries one add_subdirectory line for the fork.
 add_executable(InkhomeTests
   VersionTest.cpp
+  IfFoundTextTest.cpp
+  ${REPO_ROOT}/src/apps/iffound/core/IfFoundText.cpp
 )
 
 target_include_directories(InkhomeTests PRIVATE
