@@ -20,19 +20,25 @@ firmware stays on the device.
     <td align="center"><img src="docs/images/inkhome/x3-home.png" width="200" alt="Home screen with Apps entry"><br><sub>Home</sub></td>
     <td align="center"><img src="docs/images/inkhome/x3-apps.png" width="200" alt="Apps launcher"><br><sub>Apps</sub></td>
     <td align="center"><img src="docs/images/inkhome/x3-stats.png" width="200" alt="Reading stats with heatmap"><br><sub>Reading stats</sub></td>
-    <td align="center"><img src="docs/images/inkhome/x3-sleep-stats.png" width="200" alt="Sleep wallpaper with stats card"><br><sub>Wallpaper + stats sleep screen</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-year.png" width="200" alt="Year in books card"><br><sub>Year in books</sub></td>
   </tr>
   <tr>
-    <td align="center"><img src="docs/images/inkhome/x3-recipe.png" width="200" alt="Recipe ingredients with servings"><br><sub>Recipes: ingredients</sub></td>
-    <td align="center"><img src="docs/images/inkhome/x3-cooking.png" width="200" alt="Cooking mode with step timer"><br><sub>Recipes: cooking</sub></td>
-    <td align="center"><img src="docs/images/inkhome/x3-iffound.png" width="200" alt="If Found contact screen"><br><sub>If Found</sub></td>
-    <td align="center"><img src="docs/images/inkhome/x4-stats.png" width="200" alt="Reading stats on the X4"><br><sub>Same build on the X4</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-sleep-cover.png" width="200" alt="Cover sleep screen with progress card"><br><sub>Cover + stats sleep</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-sleep-pushed.png" width="200" alt="Stock app picture as sleep screen"><br><sub>Your stock pictures</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-sleep-stats.png" width="200" alt="Sleep wallpaper with stats card"><br><sub>Custom + stats sleep</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-sleep-verse.png" width="200" alt="Verse sleep screen"><br><sub>Verse sleep</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/images/inkhome/x3-reader.png" width="200" alt="Reader with time left in chapter"><br><sub>Time left in chapter</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-recipe.png" width="200" alt="Recipe ingredients with servings"><br><sub>Recipes</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-cooking.png" width="200" alt="Cooking mode with step timer"><br><sub>Cooking mode</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-verse.png" width="200" alt="A poem in the Verse app"><br><sub>Verse</sub></td>
   </tr>
   <tr>
     <td align="center"><img src="docs/images/inkhome/x3-fwswitch.png" width="200" alt="Switch firmware screen"><br><sub>Switch to stock</sub></td>
     <td align="center"><img src="docs/images/inkhome/x3-no-sd.png" width="200" alt="Menu shown without an SD card"><br><sub>No SD card needed</sub></td>
-    <td align="center"><img src="docs/images/inkhome/x3-sleep-verse.png" width="200" alt="Verse sleep screen"><br><sub>Verse sleep screen</sub></td>
-    <td align="center"><img src="docs/images/inkhome/x4-home.png" width="200" alt="Home on the X4"><br><sub>Home on the X4</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-sleep-owner.png" width="200" alt="Owner details across a sleep screen"><br><sub>Owner details on sleep</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x4-stats.png" width="200" alt="Reading stats on the X4"><br><sub>Same build on the X4</sub></td>
   </tr>
 </table>
 
@@ -60,6 +66,8 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
   - **Verse** (InkVerse): poems and quotations one at a time, and a **Verse**
     sleep screen that shows the next one each time the reader sleeps. Two
     public-domain collections built in.
+  - **Year in books**: hours, days, finished books, longest streak, most-read
+    book and favourite day on one card, saved as a picture or a sleep screen.
   - **Focus timer**: read for 15 to 60 minutes, then a break screen.
   - **If Found**: shows your contact note so a lost reader can find its way home,
     and can put it across the top of every sleep screen.

@@ -106,6 +106,13 @@ to hand before step 1.
       `/if_found.txt` on the card: every sleep screen shows "If found:" and
       your first two lines across the top.
 
+## 12. Cover + stats and Year in books
+- [ ] Sleep Screen = Cover + stats, sleep from a book: the cover shows with a
+      card (today, streak, the book, a progress bar and minutes left).
+- [ ] Apps, Year in books: the card shows this year. Up/Down change year.
+      Save writes `/exports/year-in-books-<year>.bmp`; Sleep writes it into
+      `/sleep`, where Custom picks it up.
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log
