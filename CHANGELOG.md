@@ -3,6 +3,13 @@
 Inkhome versions are `<upstream-version>.<n>-inkhome`. Upstream changes are
 in CrossPoint's own release notes.
 
+## 1.6.5.3-inkhome (pre-release)
+
+### Added
+- Custom sleep screens show Xteink .xth/.xtg pictures in greyscale, including
+  the stock app's /Pushed Images folder, alongside BMP wallpapers.
+- scripts/inkhome/xth_to_bmp.py converts .xth/.xtg pictures to BMP on a computer.
+
 ## 1.6.5.2-inkhome (pre-release)
 
 ### Changed
