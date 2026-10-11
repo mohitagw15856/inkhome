@@ -6,6 +6,10 @@ in CrossPoint's own release notes.
 ## 1.6.5.3-inkhome (pre-release)
 
 ### Added
+- Time left in the chapter on the reader's status bar, from your own pace.
+- Focus timer app: read for 15 to 60 minutes, then a break screen.
+- Owner details on sleep screen: your If Found note across the top of every
+  sleep screen.
 - Custom sleep screens show Xteink .xth/.xtg pictures in greyscale, including
   the stock app's /Pushed Images folder, alongside BMP wallpapers.
 - scripts/inkhome/xth_to_bmp.py converts .xth/.xtg pictures to BMP on a computer.

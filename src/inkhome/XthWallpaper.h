@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "SleepOverlays.h"
+
 class GfxRenderer;
 
 // Sleep wallpapers in Xteink's own .xth (2-bit grey) and .xtg (1-bit)
@@ -14,10 +16,10 @@ namespace inkhome::wallpaper {
 bool pickXth(std::string& outPath, bool bmpAvailable);
 
 // Draws and displays the picture, centred (cropped if larger than the panel).
-// Greyscale uses the same passes as CrossPoint's XTCH reader; withStatsCard
-// renders black and white with dithered greys and draws the stats card on top.
+// Greyscale uses the same passes as CrossPoint's XTCH reader; with overlays
+// on it renders black and white with dithered greys and draws them on top.
 // Peak heap: the whole image (about 100 KB for a full-screen .xth), freed on
 // return. False (nothing displayed) on a bad file or low memory.
-bool drawXth(GfxRenderer& renderer, const std::string& path, bool withStatsCard);
+bool drawXth(GfxRenderer& renderer, const std::string& path, const sleep::Overlays& overlays);
 
 }  // namespace inkhome::wallpaper
