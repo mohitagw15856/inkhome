@@ -96,4 +96,18 @@ void recordSession(ReadingStats& stats, size_t bookIndex, uint32_t dayOrdinal, u
 
 Summary summarise(const ReadingStats& stats, uint32_t todayOrdinal);
 
+struct YearSummary {
+  int year = 0;
+  uint64_t totalMs = 0;
+  uint32_t daysRead = 0;
+  uint32_t booksFinished = 0;
+  uint32_t longestStreak = 0;
+  int topBook = -1;  // index into books, most time this year
+  uint64_t topBookMs = 0;
+  int busiestMonth = 0;       // 1..12, 0 when no reading
+  int favouriteWeekday = -1;  // 0 = Monday .. 6 = Sunday
+};
+
+YearSummary summariseYear(const ReadingStats& stats, int year);
+
 }  // namespace inkhome::stats

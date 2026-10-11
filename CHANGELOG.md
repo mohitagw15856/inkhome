@@ -7,6 +7,8 @@ in CrossPoint's own release notes.
 
 ### Added
 - Time left in the chapter on the reader's status bar, from your own pace.
+- Cover + stats sleep screen: the book's cover with progress, time left and streak.
+- Year in books: your reading year on one card, saved as a picture or a sleep screen.
 - Focus timer app: read for 15 to 60 minutes, then a break screen.
 - Owner details on sleep screen: your If Found note across the top of every
   sleep screen.

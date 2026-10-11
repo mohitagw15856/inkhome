@@ -14,6 +14,6 @@ struct Overlays {
 
 // From the sleep mode and settings.
 Overlays current(bool customStatsMode);
-void draw(GfxRenderer& renderer, const Overlays& overlays);
+void draw(const GfxRenderer& renderer, const Overlays& overlays);
 
 }  // namespace inkhome::sleep

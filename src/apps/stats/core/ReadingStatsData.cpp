@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cinttypes>
 #include <cstdio>
+#include <numeric>
 
 namespace inkhome::stats {
 
@@ -311,6 +312,56 @@ Summary summarise(const ReadingStats& stats, const uint32_t today) {
   // Current streak: consecutive days ending today, or yesterday if today has no reading yet.
   if (today != 0 && prev != 0 && (prev == today || prev + 1 == today)) s.currentStreak = run;
   return s;
+}
+
+YearSummary summariseYear(const ReadingStats& stats, const int year) {
+  YearSummary y;
+  y.year = year;
+  const uint32_t first = daysFromCivil(year, 1, 1);
+  const uint32_t last = daysFromCivil(year, 12, 31);
+  uint64_t months[13] = {};
+  uint64_t weekdays[7] = {};
+  uint32_t run = 0;
+  uint32_t prev = 0;
+  for (const auto& d : stats.readingDays) {
+    if (d.dayOrdinal < first || d.dayOrdinal > last || d.readingMs == 0) continue;
+    y.totalMs += d.readingMs;
+    ++y.daysRead;
+    run = (prev != 0 && d.dayOrdinal == prev + 1) ? run + 1 : 1;
+    prev = d.dayOrdinal;
+    y.longestStreak = std::max(y.longestStreak, run);
+    int yy;
+    unsigned mm, dd;
+    civilFromDays(d.dayOrdinal, yy, mm, dd);
+    months[mm] += d.readingMs;
+    weekdays[(d.dayOrdinal + 3) % 7] += d.readingMs;  // 1970-01-01 was a Thursday
+  }
+  for (int m = 1; m <= 12; ++m) {
+    if (months[m] > 0 && (y.busiestMonth == 0 || months[m] > months[y.busiestMonth])) y.busiestMonth = m;
+  }
+  for (int w = 0; w < 7; ++w) {
+    if (weekdays[w] > 0 && (y.favouriteWeekday < 0 || weekdays[w] > weekdays[y.favouriteWeekday])) {
+      y.favouriteWeekday = w;
+    }
+  }
+  const uint32_t firstEpoch = first * 86400UL;
+  const uint32_t lastEpoch = (last + 1) * 86400UL;
+  for (size_t i = 0; i < stats.books.size(); ++i) {
+    const auto& b = stats.books[i];
+    // Older files may mark a book completed without a date; its last read stands in.
+    const uint32_t finishedAt = b.completedAt != 0 ? b.completedAt : b.lastReadAt;
+    if (b.completed && finishedAt >= firstEpoch && finishedAt < lastEpoch) ++y.booksFinished;
+    const uint64_t ms =
+        std::accumulate(b.readingDays.begin(), b.readingDays.end(), static_cast<uint64_t>(0),
+                        [first, last](uint64_t sum, const DayStats& d) {
+                          return d.dayOrdinal >= first && d.dayOrdinal <= last ? sum + d.readingMs : sum;
+                        });
+    if (ms > y.topBookMs) {
+      y.topBookMs = ms;
+      y.topBook = static_cast<int>(i);
+    }
+  }
+  return y;
 }
 
 }  // namespace inkhome::stats

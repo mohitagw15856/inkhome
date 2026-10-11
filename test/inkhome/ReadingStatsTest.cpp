@@ -120,3 +120,32 @@ TEST(ReadingStats, FindsBookByIdThenPathThenKnownPath) {
   EXPECT_EQ(findBook(s, "zzz", "/old/a.epub"), 0);
   EXPECT_EQ(findBook(s, "zzz", "/nope.epub"), -1);
 }
+
+TEST(ReadingStats, YearSummaryCountsOnlyThatYear) {
+  ReadingStats s;
+  s.books.resize(2);
+  const uint32_t jan5 = daysFromCivil(2026, 1, 5);  // a Monday
+  recordReading(s, 0, jan5, 60000);
+  recordReading(s, 0, jan5 + 1, 60000);
+  recordReading(s, 1, jan5 + 2, 300000);
+  recordReading(s, 1, daysFromCivil(2025, 12, 31), 999000);  // previous year
+  s.books[1].completed = true;
+  s.books[1].completedAt = (jan5 + 2) * 86400UL;
+  const YearSummary y = summariseYear(s, 2026);
+  EXPECT_EQ(y.totalMs, 420000u);
+  EXPECT_EQ(y.daysRead, 3u);
+  EXPECT_EQ(y.longestStreak, 3u);
+  EXPECT_EQ(y.booksFinished, 1u);
+  EXPECT_EQ(y.topBook, 1);
+  EXPECT_EQ(y.busiestMonth, 1);
+  EXPECT_EQ(y.favouriteWeekday, 2);  // Wednesday held the 5-minute day
+}
+
+TEST(ReadingStats, YearCountsUndatedFinishedBooksByLastRead) {
+  ReadingStats s;
+  s.books.resize(1);
+  s.books[0].completed = true;
+  s.books[0].lastReadAt = daysFromCivil(2026, 3, 1) * 86400UL;
+  EXPECT_EQ(summariseYear(s, 2026).booksFinished, 1u);
+  EXPECT_EQ(summariseYear(s, 2025).booksFinished, 0u);
+}
