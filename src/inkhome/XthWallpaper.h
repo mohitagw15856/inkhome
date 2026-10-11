@@ -20,6 +20,6 @@ bool pickXth(std::string& outPath, bool bmpAvailable);
 // on it renders black and white with dithered greys and draws them on top.
 // Peak heap: the whole image (about 100 KB for a full-screen .xth), freed on
 // return. False (nothing displayed) on a bad file or low memory.
-bool drawXth(GfxRenderer& renderer, const std::string& path, const sleep::Overlays& overlays);
+bool drawXth(const GfxRenderer& renderer, const std::string& path, const sleep::Overlays& overlays);
 
 }  // namespace inkhome::wallpaper

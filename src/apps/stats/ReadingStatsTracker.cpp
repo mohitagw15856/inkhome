@@ -10,6 +10,7 @@
 #include <ctime>
 #include <string>
 
+#include "AchievementsApp.h"
 #include "CrossPointState.h"
 #include "RecentBooksStore.h"
 #include "inkhome/SdState.h"
@@ -207,8 +208,10 @@ void endSession() {
     dirty = true;
   }
   LOG_DBG("RST", "Session end: %u ms", static_cast<unsigned>(session.sessionMs));
+  const bool counted = session.bookIndex >= 0 && session.sessionMs >= MIN_SESSION_MS;
   session = Session{};
   save();
+  if (counted) refreshAchievements();
 }
 
 }  // namespace

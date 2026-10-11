@@ -16,6 +16,8 @@ add_executable(InkhomeTests
   ${REPO_ROOT}/src/apps/inkrecipes/core/Recipe.cpp
   ReadingStatsTest.cpp
   ${REPO_ROOT}/src/apps/stats/core/ReadingStatsData.cpp
+  AchievementsTest.cpp
+  ${REPO_ROOT}/src/apps/stats/core/Achievements.cpp
   VerseTest.cpp
   ${REPO_ROOT}/src/apps/inkverse/core/VerseDoc.cpp
 )
