@@ -20,6 +20,7 @@ class NoSdCardActivity final : public UiListActivity {
   void activateIndex(int index) override;
   const char* headerTitle() const override;
   void onBackButton() override {}
+  void drawFooter() override;
 
   std::array<freeink::ui::ListItem, 3> rows{};
 };

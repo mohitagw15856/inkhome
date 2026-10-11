@@ -30,6 +30,7 @@ namespace inkhome::fwswitch {
 namespace {
 
 constexpr uint8_t ESP_IMAGE_MAGIC = 0xE9;
+constexpr char STOCK_PROJECT_NAME[] = "arduino-lib-builder";
 
 void copyField(char* out, const size_t outSize, const char* in, const size_t inSize) {
   const size_t n = strnlen(in, inSize);
@@ -77,6 +78,13 @@ void FirmwareSwitchActivity::inspectSlots() {
   if (esp_ota_get_partition_description(other, &desc) == ESP_OK) {
     copyField(otherName, sizeof(otherName), desc.project_name, sizeof(desc.project_name));
     copyField(otherVersion, sizeof(otherVersion), desc.version, sizeof(desc.version));
+    if (strcmp(otherName, STOCK_PROJECT_NAME) == 0) {
+      // Xteink's stock builds carry Espressif's builder name and a git hash; show something readable.
+      snprintf(otherName, sizeof(otherName), "%s", tr(STR_FW_SWITCH_STOCK));
+      otherVersion[0] = '\0';
+    } else if (strcmp(otherName, "inkhome") == 0) {
+      snprintf(otherName, sizeof(otherName), "%s", inkhome::FORK_NAME_FOR_UI);
+    }
   } else {
     // Older stock images may not carry a readable description; the image magic is enough to boot.
     snprintf(otherName, sizeof(otherName), "%s", tr(STR_FW_SWITCH_UNKNOWN));
@@ -164,14 +172,16 @@ void FirmwareSwitchActivity::render(RenderLock&&) {
       break;
     case State::Ready:
     case State::Failed:
-      snprintf(buf, sizeof(buf), "%s: %s %s (%s)", tr(STR_FW_SWITCH_OTHER), otherName, otherVersion, otherLabel);
+      snprintf(buf, sizeof(buf), "%s: %s%s%s (%s)", tr(STR_FW_SWITCH_OTHER), otherName, otherVersion[0] ? " " : "",
+               otherVersion, otherLabel);
       paragraph(buf, EpdFontFamily::BOLD);
       paragraph(tr(STR_FW_SWITCH_EXPLAIN), EpdFontFamily::REGULAR);
       if (state == State::Failed) paragraph(tr(STR_FW_SWITCH_FAILED), EpdFontFamily::BOLD);
       confirmLabel = tr(STR_FW_SWITCH_ACTION);
       break;
     case State::Confirming:
-      snprintf(buf, sizeof(buf), "%s: %s %s", tr(STR_FW_SWITCH_OTHER), otherName, otherVersion);
+      snprintf(buf, sizeof(buf), "%s: %s%s%s", tr(STR_FW_SWITCH_OTHER), otherName, otherVersion[0] ? " " : "",
+               otherVersion);
       paragraph(buf, EpdFontFamily::BOLD);
       paragraph(tr(STR_FW_SWITCH_CONFIRM), EpdFontFamily::BOLD);
       confirmLabel = tr(STR_FW_SWITCH_RESTART);

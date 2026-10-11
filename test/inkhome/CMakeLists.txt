@@ -4,6 +4,8 @@ add_executable(InkhomeTests
   VersionTest.cpp
   IfFoundTextTest.cpp
   ${REPO_ROOT}/src/apps/iffound/core/IfFoundText.cpp
+  RecipeTest.cpp
+  ${REPO_ROOT}/src/apps/inkrecipes/core/Recipe.cpp
 )
 
 target_include_directories(InkhomeTests PRIVATE

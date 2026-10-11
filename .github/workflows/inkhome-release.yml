@@ -4,7 +4,8 @@ name: Inkhome release
 # attaches two assets:
 #   inkhome-<tag>-x3-x4.bin          app image for OTA and SD-card updates
 #   inkhome-<tag>-x3-x4-factory.bin  full image (bootloader, partitions, app) for a USB flash
-# It then publishes the web flasher (docs/flash) with the factory image to GitHub Pages.
+# It then publishes the web flasher (docs/flash) with the app image to GitHub Pages; the
+# flasher writes it beside the stock firmware.
 
 on:
   release:
@@ -85,8 +86,9 @@ jobs:
           cp .pio/build/gh_release/firmware.bin "dist/inkhome-${v}-x3-x4.bin"
           cp .pio/build/gh_release/firmware.factory.bin "dist/inkhome-${v}-x3-x4-factory.bin"
           cp -r docs/flash/. site/
-          cp .pio/build/gh_release/firmware.factory.bin site/inkhome-x3-x4-factory.bin
-          sed -i "s/__VERSION__/${v}/g" site/manifest.json site/index.html
+          mkdir -p site/images && cp docs/images/inkhome/*.png site/images/
+          cp .pio/build/gh_release/firmware.bin site/inkhome-x3-x4.bin
+          printf '{"version":"%s"}\n' "$v" > site/version.json
 
       - name: Attach to release
         if: github.event_name == 'release'
