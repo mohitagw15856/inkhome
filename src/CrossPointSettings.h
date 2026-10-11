@@ -353,6 +353,8 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
   // Tilt-based page turning (X3 only — requires QMI8658 IMU)
   // Inkhome: on by default. Only takes effect when the IMU is detected (X3); the X4 never polls it.
   uint8_t tiltPageTurn = TILT_NORMAL;
+  // Inkhome: show minutes left in the chapter beside the page count.
+  uint8_t statusBarTimeLeft = 1;
   // Master reader-touch toggle on boards with a touch controller.
   uint8_t touchReaderControls = TOUCH_READER_ON;
   // Which gestures turn the page in each direction (PAGE_TURN_GESTURE).

@@ -34,6 +34,9 @@ const ReadingStats& data();
 uint32_t todayOrdinal();
 // Time in the open session that is not yet folded into data().
 uint64_t pendingMs();
+// Seconds per page from this owner's recent page turns (an average that
+// ignores pauses), or 0 until there are enough turns to say.
+float secondsPerPage();
 
 bool exportTo(const char* path = EXPORT_PATH);
 bool importFrom(const char* path = EXPORT_PATH);

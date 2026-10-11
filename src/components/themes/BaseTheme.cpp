@@ -1,3 +1,4 @@
+#include "apps/stats/ReadingStatsTracker.h"
 #include "BaseTheme.h"
 
 #include <FreeInkUIGfxRenderer.h>
@@ -799,12 +800,23 @@ void BaseTheme::drawStatusBar(GfxRenderer& renderer, const float bookProgress, c
     // Draw the estimate marker separately so it can use the next UI font size.
     const bool showEstimate = pageCountEstimated && sb.showChapterPageCount;
 
+    // Inkhome: "~6 min" left in the chapter, from the owner's own page pace.
+    char timeLeft[16] = "";
+    const float pace = inkhome::stats::secondsPerPage();
+    if (SETTINGS.statusBarTimeLeft && sb.showChapterPageCount && pace > 0 && pageCount >= currentPage) {
+      const int minutes = static_cast<int>((pageCount - currentPage) * pace / 60.0f + 0.5f);
+      if (minutes < 1) {
+        snprintf(timeLeft, sizeof(timeLeft), "  <1 min");
+      } else {
+        snprintf(timeLeft, sizeof(timeLeft), "  ~%d min", minutes);
+      }
+    }
     if (sb.showBookProgressPercent && sb.showChapterPageCount) {
-      snprintf(progressStr, sizeof(progressStr), "%d/%d  %.0f%%", currentPage, pageCount, bookProgress);
+      snprintf(progressStr, sizeof(progressStr), "%d/%d%s  %.0f%%", currentPage, pageCount, timeLeft, bookProgress);
     } else if (sb.showBookProgressPercent) {
       snprintf(progressStr, sizeof(progressStr), "%.0f%%", bookProgress);
     } else {
-      snprintf(progressStr, sizeof(progressStr), "%d/%d", currentPage, pageCount);
+      snprintf(progressStr, sizeof(progressStr), "%d/%d%s", currentPage, pageCount, timeLeft);
     }
 
     int progressTextWidth = renderer.getTextWidth(SMALL_FONT_ID, progressStr);
