@@ -25,6 +25,7 @@
 #include "CrossPointSettings.h"
 #include "CrossPointState.h"
 #include "activities/reader/ReaderUtils.h"
+#include "apps/inkverse/SleepVerse.h"
 #include "apps/stats/SleepStatsCard.h"
 #include "components/UITheme.h"
 #include "fontIds.h"
@@ -554,6 +555,10 @@ void SleepActivity::onEnter() {
   switch (SETTINGS.sleepScreen) {
     case (CrossPointSettings::SLEEP_SCREEN_MODE::CUSTOM_STATS):
       return renderCustomSleepScreen();
+    case (CrossPointSettings::SLEEP_SCREEN_MODE::VERSE):
+      inkverse::drawSleepVerse(renderer);
+      renderer.displayBuffer(HalDisplay::HALF_REFRESH);
+      return;
     case (CrossPointSettings::SLEEP_SCREEN_MODE::BLANK):
       return renderBlankSleepScreen();
     case (CrossPointSettings::SLEEP_SCREEN_MODE::CUSTOM):

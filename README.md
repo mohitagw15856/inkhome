@@ -31,7 +31,7 @@ firmware stays on the device.
   <tr>
     <td align="center"><img src="docs/images/inkhome/x3-fwswitch.png" width="200" alt="Switch firmware screen"><br><sub>Switch to stock</sub></td>
     <td align="center"><img src="docs/images/inkhome/x3-no-sd.png" width="200" alt="Menu shown without an SD card"><br><sub>No SD card needed</sub></td>
-    <td align="center"><img src="docs/images/inkhome/x3-recipes.png" width="200" alt="Recipe list"><br><sub>Recipes</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-sleep-verse.png" width="200" alt="Verse sleep screen"><br><sub>Verse sleep screen</sub></td>
     <td align="center"><img src="docs/images/inkhome/x4-home.png" width="200" alt="Home on the X4"><br><sub>Home on the X4</sub></td>
   </tr>
 </table>
@@ -57,6 +57,9 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
   app is a self-contained module with its own SD folder.
   - **Recipes** (InkRecipes): ingredient checklist with a servings scaler and
     a cooking mode with large type and step timers. Includes a built-in recipe.
+  - **Verse** (InkVerse): poems and quotations one at a time, and a **Verse**
+    sleep screen that shows the next one each time the reader sleeps. Two
+    public-domain collections built in.
   - **If Found**: shows your contact note so a lost reader can find its way home.
   - **Switch firmware**: restarts into the stock firmware.
 - **Tilt page turn on by default** on the X3 when its QMI8658 sensor is

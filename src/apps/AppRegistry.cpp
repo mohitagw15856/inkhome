@@ -6,6 +6,7 @@
 #include "apps/fwswitch/FirmwareSwitchApp.h"
 #include "apps/iffound/IfFoundApp.h"
 #include "apps/inkrecipes/InkRecipesApp.h"
+#include "apps/inkverse/InkVerseApp.h"
 #include "apps/stats/ReadingStatsApp.h"
 
 namespace inkhome::apps {
@@ -13,9 +14,10 @@ namespace inkhome::apps {
 namespace {
 
 // Launcher order. Add an app by including its header and appending its descriptor.
-constexpr std::array<AppDescriptor, 4> APPS{{
+constexpr std::array<AppDescriptor, 5> APPS{{
     stats::DESCRIPTOR,
     inkrecipes::DESCRIPTOR,
+    inkverse::DESCRIPTOR,
     iffound::DESCRIPTOR,
     fwswitch::DESCRIPTOR,
 }};

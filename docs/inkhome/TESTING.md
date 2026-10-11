@@ -83,6 +83,14 @@ to hand before step 1.
       and days appear.
 - [ ] X4: the screen says the reader has no clock and still counts per book.
 
+## 10. Verse
+- [ ] Apps, Verse lists the two built-in collections (and any `.verse` files
+      in `/apps/inkverse/` or `/inkverse/`). A poem keeps its line breaks.
+- [ ] Left/Right change verse; Up/Down scroll a long one.
+- [ ] Confirm (Sleep) shows "Shown on the sleep screen from now on"; on
+      sleep the next verse appears, a different one each time.
+- [ ] Settings, Display, Sleep Screen lists Verse after Custom + stats.
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log

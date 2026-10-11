@@ -20,6 +20,7 @@ docs/inkhome/TESTING.md.
   (format 6), with a heatmap, streaks, per-book time, export and import.
 - Custom + stats sleep screen: your wallpaper with a reading card, beside the
   unchanged Custom mode.
+- Verse app (native port of InkVerse) and a Verse sleep screen.
 - Simulator config, screenshot script and button smoke test.
 - Inkhome unit tests (`test/inkhome/`) and flasher tests in CI.
 

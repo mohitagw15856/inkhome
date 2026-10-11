@@ -27,6 +27,8 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
     TRANSPARENT_CUSTOM = 7,
     // Inkhome: appended so upstream values keep their numbers. Custom wallpaper plus a stats card.
     CUSTOM_STATS = 8,
+    // Inkhome: a verse from the InkVerse app, advancing each sleep.
+    VERSE = 9,
     SLEEP_SCREEN_MODE_COUNT
   };
   enum SLEEP_SCREEN_COVER_MODE { FIT = 0, CROP = 1, SLEEP_SCREEN_COVER_MODE_COUNT };

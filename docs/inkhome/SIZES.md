@@ -18,6 +18,7 @@ in each module's header comment.
 | Review fixes | 5,657,473 | +288 | 57,936 |
 | Reading stats | 5,681,487 | +24,014 | 58,048 |
 | Custom + stats sleep screen | 5,683,045 | +1,558 | 58,048 |
+| Verse (InkVerse) and Verse sleep screen | 5,698,113 | +15,068 | 58,048 |
 
 `gh_release` env (what users install): **5,610,373 bytes, 85.6%** of the
 partition; image file 5,624,448 bytes. Headroom about 929 KB.
