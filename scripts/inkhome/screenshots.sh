@@ -41,6 +41,8 @@ shoot() {
   local at=$((quit_at - 600))
   rm -rf fs_ && mkdir -p fs_
   if [ -d "$REPO/scripts/inkhome/sim-sd" ]; then cp -R "$REPO/scripts/inkhome/sim-sd/." fs_/; fi
+  # Optional per-shot overlay of extra card content (e.g. a wallpaper and sleep setting).
+  if [ -n "${EXTRA_SD:-}" ]; then cp -R "$REPO/scripts/inkhome/$EXTRA_SD/." fs_/; fi
   local log="$WORK/$name.log"
   env "$@" SDL_VIDEODRIVER=dummy CROSSPOINT_SIM_INPUT_SCRIPT="$script" \
     CROSSPOINT_SIM_SCREENSHOTS="$at:$WORK/$name.bmp" \
@@ -69,6 +71,8 @@ shoot simulator_x3 x3-no-sd       '2600:QUIT' INKHOME_SIM_NO_SD=1
 shoot simulator    x4-home        '2600:QUIT'
 shoot simulator    x4-apps        "$APPS;3200:QUIT"
 shoot simulator    x4-stats       "$APPS;2100:ENTER;3800:QUIT"
+EXTRA_SD=sim-sd-sleep shoot simulator_x3 x3-sleep-stats '1500:SLEEP;4500:QUIT'
+
 
 # Back out of every app to the launcher and Home again: a key path that hangs fails here.
 shoot simulator_x3 x3-roundtrip   "$APPS;2100:ENTER;2800:BACK;3300:DOWN;3600:ENTER;4200:BACK;4700:DOWN;5000:ENTER;5600:BACK;6100:DOWN;6400:ENTER;7000:BACK;7500:BACK;9000:QUIT"
