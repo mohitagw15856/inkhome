@@ -14,6 +14,7 @@
 
 #include "FirmwareBoardTag.h"
 #include "OtaBootSwitch.h"
+#include "inkhome/SlotGuard.h"
 
 namespace firmware_flash {
 
@@ -279,6 +280,11 @@ Result flashFromSdPath(const char* sdPath, ProgressCb onProgress, void* ctx, boo
   const esp_partition_t* dest = esp_ota_get_next_update_partition(nullptr);
   if (!dest) {
     LOG_ERR("FLASH", "no next-update partition");
+    return Result::NO_PARTITION;
+  }
+  // Inkhome: never overwrite stock firmware kept in the other slot.
+  if (inkhome::otherSlotHoldsOtherFirmware()) {
+    LOG_ERR("FLASH", "other slot holds other firmware; refusing to overwrite");
     return Result::NO_PARTITION;
   }
 

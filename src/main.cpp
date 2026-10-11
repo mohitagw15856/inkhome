@@ -15,6 +15,7 @@
 #include <HalTiltSensor.h>
 #include <I18n.h>
 #include <Logging.h>
+#include <Memory.h>
 #include <SPI.h>
 #include <VectorFontSupport.h>
 #include <WiFi.h>
@@ -35,6 +36,7 @@
 #include "activities/settings/SdFirmwareUpdateActivity.h"
 #include "components/UITheme.h"
 #include "fontIds.h"
+#include "inkhome/NoSdCardActivity.h"
 #include "platform/UsbSerialJtagHandoff.h"
 #include "util/ButtonNavigator.h"
 #include "util/ScreenshotUtil.h"
@@ -407,7 +409,15 @@ void setup() {
   if (!Storage.begin()) {
     LOG_ERR("MAIN", "SD card initialization failed");
     setupDisplayAndFonts(isSilentReboot);
-    activityManager.goToFullScreenMessage("SD card error", EpdFontFamily::BOLD);
+    // Inkhome: stay usable without a card (defaults in RAM, nothing saved).
+    UITheme::getInstance().reload();
+    ButtonNavigator::setMappedInputManager(mappedInputManager);
+    if (auto noSd = makeUniqueNoThrow<NoSdCardActivity>(renderer, mappedInputManager)) {
+      activityManager.replaceActivity(std::move(noSd));
+    } else {
+      activityManager.goToFullScreenMessage("SD card error", EpdFontFamily::BOLD);
+    }
+    allowSleepAt = millis() + 2000;
     return;
   }
 

@@ -1,6 +1,7 @@
 #include "AppsActivity.h"
 
 #include <GfxRenderer.h>
+#include <HalStorage.h>
 #include <I18n.h>
 #include <Logging.h>
 
@@ -32,7 +33,14 @@ int AppsActivity::listCount() const { return static_cast<int>(rowItems.size()); 
 
 const char* AppsActivity::headerTitle() const { return tr(STR_APPS); }
 
-void AppsActivity::onBackButton() { activityManager.goHome(HomeMenuItem::APPS); }
+void AppsActivity::onBackButton() {
+  // Without a card the launcher was pushed from the no-SD screen; Home needs the card.
+  if (!Storage.ready()) {
+    finish();
+    return;
+  }
+  activityManager.goHome(HomeMenuItem::APPS);
+}
 
 void AppsActivity::activateIndex(const int index) {
   if (index < 0 || index >= listCount()) return;
