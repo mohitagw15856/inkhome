@@ -66,7 +66,22 @@ to hand before step 1.
 
 ## 8. Sleep wallpaper
 - [ ] Settings, Display, Sleep Screen = Custom with BMPs in `/sleep`: your
-      wallpaper shows on sleep, as on upstream CrossPoint.
+      wallpaper shows on sleep, in greyscale, as on upstream CrossPoint.
+- [ ] Sleep Screen = Custom + stats: the same wallpaper (black and white)
+      with a card at the bottom showing today's minutes and streak, plus the
+      book when you slept from the reader.
+
+## 9. Reading stats
+- [ ] Settings, System, Clock: set the time (X3). Read a book for a few
+      minutes, turning pages. Apps, Reading stats shows today's minutes and
+      a filled square for today in the heatmap.
+- [ ] Leave the book idle for over five minutes: the idle time is not counted.
+- [ ] Sleep and wake in the reader: `/.crosspoint/reading_stats.json` exists
+      and grows; `reading_stats.json.bak` holds the previous copy.
+- [ ] Confirm (Export) writes `/exports/stats_exported`. Copy a vCodex
+      `reading_stats.json` there, press Left then Confirm (Import): its books
+      and days appear.
+- [ ] X4: the screen says the reader has no clock and still counts per book.
 
 ## Reporting
 If anything hangs, connect USB and capture the serial log

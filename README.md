@@ -19,20 +19,27 @@ firmware stays on the device.
   <tr>
     <td align="center"><img src="docs/images/inkhome/x3-home.png" width="200" alt="Home screen with Apps entry"><br><sub>Home</sub></td>
     <td align="center"><img src="docs/images/inkhome/x3-apps.png" width="200" alt="Apps launcher"><br><sub>Apps</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-stats.png" width="200" alt="Reading stats with heatmap"><br><sub>Reading stats</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-sleep-stats.png" width="200" alt="Sleep wallpaper with stats card"><br><sub>Wallpaper + stats sleep screen</sub></td>
+  </tr>
+  <tr>
     <td align="center"><img src="docs/images/inkhome/x3-recipe.png" width="200" alt="Recipe ingredients with servings"><br><sub>Recipes: ingredients</sub></td>
     <td align="center"><img src="docs/images/inkhome/x3-cooking.png" width="200" alt="Cooking mode with step timer"><br><sub>Recipes: cooking</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-iffound.png" width="200" alt="If Found contact screen"><br><sub>If Found</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x4-stats.png" width="200" alt="Reading stats on the X4"><br><sub>Same build on the X4</sub></td>
   </tr>
   <tr>
     <td align="center"><img src="docs/images/inkhome/x3-fwswitch.png" width="200" alt="Switch firmware screen"><br><sub>Switch to stock</sub></td>
     <td align="center"><img src="docs/images/inkhome/x3-no-sd.png" width="200" alt="Menu shown without an SD card"><br><sub>No SD card needed</sub></td>
-    <td align="center"><img src="docs/images/inkhome/x3-iffound.png" width="200" alt="If Found contact screen"><br><sub>If Found</sub></td>
-    <td align="center"><img src="docs/images/inkhome/x4-home.png" width="200" alt="Home on the X4"><br><sub>Same build on the X4</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-recipes.png" width="200" alt="Recipe list"><br><sub>Recipes</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x4-home.png" width="200" alt="Home on the X4"><br><sub>Home on the X4</sub></td>
   </tr>
 </table>
 
 <sub>Screens rendered from the real firmware with
 [crosspoint-simulator](https://github.com/crosspoint-reader/crosspoint-simulator)
-at the X3's 528 x 792 portrait size (last image: X4, 480 x 800).
+at the X3's 528 x 792 portrait size (X4 images: 480 x 800). Book titles and
+reading history in them are sample data.
 Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
 
 ## What it adds
@@ -43,6 +50,9 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
   Wi-Fi and SD updaters refuse to overwrite stock.
 - **No SD card required.** Without a card Inkhome opens a small menu (try
   again, Apps, Switch firmware) instead of stopping on an error screen.
+- **Reading stats**, compatible with CPR-vCodex's `reading_stats.json`:
+  today, last 7 days, streak and total, a reading heatmap sized to the panel,
+  and time per book. Import and export use vCodex's `/exports/stats_exported`.
 - **Apps.** A launcher on Home and a small framework (`src/apps/`) where each
   app is a self-contained module with its own SD folder.
   - **Recipes** (InkRecipes): ingredient checklist with a servings scaler and
@@ -53,7 +63,8 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
   detected. Turn it off in Settings, Controls. The X4 has no sensor and is
   unaffected.
 - **Your sleep wallpaper stays.** The Custom sleep screen (your images in
-  `/sleep` or `/.sleep`) is kept; new sleep modes are added beside it.
+  `/sleep` or `/.sleep`) is unchanged. A new **Custom + stats** mode shows the
+  same wallpaper with a small reading card.
 - **Updates come from Inkhome.** The updater looks for Inkhome releases, so a
   fork build is never "updated" back to stock CrossPoint by accident.
 
@@ -108,15 +119,17 @@ Inkhome release on top of CrossPoint 1.6.5. Release tags match the version.
 ## Your data
 
 Inkhome keeps CrossPoint's `/.crosspoint/` layout. Apps keep user content in
-`/apps/<app>/` and state in `/.crosspoint/apps/<app>/`. Reading statistics,
-when ported, keep CPR-vCodex's JSON formats so you can bring your history across.
+`/apps/<app>/` and state in `/.crosspoint/apps/<app>/`. Reading stats live in
+`/.crosspoint/reading_stats.json` in CPR-vCodex's format, so you can copy a
+vCodex file across (or import `/exports/stats_exported`) and back.
 
 ## Credits
 
 - **CrossPoint Reader**, the CrossPoint Reader organisation and contributors
   (MIT). Inkhome is their firmware with additions; the upstream README is
   kept at [docs/UPSTREAM_README.md](docs/UPSTREAM_README.md).
-- **CPR-vCodex** by franssjz (MIT): If Found is ported from vCodex. vCodex in
+- **CPR-vCodex** by franssjz (MIT): If Found is ported from vCodex, and the
+  reading-stats format and design follow vCodex. vCodex in
   turn credits zgredex and erickosanchezj (Lyra Carousel), uxjulia and
   CrossInk (highlights) and the crosspet fork (text darkness).
 - **crosspoint-tools** by SoFriendly (MIT): the flasher's partition and boot
