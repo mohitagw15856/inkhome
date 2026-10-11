@@ -158,7 +158,36 @@ font engine) for free.
 Inkcards overlaps vCodex Flashcards. Recommendation: port Inkcards (your
 format, your SM-2) rather than vCodex Flashcards.
 
-## 4. Phase 1 scope (implemented in this run)
+## 4. Status (2026-10-11)
+
+You asked for all phases to be built in one run, for the sleep wallpaper
+to stay, and later for: switching between stock and Inkhome without
+downloading anything, the project on GitHub with screenshots, no SD card
+required, and buttons that never leave the reader looking frozen.
+
+Done and merged to `main`, each on its own branch with a build and size
+report ([SIZES](docs/inkhome/SIZES.md)) and on-device checks
+([TESTING](docs/inkhome/TESTING.md)):
+
+| Branch | What |
+|---|---|
+| `main` (foundation) | README, SCOPE, CHANGELOG, versioning, release workflow, OTA points at Inkhome |
+| `feat/apps-framework` | Apps registry, launcher, per-app folders |
+| `feat/controls-tilt-default` | Tilt page turn on by default when the IMU is present |
+| `feat/apps-iffound` | If Found (vCodex) |
+| `feat/apps-firmware-switch` | Switch firmware app, stock-safe updaters, no-SD menu |
+| `chore/simulator-screenshots` | Simulator config, screenshots, button smoke test |
+| `feat/apps-inkrecipes` | Recipes (InkRecipes), web flasher that keeps stock |
+| `docs/readme-screens` | README screenshots, checklists, size report |
+
+Sleep wallpaper: upstream's Custom mode is untouched and new sleep modes
+(stats overlay, roadmap 2.2) will be appended beside it.
+
+Not done yet, in order: the roadmap below from 2.1. The reading-stats port
+(2.1) is the largest single item (about 4,200 lines in vCodex) and is the
+next branch.
+
+## 4a. Phase 1 scope (as planned)
 
 The smallest set that makes Inkhome clearly "the X3 home for my e-ink
 ecosystem":
@@ -223,8 +252,7 @@ See `docs/inkhome/SIZES.md`, updated on every feature branch.
 
 1. **Name.** Keep "Inkhome" or choose another? (Rename touches
    `platformio.ini`, README and the release asset names only.)
-2. **GitHub.** Create `mohitagw15856/inkhome` (public) and push? Nothing
-   has been pushed.
+2. **GitHub.** Answered: published at `mohitagw15856/inkhome`.
 3. **App data location.** Phase 1 uses `/apps/<id>/` for user content
    (recipes you copy over) and `/.crosspoint/apps/<id>/` for app state.
    InkRecipes also reads the legacy `/inkrecipes/` folder so existing cards

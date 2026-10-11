@@ -2,107 +2,131 @@
 
 Inkhome is an X3-first fork of [CrossPoint Reader](https://github.com/crosspoint-reader/crosspoint-reader)
 for the Xteink X3 (and, unchanged, the X4). It keeps CrossPoint's reader and
-adds a proper home for a small e-ink ecosystem: native on-device **Apps**,
-reading statistics ported from [CPR-vCodex](https://github.com/franssjz/cpr-vcodex),
-and the X3's motion sensor as a first-class feature.
+adds a home for a small e-ink ecosystem: native on-device **Apps**, the X3's
+motion sensor as a first-class feature, and a flasher that installs Inkhome
+**beside the stock firmware** so you can switch back at any time.
 
-> Status: early. Built and unit tested on a computer; **not yet verified on a
-> device**. Every change ships with an on-device checklist in
+**Install from your browser:** [mohitagw15856.github.io/inkhome](https://mohitagw15856.github.io/inkhome/)
+(Chrome or Edge on a computer). No downloads, no building, and the stock
+firmware stays on the device.
+
+> Status: early. Every screen is built, unit tested and driven with scripted
+> button presses in the CrossPoint simulator at X3 and X4 size. It has **not
+> yet been verified on a physical device**; the checklist is in
 > [docs/inkhome/TESTING.md](docs/inkhome/TESTING.md).
 
-## Why a fork
+<table>
+  <tr>
+    <td align="center"><img src="docs/images/inkhome/x3-home.png" width="200" alt="Home screen with Apps entry"><br><sub>Home</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-apps.png" width="200" alt="Apps launcher"><br><sub>Apps</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-recipe.png" width="200" alt="Recipe ingredients with servings"><br><sub>Recipes: ingredients</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-cooking.png" width="200" alt="Cooking mode with step timer"><br><sub>Recipes: cooking</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/images/inkhome/x3-fwswitch.png" width="200" alt="Switch firmware screen"><br><sub>Switch to stock</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-no-sd.png" width="200" alt="Menu shown without an SD card"><br><sub>No SD card needed</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-iffound.png" width="200" alt="If Found contact screen"><br><sub>If Found</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x4-home.png" width="200" alt="Home on the X4"><br><sub>Same build on the X4</sub></td>
+  </tr>
+</table>
 
-Upstream CrossPoint deliberately keeps interactive apps out of scope
-([docs/UPSTREAM_SCOPE.md](docs/UPSTREAM_SCOPE.md)). Inkhome is where they
-live instead. Everything else tracks upstream closely, and the fork keeps its
-changes small and isolated so upstream releases merge cleanly.
+<sub>Screens rendered from the real firmware with
+[crosspoint-simulator](https://github.com/crosspoint-reader/crosspoint-simulator)
+at the X3's 528 x 792 portrait size (last image: X4, 480 x 800).
+Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
 
 ## What it adds
 
+- **Keep stock, switch any time.** The web flasher identifies the stock
+  firmware and installs Inkhome into the *other* slot. Switch back from the
+  reader (Apps, Switch firmware) or from the flasher page. Inkhome's own
+  Wi-Fi and SD updaters refuse to overwrite stock.
+- **No SD card required.** Without a card Inkhome opens a small menu (try
+  again, Apps, Switch firmware) instead of stopping on an error screen.
 - **Apps.** A launcher on Home and a small framework (`src/apps/`) where each
   app is a self-contained module with its own SD folder.
-  - **InkRecipes**: recipe checklist with a servings scaler and a cooking mode
-    with big type and step timers.
-  - **If Found**: shows your contact details so a lost reader can find its
-    way home.
+  - **Recipes** (InkRecipes): ingredient checklist with a servings scaler and
+    a cooking mode with large type and step timers. Includes a built-in recipe.
+  - **If Found**: shows your contact note so a lost reader can find its way home.
+  - **Switch firmware**: restarts into the stock firmware.
 - **Tilt page turn on by default** on the X3 when its QMI8658 sensor is
-  detected. You can turn it off in Settings, Controls. The X4 has no sensor
-  and is unaffected.
-- **Your sleep wallpaper stays.** The Custom sleep screen (your own images
-  from `/sleep` or `/.sleep`) is kept, and new sleep modes are added
-  alongside it rather than replacing it.
-- **Updates come from Inkhome.** The over-the-air and SD updaters look for
-  Inkhome releases, so a fork build is never "updated" back to stock
-  CrossPoint by accident.
+  detected. Turn it off in Settings, Controls. The X4 has no sensor and is
+  unaffected.
+- **Your sleep wallpaper stays.** The Custom sleep screen (your images in
+  `/sleep` or `/.sleep`) is kept; new sleep modes are added beside it.
+- **Updates come from Inkhome.** The updater looks for Inkhome releases, so a
+  fork build is never "updated" back to stock CrossPoint by accident.
 
-The full plan and roadmap are in [PLAN.md](PLAN.md). Scope rules are in
-[SCOPE.md](SCOPE.md).
+The plan and roadmap are in [PLAN.md](PLAN.md); scope rules in [SCOPE.md](SCOPE.md).
+
+## Install
+
+1. Open **[the Inkhome flasher](https://mohitagw15856.github.io/inkhome/)** in Chrome or Edge.
+2. Connect the reader with a USB-C data cable, wake it, press **Connect**.
+3. The page lists both firmware slots and says exactly what it will do.
+   Press **Install or update Inkhome**.
+4. Unplug the cable and hold Power for about two seconds.
+
+To go back to stock, use **Start stock firmware** on the same page, or on
+the reader open Apps, Switch firmware. To update Inkhome later, run Install
+again: it updates Inkhome in place and keeps stock.
+
+Not on stock any more, or the page cannot find a two-slot layout? See
+CrossPoint's [recovery guide](docs/fix-bricked-xteink.md).
 
 ## X3 first, X4 safe
 
 - One binary for both devices; the device is detected at start-up using
   upstream's runtime detection (`gpio.deviceIsX3()`).
 - No screen sizes are hard-coded. Every screen lays out from the renderer's
-  width and height, is designed for the X3's 792 x 528 panel first and is
+  width and height, is designed for the X3's 792 x 528 panel first and
   checked against the X4's 800 x 480.
 - The ESP32-C3 has no PSRAM. Apps allocate on entry, free on exit, cap the
-  size of files they read and keep state on the SD card under
-  `/.crosspoint/`.
+  size of files they read and keep state on the card under `/.crosspoint/`.
+- Release image: 5.6 MB, 85.6% of the 6.25 MB slot, so it fits the X4's
+  stock slots as well as the X3's larger ones ([sizes](docs/inkhome/SIZES.md)).
 
-## Install
-
-**Web flasher (first install).** Open the Inkhome flasher page in Chrome or
-Edge, connect the reader over USB and press Connect and install. The page is
-published from [docs/flash](docs/flash) by the release workflow.
-
-This writes a full image including the partition table, which replaces the
-stock firmware. Take a full backup first if you may want stock back.
-
-**Updating.** Copy `inkhome-<version>-x3-x4.bin` from a release to the SD
-card and choose Settings, SD Card Firmware Update, or use Check for Updates
-over Wi-Fi.
-
-**Building it yourself.**
+## Building it yourself
 
 ```sh
 git clone --recursive https://github.com/mohitagw15856/inkhome.git
 cd inkhome
-pio run -e default           # development build, serial logging on
-pio run -e gh_release        # release build
-# app image: .pio/build/<env>/firmware.bin
-# full image for a USB flash at offset 0: .pio/build/<env>/firmware.factory.bin
+pio run -e gh_release              # release build: .pio/build/gh_release/firmware.bin
+pio run -t unit-tests              # host tests, including test/inkhome
+node --test test/inkhome/flasher.test.mjs
+scripts/inkhome/screenshots.sh     # simulator screenshots and button smoke test
 ```
 
-Unit tests: `pio run -t unit-tests`, or configure `test/` with CMake and run
-`ctest`. The fork's own tests live in `test/inkhome/`.
+Writing an app: [docs/inkhome/APPS.md](docs/inkhome/APPS.md). Merging a new
+upstream release: [docs/inkhome/UPSTREAM_SYNC.md](docs/inkhome/UPSTREAM_SYNC.md).
 
 ## Versioning
 
 `<upstream-version>.<n>-inkhome`, for example `1.6.5.1-inkhome` is the first
-Inkhome release on top of CrossPoint 1.6.5. Release tags match the version
-exactly.
+Inkhome release on top of CrossPoint 1.6.5. Release tags match the version.
 
 ## Your data
 
-Inkhome keeps CrossPoint's `/.crosspoint/` layout. Apps keep user content
-in `/apps/<app>/` and app state in `/.crosspoint/apps/<app>/`. Reading
-statistics, when ported, keep CPR-vCodex's JSON formats so you can bring
-your history across.
+Inkhome keeps CrossPoint's `/.crosspoint/` layout. Apps keep user content in
+`/apps/<app>/` and state in `/.crosspoint/apps/<app>/`. Reading statistics,
+when ported, keep CPR-vCodex's JSON formats so you can bring your history across.
 
 ## Credits
 
 - **CrossPoint Reader**, the CrossPoint Reader organisation and contributors
   (MIT). Inkhome is their firmware with additions; the upstream README is
   kept at [docs/UPSTREAM_README.md](docs/UPSTREAM_README.md).
-- **CPR-vCodex** by franssjz (MIT). Features ported from vCodex are credited
-  in the source files and commit messages that bring them in. vCodex in turn
-  credits zgredex and erickosanchezj (Lyra Carousel), uxjulia and CrossInk
-  (highlights) and the crosspet fork (text darkness).
+- **CPR-vCodex** by franssjz (MIT): If Found is ported from vCodex. vCodex in
+  turn credits zgredex and erickosanchezj (Lyra Carousel), uxjulia and
+  CrossInk (highlights) and the crosspet fork (text darkness).
+- **crosspoint-tools** by SoFriendly (MIT): the flasher's partition and boot
+  record handling. **esptool-js** by Espressif (Apache-2.0).
+- **crosspoint-simulator** by Julia Nguyen (MIT): screenshots and smoke tests.
 - **FreeInk SDK** (MIT), the hardware layer CrossPoint is built on.
 - **inkkit apps** by Mohit (MIT): InkRecipes and the rest of the ecosystem.
 
 Inkhome does not include vCodex's built-in Bookerly font, which is not
-openly licensed.
+openly licensed, and does not host Xteink's stock firmware.
 
 ## Licence
 
