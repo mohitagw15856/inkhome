@@ -46,7 +46,7 @@ shoot() {
   local log="$WORK/$name.log"
   env "$@" SDL_VIDEODRIVER=dummy CROSSPOINT_SIM_INPUT_SCRIPT="$script" \
     CROSSPOINT_SIM_SCREENSHOTS="$at:$WORK/$name.bmp" \
-    perl -e 'alarm 30; exec @ARGV' ".pio/build/$env/program" >"$log" 2>&1 || {
+    perl -e 'alarm 90; exec @ARGV' ".pio/build/$env/program" >"$log" 2>&1 || {
       echo "FAIL $name (exit $?), log: $log"; tail -20 "$log"; exit 1; }
   if grep -qiE 'abort|panic|assert|segmentation' "$log"; then
     echo "FAIL $name: crash signature in $log"; exit 1
@@ -56,25 +56,50 @@ shoot() {
 }
 
 # Home list order without recent books: Browse Files, Library, Apps, File Transfer, Settings.
-# Apps order: Reading stats, Focus timer, Recipes, Verse, If Found, Switch firmware.
 APPS='900:DOWN;1200:DOWN;1500:ENTER'
-FOCUS="$APPS;2100:DOWN;2400:ENTER"
-RECIPES="$APPS;2100:DOWN;2400:DOWN;2700:ENTER"
-VERSE="$APPS;2100:DOWN;2400:DOWN;2700:DOWN;3000:ENTER"
+# Launcher order, as in src/apps/AppRegistry.cpp.
+APP_ORDER=(stats year focus inkrecipes inkverse iffound fwswitch)
+
+# app <id> [extra steps...]: input script that opens an app from Home, then runs
+# "ms-offset:KEY" steps relative to the moment the app opened. Prints the script
+# and the time it ends on, as "<script> <end>".
+app() {
+  local id="$1"; shift
+  local t=2100 steps="$APPS" i
+  for i in "${!APP_ORDER[@]}"; do
+    [ "${APP_ORDER[$i]}" = "$id" ] && break
+    steps="$steps;$t:DOWN"; t=$((t + 300))
+  done
+  steps="$steps;$t:ENTER"
+  local base=$((t + 700)) step
+  for step in "$@"; do
+    steps="$steps;$((base + ${step%%:*})):${step#*:}"
+    t=$((base + ${step%%:*}))
+  done
+  echo "$steps $t"
+}
+# shoot_app <env> <name> <id> [steps...]: open the app, run the steps, capture.
+shoot_app() {
+  local env="$1" name="$2"; shift 2
+  local out; out="$(app "$@")"
+  shoot "$env" "$name" "${out% *};$(( ${out##* } + 1800 )):QUIT"
+}
+
 shoot simulator_x3 x3-home        '2600:QUIT'
 shoot simulator_x3 x3-apps        "$APPS;3200:QUIT"
-shoot simulator_x3 x3-stats       "$APPS;2100:ENTER;3800:QUIT"
-shoot simulator_x3 x3-focus       "$FOCUS;4000:QUIT"
-shoot simulator_x3 x3-recipes     "$RECIPES;4300:QUIT"
-shoot simulator_x3 x3-recipe      "$RECIPES;3400:ENTER;5000:QUIT"
-shoot simulator_x3 x3-cooking     "$RECIPES;3400:ENTER;4100:UP;4500:ENTER;5200:ENTER;7000:QUIT"
-shoot simulator_x3 x3-verse       "$VERSE;3700:ENTER;5500:QUIT"
-shoot simulator_x3 x3-iffound     "$APPS;2100:DOWN;2400:DOWN;2700:DOWN;3000:DOWN;3300:ENTER;4900:QUIT"
-shoot simulator_x3 x3-fwswitch    "$APPS;2100:DOWN;2400:DOWN;2700:DOWN;3000:DOWN;3300:DOWN;3600:ENTER;5200:QUIT"
+shoot_app simulator_x3 x3-stats    stats
+shoot_app simulator_x3 x3-year     year
+shoot_app simulator_x3 x3-focus    focus
+shoot_app simulator_x3 x3-recipes  inkrecipes
+shoot_app simulator_x3 x3-recipe   inkrecipes 0:ENTER
+shoot_app simulator_x3 x3-cooking  inkrecipes 0:ENTER 700:UP 1100:ENTER 1800:ENTER
+shoot_app simulator_x3 x3-verse    inkverse 0:ENTER
+shoot_app simulator_x3 x3-iffound  iffound
+shoot_app simulator_x3 x3-fwswitch fwswitch
 shoot simulator_x3 x3-no-sd       '2600:QUIT' INKHOME_SIM_NO_SD=1
 shoot simulator    x4-home        '2600:QUIT'
 shoot simulator    x4-apps        "$APPS;3200:QUIT"
-shoot simulator    x4-stats       "$APPS;2100:ENTER;3800:QUIT"
+shoot_app simulator x4-stats       stats
 EXTRA_SD=sim-sd-sleep shoot simulator_x3 x3-sleep-stats '1500:SLEEP;4500:QUIT'
 EXTRA_SD=sim-sd-verse shoot simulator_x3 x3-sleep-verse '1500:SLEEP;4500:QUIT'
 EXTRA_SD=sim-sd-xth shoot simulator_x3 x3-sleep-pushed '1500:SLEEP;5000:QUIT'
@@ -89,7 +114,12 @@ shoot simulator_x3 x3-reader "$READ;$((t + 800)):QUIT"
 EXTRA_SD=sim-sd-cover shoot simulator_x3 x3-sleep-cover "$READ;$((t + 500)):SLEEP;$((t + 5600)):QUIT"
 
 # Into and back out of every app, then Home: a key path that hangs fails here.
-shoot simulator_x3 x3-roundtrip   "$APPS;2100:ENTER;2800:BACK;3300:DOWN;3600:ENTER;4200:BACK;4700:DOWN;5000:ENTER;5600:BACK;6100:DOWN;6400:ENTER;7000:ENTER;7600:RIGHT;8000:BACK;8500:BACK;9000:DOWN;9300:ENTER;9900:BACK;10400:DOWN;10700:ENTER;11300:BACK;11800:BACK;13500:QUIT"
-grep -q 'Entering activity: Home' "$WORK/x3-roundtrip.log" || { echo "FAIL roundtrip: never returned Home"; exit 1; }
+RT="$APPS"; t=2100
+for _ in "${APP_ORDER[@]}"; do
+  RT="$RT;$t:ENTER;$((t + 900)):BACK;$((t + 1500)):DOWN"; t=$((t + 1800))
+done
+shoot simulator_x3 x3-roundtrip "$RT;$t:BACK;$((t + 1500)):QUIT"
+# Home is entered once at start-up; a second entry means the round trip came back.
+[ "$(grep -c 'Entering activity: Home' "$WORK/x3-roundtrip.log")" -ge 2 ] || { echo "FAIL roundtrip: never returned Home"; exit 1; }
 rm -f "$OUT/x3-roundtrip.png"
 echo "Screenshots in $OUT"

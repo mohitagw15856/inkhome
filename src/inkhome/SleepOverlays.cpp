@@ -20,7 +20,7 @@ constexpr int MAX_LINES = 2;
 
 // "If found: <first line>" plus the next non-empty line, in a white band
 // with a rule under it, across the top of the screen.
-void drawOwnerStrip(GfxRenderer& renderer) {
+void drawOwnerStrip(const GfxRenderer& renderer) {
   const std::string note = iffound::ownerNote();
   std::string lines[MAX_LINES];
   int count = 0;
@@ -42,9 +42,9 @@ void drawOwnerStrip(GfxRenderer& renderer) {
   renderer.drawLine(0, height, width, height);
   std::string first = std::string(tr(STR_OWNER_STRIP_PREFIX)) + " " + lines[0];
   for (int i = 0; i < count; ++i) {
-    const std::string text = renderer.truncatedText(SMALL_FONT_ID, (i == 0 ? first : lines[i]).c_str(),
-                                                    width - PADDING * 2, i == 0 ? EpdFontFamily::BOLD
-                                                                                : EpdFontFamily::REGULAR);
+    const std::string text =
+        renderer.truncatedText(SMALL_FONT_ID, (i == 0 ? first : lines[i]).c_str(), width - PADDING * 2,
+                               i == 0 ? EpdFontFamily::BOLD : EpdFontFamily::REGULAR);
     renderer.drawCenteredText(SMALL_FONT_ID, PADDING + i * lineHeight, text.c_str(), true,
                               i == 0 ? EpdFontFamily::BOLD : EpdFontFamily::REGULAR);
   }
@@ -59,7 +59,7 @@ Overlays current(const bool customStatsMode) {
   return o;
 }
 
-void draw(GfxRenderer& renderer, const Overlays& overlays) {
+void draw(const GfxRenderer& renderer, const Overlays& overlays) {
   if (overlays.statsCard) stats::drawSleepCard(renderer);
   if (overlays.ownerStrip) drawOwnerStrip(renderer);
 }
