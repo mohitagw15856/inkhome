@@ -75,6 +75,7 @@ shoot simulator    x4-apps        "$APPS;3200:QUIT"
 shoot simulator    x4-stats       "$APPS;2100:ENTER;3800:QUIT"
 EXTRA_SD=sim-sd-sleep shoot simulator_x3 x3-sleep-stats '1500:SLEEP;4500:QUIT'
 EXTRA_SD=sim-sd-verse shoot simulator_x3 x3-sleep-verse '1500:SLEEP;4500:QUIT'
+EXTRA_SD=sim-sd-xth shoot simulator_x3 x3-sleep-pushed '1500:SLEEP;5000:QUIT'
 
 # Into and back out of every app, then Home: a key path that hangs fails here.
 shoot simulator_x3 x3-roundtrip   "$APPS;2100:ENTER;2800:BACK;3300:DOWN;3600:ENTER;4200:BACK;4700:DOWN;5000:ENTER;5600:ENTER;6200:RIGHT;6600:BACK;7100:BACK;7600:DOWN;7900:ENTER;8500:BACK;9000:DOWN;9300:ENTER;9900:BACK;10400:BACK;12000:QUIT"

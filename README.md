@@ -66,7 +66,9 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
   detected. Turn it off in Settings, Controls. The X4 has no sensor and is
   unaffected.
 - **Your sleep wallpaper stays.** The Custom sleep screen (your images in
-  `/sleep` or `/.sleep`) is unchanged. A new **Custom + stats** mode shows the
+  `/sleep` or `/.sleep`) is unchanged, and it now also shows Xteink's own
+  `.xth`/`.xtg` pictures in greyscale, including everything you sent to the
+  reader with the stock app (the `/Pushed Images` folder on the card). A new **Custom + stats** mode shows the
   same wallpaper with a small reading card.
 - **Updates come from Inkhome.** The updater looks for Inkhome releases, so a
   fork build is never "updated" back to stock CrossPoint by accident.

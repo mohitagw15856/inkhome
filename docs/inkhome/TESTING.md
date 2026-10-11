@@ -71,6 +71,11 @@ to hand before step 1.
       with a card at the bottom showing today's minutes and streak, plus the
       book when you slept from the reader.
 
+- [ ] Sleep Screen = Custom with your stock app pictures still in
+      `/Pushed Images` on the card: they show in greyscale, taking turns with
+      any BMPs in `/sleep`. With Custom + stats they show in black and white
+      with the card.
+
 ## 9. Reading stats
 - [ ] Settings, System, Clock: set the time (X3). Read a book for a few
       minutes, turning pages. Apps, Reading stats shows today's minutes and

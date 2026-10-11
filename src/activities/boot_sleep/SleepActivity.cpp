@@ -32,6 +32,7 @@
 #include "images/Logo120.h"
 #include "images/MoonIcon.h"
 #include "inkhome/InkhomeConfig.h"
+#include "inkhome/XthWallpaper.h"
 
 namespace {
 
@@ -599,6 +600,13 @@ void SleepActivity::renderCustomSleepScreen() const {
   std::string selectedPath;
   if (!selectRandomSleepFile("/.sleep", SleepRecentKind::Standard, selectedPath)) {
     selectRandomSleepFile("/sleep", SleepRecentKind::Standard, selectedPath);
+  }
+
+  // Inkhome: Xteink .xth/.xtg pictures (including the stock app's /Pushed Images) take turns with BMPs.
+  std::string xthPath;
+  if (inkhome::wallpaper::pickXth(xthPath, !selectedPath.empty()) &&
+      inkhome::wallpaper::drawXth(renderer, xthPath, statsCard)) {
+    return;
   }
 
   if (!selectedPath.empty()) {
