@@ -26,7 +26,6 @@
 #include "CrossPointState.h"
 #include "activities/reader/ReaderUtils.h"
 #include "apps/inkverse/SleepVerse.h"
-#include "apps/stats/SleepStatsCard.h"
 #include "components/UITheme.h"
 #include "fontIds.h"
 #include "images/Logo120.h"
@@ -553,12 +552,13 @@ void SleepActivity::onEnter() {
     GUI.drawPopup(renderer, tr(STR_ENTERING_SLEEP));
   }
 
-  statsCard = SETTINGS.sleepScreen == CrossPointSettings::SLEEP_SCREEN_MODE::CUSTOM_STATS;
+  overlays = inkhome::sleep::current(SETTINGS.sleepScreen == CrossPointSettings::SLEEP_SCREEN_MODE::CUSTOM_STATS);
   switch (SETTINGS.sleepScreen) {
     case (CrossPointSettings::SLEEP_SCREEN_MODE::CUSTOM_STATS):
       return renderCustomSleepScreen();
     case (CrossPointSettings::SLEEP_SCREEN_MODE::VERSE):
       inkverse::drawSleepVerse(renderer);
+      inkhome::sleep::draw(renderer, overlays);
       renderer.displayBuffer(HalDisplay::HALF_REFRESH);
       return;
     case (CrossPointSettings::SLEEP_SCREEN_MODE::BLANK):
@@ -605,7 +605,7 @@ void SleepActivity::renderCustomSleepScreen() const {
   // Inkhome: Xteink .xth/.xtg pictures (including the stock app's /Pushed Images) take turns with BMPs.
   std::string xthPath;
   if (inkhome::wallpaper::pickXth(xthPath, !selectedPath.empty()) &&
-      inkhome::wallpaper::drawXth(renderer, xthPath, statsCard)) {
+      inkhome::wallpaper::drawXth(renderer, xthPath, overlays)) {
     return;
   }
 
@@ -648,7 +648,7 @@ void SleepActivity::renderDefaultSleepScreen() const {
   if (SETTINGS.sleepScreen != CrossPointSettings::SLEEP_SCREEN_MODE::LIGHT) {
     renderer.invertScreen();
   }
-  if (statsCard) inkhome::stats::drawSleepCard(renderer);
+  inkhome::sleep::draw(renderer, overlays);
 
   renderer.displayBuffer(HalDisplay::HALF_REFRESH);
 }
@@ -666,7 +666,7 @@ void SleepActivity::renderBitmapSleepScreen(const Bitmap& bitmap, const bool pre
   LOG_DBG("SLP", "drawing to %d x %d", x, y);
   if (!preserveBackground) renderer.clearScreen();
 
-  const bool hasGreyscale = !statsCard && bitmap.hasGreyscale() &&
+  const bool hasGreyscale = !overlays.any() && bitmap.hasGreyscale() &&
                             (preserveBackground || SETTINGS.sleepScreenCoverFilter ==
                                                        CrossPointSettings::SLEEP_SCREEN_COVER_FILTER::NO_FILTER);
 
@@ -679,7 +679,7 @@ void SleepActivity::renderBitmapSleepScreen(const Bitmap& bitmap, const bool pre
       SETTINGS.sleepScreenCoverFilter == CrossPointSettings::SLEEP_SCREEN_COVER_FILTER::INVERTED_BLACK_AND_WHITE) {
     renderer.invertScreen();
   }
-  if (statsCard) inkhome::stats::drawSleepCard(renderer);
+  inkhome::sleep::draw(renderer, overlays);
 
   const bool absolute = hasGreyscale && renderer.grayscaleCapabilities(sleepGrayscaleMode(renderer)).supported();
   if (absolute) {

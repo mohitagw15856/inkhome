@@ -5,11 +5,10 @@
 #include <Logging.h>
 #include <Memory.h>
 
-#include <Xtc/XtcTypes.h>
 #include <cstring>
 #include <vector>
 
-#include "apps/stats/SleepStatsCard.h"
+#include "Xtc/XtcTypes.h"
 
 namespace inkhome::wallpaper {
 
@@ -56,7 +55,7 @@ bool pickXth(std::string& outPath, const bool bmpAvailable) {
   return true;
 }
 
-bool drawXth(GfxRenderer& renderer, const std::string& path, const bool withStatsCard) {
+bool drawXth(GfxRenderer& renderer, const std::string& path, const sleep::Overlays& overlays) {
   HalFile file;
   if (!Storage.openFileForRead("XTH", path.c_str(), file)) return false;
   xtc::XtgPageHeader header{};
@@ -115,9 +114,9 @@ bool drawXth(GfxRenderer& renderer, const std::string& path, const bool withStat
   };
 
   renderer.clearScreen();
-  if (!twoBit || withStatsCard) {
+  if (!twoBit || overlays.any()) {
     drawWhere([](uint8_t v, int x, int y) { return ditherBlack(v, x, y); }, true);
-    if (withStatsCard) inkhome::stats::drawSleepCard(renderer);
+    sleep::draw(renderer, overlays);
     renderer.displayBuffer(HalDisplay::HALF_REFRESH);
     LOG_DBG("XTH", "Sleep picture %s (black and white)", path.c_str());
     return true;

@@ -2,6 +2,7 @@
 #include <string>
 
 #include "activities/Activity.h"
+#include "inkhome/SleepOverlays.h"
 
 class Bitmap;
 class HalFile;
@@ -25,6 +26,6 @@ class SleepActivity final : public Activity {
   void renderBlankSleepScreen() const;
 
   bool fromTimeout = false;
-  // Inkhome: Custom + stats renders the wallpaper in black and white and draws the stats card over it.
-  bool statsCard = false;
+  // Inkhome: stats card and owner strip; when either is on, pictures render in black and white under them.
+  inkhome::sleep::Overlays overlays;
 };

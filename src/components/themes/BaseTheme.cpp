@@ -1,4 +1,3 @@
-#include "apps/stats/ReadingStatsTracker.h"
 #include "BaseTheme.h"
 
 #include <FreeInkUIGfxRenderer.h>
@@ -15,6 +14,7 @@
 
 #include "I18n.h"
 #include "RecentBooksStore.h"
+#include "apps/stats/ReadingStatsTracker.h"
 #include "components/HeaderBackTapTarget.h"
 #include "components/UIScale.h"
 #include "components/UITheme.h"

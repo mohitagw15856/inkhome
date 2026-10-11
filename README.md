@@ -60,7 +60,9 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
   - **Verse** (InkVerse): poems and quotations one at a time, and a **Verse**
     sleep screen that shows the next one each time the reader sleeps. Two
     public-domain collections built in.
-  - **If Found**: shows your contact note so a lost reader can find its way home.
+  - **Focus timer**: read for 15 to 60 minutes, then a break screen.
+  - **If Found**: shows your contact note so a lost reader can find its way home,
+    and can put it across the top of every sleep screen.
   - **Switch firmware**: restarts into the stock firmware.
 - **Tilt page turn on by default** on the X3 when its QMI8658 sensor is
   detected. Turn it off in Settings, Controls. The X4 has no sensor and is

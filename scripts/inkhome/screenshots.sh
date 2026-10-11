@@ -41,8 +41,8 @@ shoot() {
   local at=$((quit_at - 600))
   rm -rf fs_ && mkdir -p fs_
   if [ -d "$REPO/scripts/inkhome/sim-sd" ]; then cp -R "$REPO/scripts/inkhome/sim-sd/." fs_/; fi
-  # Optional per-shot overlay of extra card content (e.g. a wallpaper and sleep setting).
-  if [ -n "${EXTRA_SD:-}" ]; then cp -R "$REPO/scripts/inkhome/$EXTRA_SD/." fs_/; fi
+  # Optional per-shot extra card content, space-separated folder names (e.g. a wallpaper and a sleep setting).
+  for extra in ${EXTRA_SD:-}; do cp -R "$REPO/scripts/inkhome/$extra/." fs_/; done
   local log="$WORK/$name.log"
   env "$@" SDL_VIDEODRIVER=dummy CROSSPOINT_SIM_INPUT_SCRIPT="$script" \
     CROSSPOINT_SIM_SCREENSHOTS="$at:$WORK/$name.bmp" \
@@ -56,19 +56,21 @@ shoot() {
 }
 
 # Home list order without recent books: Browse Files, Library, Apps, File Transfer, Settings.
-# Apps order: Reading stats, Recipes, Verse, If Found, Switch firmware.
+# Apps order: Reading stats, Focus timer, Recipes, Verse, If Found, Switch firmware.
 APPS='900:DOWN;1200:DOWN;1500:ENTER'
-RECIPES="$APPS;2100:DOWN;2400:ENTER"
-VERSE="$APPS;2100:DOWN;2400:DOWN;2700:ENTER"
+FOCUS="$APPS;2100:DOWN;2400:ENTER"
+RECIPES="$APPS;2100:DOWN;2400:DOWN;2700:ENTER"
+VERSE="$APPS;2100:DOWN;2400:DOWN;2700:DOWN;3000:ENTER"
 shoot simulator_x3 x3-home        '2600:QUIT'
 shoot simulator_x3 x3-apps        "$APPS;3200:QUIT"
 shoot simulator_x3 x3-stats       "$APPS;2100:ENTER;3800:QUIT"
-shoot simulator_x3 x3-recipes     "$RECIPES;4000:QUIT"
-shoot simulator_x3 x3-recipe      "$RECIPES;3100:ENTER;4700:QUIT"
-shoot simulator_x3 x3-cooking     "$RECIPES;3100:ENTER;3800:UP;4200:ENTER;4900:ENTER;6700:QUIT"
-shoot simulator_x3 x3-verse       "$VERSE;3400:ENTER;5200:QUIT"
-shoot simulator_x3 x3-iffound     "$APPS;2100:DOWN;2400:DOWN;2700:DOWN;3000:ENTER;4600:QUIT"
-shoot simulator_x3 x3-fwswitch    "$APPS;2100:DOWN;2400:DOWN;2700:DOWN;3000:DOWN;3300:ENTER;4900:QUIT"
+shoot simulator_x3 x3-focus       "$FOCUS;4000:QUIT"
+shoot simulator_x3 x3-recipes     "$RECIPES;4300:QUIT"
+shoot simulator_x3 x3-recipe      "$RECIPES;3400:ENTER;5000:QUIT"
+shoot simulator_x3 x3-cooking     "$RECIPES;3400:ENTER;4100:UP;4500:ENTER;5200:ENTER;7000:QUIT"
+shoot simulator_x3 x3-verse       "$VERSE;3700:ENTER;5500:QUIT"
+shoot simulator_x3 x3-iffound     "$APPS;2100:DOWN;2400:DOWN;2700:DOWN;3000:DOWN;3300:ENTER;4900:QUIT"
+shoot simulator_x3 x3-fwswitch    "$APPS;2100:DOWN;2400:DOWN;2700:DOWN;3000:DOWN;3300:DOWN;3600:ENTER;5200:QUIT"
 shoot simulator_x3 x3-no-sd       '2600:QUIT' INKHOME_SIM_NO_SD=1
 shoot simulator    x4-home        '2600:QUIT'
 shoot simulator    x4-apps        "$APPS;3200:QUIT"
@@ -76,9 +78,10 @@ shoot simulator    x4-stats       "$APPS;2100:ENTER;3800:QUIT"
 EXTRA_SD=sim-sd-sleep shoot simulator_x3 x3-sleep-stats '1500:SLEEP;4500:QUIT'
 EXTRA_SD=sim-sd-verse shoot simulator_x3 x3-sleep-verse '1500:SLEEP;4500:QUIT'
 EXTRA_SD=sim-sd-xth shoot simulator_x3 x3-sleep-pushed '1500:SLEEP;5000:QUIT'
+EXTRA_SD='sim-sd-xth sim-sd-owner' shoot simulator_x3 x3-sleep-owner '1500:SLEEP;5000:QUIT'
 
 # Into and back out of every app, then Home: a key path that hangs fails here.
-shoot simulator_x3 x3-roundtrip   "$APPS;2100:ENTER;2800:BACK;3300:DOWN;3600:ENTER;4200:BACK;4700:DOWN;5000:ENTER;5600:ENTER;6200:RIGHT;6600:BACK;7100:BACK;7600:DOWN;7900:ENTER;8500:BACK;9000:DOWN;9300:ENTER;9900:BACK;10400:BACK;12000:QUIT"
+shoot simulator_x3 x3-roundtrip   "$APPS;2100:ENTER;2800:BACK;3300:DOWN;3600:ENTER;4200:BACK;4700:DOWN;5000:ENTER;5600:BACK;6100:DOWN;6400:ENTER;7000:ENTER;7600:RIGHT;8000:BACK;8500:BACK;9000:DOWN;9300:ENTER;9900:BACK;10400:DOWN;10700:ENTER;11300:BACK;11800:BACK;13500:QUIT"
 grep -q 'Entering activity: Home' "$WORK/x3-roundtrip.log" || { echo "FAIL roundtrip: never returned Home"; exit 1; }
 rm -f "$OUT/x3-roundtrip.png"
 echo "Screenshots in $OUT"

@@ -96,6 +96,16 @@ to hand before step 1.
       sleep the next verse appears, a different one each time.
 - [ ] Settings, Display, Sleep Screen lists Verse after Custom + stats.
 
+## 11. Batch 1 additions
+- [ ] Reader: after about eight page turns, the status bar shows "~N min"
+      beside the chapter page count. Settings, Reader, Time left in chapter
+      turns it off.
+- [ ] Apps, Focus timer, 15 minutes: your book opens. After 15 minutes of
+      reading a break screen appears; Again restarts, Done returns to the book.
+- [ ] Settings, Display, Owner details on sleep screen = On with
+      `/if_found.txt` on the card: every sleep screen shows "If found:" and
+      your first two lines across the top.
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log

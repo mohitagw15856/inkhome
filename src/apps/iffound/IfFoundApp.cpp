@@ -9,10 +9,12 @@
 #include <iterator>
 
 #include "MappedInputManager.h"
+#include "OwnerNote.h"
 #include "apps/AppPaths.h"
 #include "components/UITheme.h"
 #include "core/IfFoundText.h"
 #include "fontIds.h"
+#include "inkhome/SdState.h"
 
 namespace inkhome::iffound {
 
@@ -57,6 +59,8 @@ bool isBlank(const std::string& line) { return line.find_first_not_of(" \t") == 
 std::unique_ptr<Activity> create(GfxRenderer& renderer, MappedInputManager& mappedInput) {
   return makeUniqueNoThrow<IfFoundActivity>(renderer, mappedInput);
 }
+
+std::string ownerNote() { return inkhome::sdMounted() ? readNote(findNotePath()) : std::string(); }
 
 void IfFoundActivity::onEnter() {
   Activity::onEnter();
