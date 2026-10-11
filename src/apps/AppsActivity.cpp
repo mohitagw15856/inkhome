@@ -1,13 +1,13 @@
 #include "AppsActivity.h"
 
 #include <GfxRenderer.h>
-#include <HalStorage.h>
 #include <I18n.h>
 #include <Logging.h>
 
 #include "AppRegistry.h"
 #include "MappedInputManager.h"
 #include "components/UITheme.h"
+#include "inkhome/SdState.h"
 
 namespace fui = freeink::ui;
 
@@ -35,7 +35,7 @@ const char* AppsActivity::headerTitle() const { return tr(STR_APPS); }
 
 void AppsActivity::onBackButton() {
   // Without a card the launcher was pushed from the no-SD screen; Home needs the card.
-  if (!Storage.ready()) {
+  if (!inkhome::sdMounted()) {
     finish();
     return;
   }
