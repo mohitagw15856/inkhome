@@ -1,9 +1,11 @@
 // From InkRecipes (github.com/mohitagw15856/inkrecipes, MIT), unchanged apart from stepText.
 #include "Recipe.h"
 
+#include <algorithm>
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <iterator>
 
 namespace inkrecipes {
 
@@ -64,8 +66,7 @@ bool parseRecipe(const std::string& text, Recipe& out) {
         // "I <qty>|<unit>|<name>", qty is decimal or empty.
         Ingredient ing;
         const size_t bar1 = rest.find('|');
-        const size_t bar2 = bar1 == std::string::npos ? std::string::npos
-                                                      : rest.find('|', bar1 + 1);
+        const size_t bar2 = bar1 == std::string::npos ? std::string::npos : rest.find('|', bar1 + 1);
         if (bar1 == std::string::npos || bar2 == std::string::npos) break;
         const std::string qty = rest.substr(0, bar1);
         ing.unit = rest.substr(bar1 + 1, bar2 - bar1 - 1);
@@ -109,16 +110,15 @@ std::string formatQuantity(double q) {
   if (q <= 0) return "";
   const double whole = std::floor(q + 1e-9);
   const double frac = q - whole;
-  struct Name { double value; const char* text; };
-  const Name names[] = {{0.125, "1/8"}, {0.25, "1/4"}, {1.0 / 3.0, "1/3"},
+  struct Name {
+    double value;
+    const char* text;
+  };
+  const Name names[] = {{0.125, "1/8"}, {0.25, "1/4"},      {1.0 / 3.0, "1/3"},
                         {0.5, "1/2"},   {2.0 / 3.0, "2/3"}, {0.75, "3/4"}};
-  const char* fracText = nullptr;
-  for (const auto& n : names) {
-    if (std::fabs(frac - n.value) < 0.02) {
-      fracText = n.text;
-      break;
-    }
-  }
+  const auto match = std::find_if(std::begin(names), std::end(names),
+                                  [frac](const Name& n) { return std::fabs(frac - n.value) < 0.02; });
+  const char* fracText = match == std::end(names) ? nullptr : match->text;
   char buf[32];
   if (fracText && whole > 0) {
     std::snprintf(buf, sizeof(buf), "%d %s", static_cast<int>(whole), fracText);

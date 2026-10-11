@@ -10,14 +10,14 @@
 namespace inkrecipes {
 
 struct Ingredient {
-  double quantity = 0;   // 0 means "no quantity" (to taste)
-  std::string unit;      // may be empty
+  double quantity = 0;  // 0 means "no quantity" (to taste)
+  std::string unit;     // may be empty
   std::string name;
-  bool ticked = false;   // runtime checklist state
+  bool ticked = false;  // runtime checklist state
 };
 
 struct Step {
-  uint32_t seconds = 0;  // 0 = no timer
+  uint32_t seconds = 0;            // 0 = no timer
   std::vector<std::string> lines;  // pre-wrapped for the big cooking type
 };
 

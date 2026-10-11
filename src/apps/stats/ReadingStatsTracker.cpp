@@ -21,7 +21,7 @@ constexpr unsigned long IDLE_LIMIT_MS = 5UL * 60 * 1000;  // no input for this l
 constexpr unsigned long MAX_TICK_GAP_MS = 10UL * 1000;    // longer gaps (blocking work, sleep) are not reading
 constexpr unsigned long COMMIT_EVERY_MS = 60UL * 1000;    // fold pending time into the history
 constexpr unsigned long SAVE_EVERY_MS = 10UL * 60 * 1000;
-constexpr uint32_t MIN_SESSION_MS = 30UL * 1000;          // shorter opens are not counted as sessions
+constexpr uint32_t MIN_SESSION_MS = 30UL * 1000;  // shorter opens are not counted as sessions
 constexpr int MIN_VALID_YEAR = 2024;
 
 ReadingStats stats;

@@ -5,8 +5,7 @@ namespace inkverse {
 
 namespace {
 
-void feedLine(Collection& out, const std::string& line, bool& inVerse, size_t maxVerses,
-              size_t maxLines) {
+void feedLine(Collection& out, const std::string& line, bool& inVerse, size_t maxVerses, size_t maxLines) {
   if (line == "%%") {
     if (out.verses.size() < maxVerses) {
       out.verses.emplace_back();
@@ -33,20 +32,26 @@ void feedLine(Collection& out, const std::string& line, bool& inVerse, size_t ma
 
   Verse& v = out.verses.back();
   switch (tag) {
-    case 'S': v.title = rest; break;
-    case 'A': v.author = rest; break;
-    case 'B': v.attribution = rest; break;
+    case 'S':
+      v.title = rest;
+      break;
+    case 'A':
+      v.author = rest;
+      break;
+    case 'B':
+      v.attribution = rest;
+      break;
     case 'T':
       if (v.lines.size() < maxLines) v.lines.push_back(rest);
       break;
-    default: break;  // unknown tags skipped for forward compatibility
+    default:
+      break;  // unknown tags skipped for forward compatibility
   }
 }
 
 }  // namespace
 
-bool parseVerse(const std::string& text, Collection& out, size_t maxVerses,
-                size_t maxLines) {
+bool parseVerse(const std::string& text, Collection& out, size_t maxVerses, size_t maxLines) {
   out = Collection{};
   bool first = true;
   bool inVerse = false;
@@ -67,15 +72,13 @@ bool parseVerse(const std::string& text, Collection& out, size_t maxVerses,
     if (end == text.size()) break;
   }
   // Drop a trailing empty verse from a terminal %%.
-  while (!out.verses.empty() && out.verses.back().lines.empty() &&
-         out.verses.back().title.empty()) {
+  while (!out.verses.empty() && out.verses.back().lines.empty() && out.verses.back().title.empty()) {
     out.verses.pop_back();
   }
   return !out.verses.empty();
 }
 
-size_t pickVerse(Rotation policy, size_t verseCount, uint32_t dayKey, uint32_t counter,
-                 uint32_t seed) {
+size_t pickVerse(Rotation policy, size_t verseCount, uint32_t dayKey, uint32_t counter, uint32_t seed) {
   if (verseCount == 0) return 0;
   switch (policy) {
     case Rotation::Daily:

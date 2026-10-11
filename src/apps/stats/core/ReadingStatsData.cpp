@@ -142,7 +142,8 @@ bool fromJson(const JsonDocument& doc, ReadingStats& out) {
     book.bookId = str(b["bookId"]);
     book.path = str(b["path"]);
     for (JsonVariantConst p : b["knownPaths"].as<JsonArrayConst>()) {
-      if (book.knownPaths.size() < MAX_KNOWN_PATHS && p.is<const char*>()) book.knownPaths.emplace_back(p.as<const char*>());
+      if (book.knownPaths.size() < MAX_KNOWN_PATHS && p.is<const char*>())
+        book.knownPaths.emplace_back(p.as<const char*>());
     }
     book.title = str(b["title"]);
     book.author = str(b["author"]);

@@ -10,9 +10,8 @@ namespace inkhome::iffound {
 namespace {
 
 std::string toLowerAscii(std::string value) {
-  for (char& c : value) {
-    if (c >= 'A' && c <= 'Z') c = static_cast<char>(c - 'A' + 'a');
-  }
+  std::transform(value.begin(), value.end(), value.begin(),
+                 [](char c) { return c >= 'A' && c <= 'Z' ? static_cast<char>(c - 'A' + 'a') : c; });
   return value;
 }
 

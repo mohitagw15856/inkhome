@@ -14,9 +14,7 @@ TEST(InkhomeVersion, UpstreamBumpIsNewer) {
   EXPECT_TRUE(isVersionNewer("1.7.0.1-inkhome", "1.6.5.1-inkhome"));
 }
 
-TEST(InkhomeVersion, EqualIsNotNewer) {
-  EXPECT_FALSE(isVersionNewer("1.6.5.1-inkhome", "1.6.5.1-inkhome"));
-}
+TEST(InkhomeVersion, EqualIsNotNewer) { EXPECT_FALSE(isVersionNewer("1.6.5.1-inkhome", "1.6.5.1-inkhome")); }
 
 TEST(InkhomeVersion, DevBuildSuffixIgnored) {
   EXPECT_FALSE(isVersionNewer("1.6.5.1-inkhome", "1.6.5.1-inkhome-dev-main-abc1234"));
