@@ -90,3 +90,12 @@ test('real Inkhome build validates and identifies', { skip: !fw || !existsSync(f
   await validateImage(image);
   assert.equal(identifyImage(image.subarray(0, 0x100)).kind, 'inkhome');
 });
+
+test('MD5 matches Node crypto, as the chip-side check relies on it', async () => {
+  const { createHash } = await import('node:crypto');
+  const { md5Hex } = await import('../../docs/flash/flasher.js');
+  for (const size of [0, 1, 55, 56, 64, 1000, 300000]) {
+    const data = new Uint8Array(size).map((_, i) => (i * 31 + 7) & 0xff);
+    assert.equal(md5Hex(data), createHash('md5').update(data).digest('hex'));
+  }
+});

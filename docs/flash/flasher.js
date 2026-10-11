@@ -39,6 +39,45 @@ const u32Bytes = (v) => new Uint8Array([v & 0xff, (v >>> 8) & 0xff, (v >>> 16) &
 const cString = (b, o, n) => new TextDecoder().decode(b.subarray(o, o + n)).split('\0')[0];
 const seqCrc = (seq) => crc32Le(u32Bytes(seq));
 
+// ---------------------------------------------------------------- MD5
+// Minimal RFC 1321 MD5 (WebCrypto has none), from crosspoint-tools. Used to
+// prove the whole image landed in flash before the boot slot is switched.
+
+const MD5_K = new Uint32Array(64);
+for (let i = 0; i < 64; i++) MD5_K[i] = Math.floor(Math.abs(Math.sin(i + 1)) * 2 ** 32);
+const MD5_S = [
+  7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
+  4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21,
+];
+
+export function md5Hex(input) {
+  const bitLen = input.length * 8;
+  const paddedLen = (Math.floor((input.length + 8) / 64) + 1) * 64;
+  const msg = new Uint8Array(paddedLen);
+  msg.set(input);
+  msg[input.length] = 0x80;
+  msg.set(u32Bytes(bitLen >>> 0), paddedLen - 8);
+  msg.set(u32Bytes(Math.floor(bitLen / 2 ** 32)), paddedLen - 4);
+  let a0 = 0x67452301, b0 = 0xefcdab89, c0 = 0x98badcfe, d0 = 0x10325476;
+  const M = new Uint32Array(16);
+  for (let chunk = 0; chunk < paddedLen; chunk += 64) {
+    for (let i = 0; i < 16; i++) M[i] = u32(msg, chunk + i * 4);
+    let A = a0, B = b0, C = c0, D = d0;
+    for (let i = 0; i < 64; i++) {
+      let F, g;
+      if (i < 16) { F = (B & C) | (~B & D); g = i; }
+      else if (i < 32) { F = (D & B) | (~D & C); g = (5 * i + 1) % 16; }
+      else if (i < 48) { F = B ^ C ^ D; g = (3 * i + 5) % 16; }
+      else { F = C ^ (B | ~D); g = (7 * i) % 16; }
+      F = (F + A + MD5_K[i] + M[g]) >>> 0;
+      A = D; D = C; C = B;
+      B = (B + ((F << MD5_S[i]) | (F >>> (32 - MD5_S[i])))) >>> 0;
+    }
+    a0 = (a0 + A) >>> 0; b0 = (b0 + B) >>> 0; c0 = (c0 + C) >>> 0; d0 = (d0 + D) >>> 0;
+  }
+  return [a0, b0, c0, d0].map((w) => Array.from(u32Bytes(w), (b) => b.toString(16).padStart(2, '0')).join('')).join('');
+}
+
 // ---------------------------------------------------------------- partition table and otadata
 
 export function parsePartitionTable(data) {
@@ -205,6 +244,11 @@ export class Device {
       flashSize: 'keep', flashMode: 'keep', flashFreq: 'keep', eraseAll: false, compress: true,
       reportProgress: (_, written, total) => onProgress?.(written / total),
     });
+    // The chip hashes what is really in flash; only a byte-for-byte match lets the boot slot change.
+    const onChip = String(await this.loader.flashMd5sum(slot.offset, image.length)).toLowerCase();
+    if (onChip !== md5Hex(image)) {
+      throw new Error('The written firmware did not verify, so the device was left starting the firmware it had before. Nothing else was changed; you can safely try again.');
+    }
     const check = identifyImage(await this.loader.readFlash(slot.offset, 0x100));
     if (check.kind !== 'inkhome') throw new Error('Read-back after writing did not find Inkhome. The boot selection was not changed.');
   }

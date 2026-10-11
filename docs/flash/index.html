@@ -59,8 +59,9 @@
     <h2>1. Connect</h2>
     <ol>
       <li>Connect the reader to this computer with a USB-C <em>data</em> cable.</li>
-      <li>Wake it (press Power), then press <strong>Connect</strong> and choose the port (often <span class="mono">USB JTAG/serial</span> or <span class="mono">usbmodem</span>).</li>
+      <li>Wake it (press Power), then press <strong>Connect</strong> straight away and choose the port (often <span class="mono">USB JTAG/serial</span> or <span class="mono">usbmodem</span>). If no port is listed, the reader has gone to sleep: press Power and try again.</li>
     </ol>
+    <p class="sub">Connect only <em>reads</em> the reader. Nothing is written until you press a button in step 2, so it is safe to connect just to look.</p>
     <div class="row"><button class="primary" id="connect">Connect</button></div>
     <div id="device" class="hidden">
       <div class="slots" id="slots"></div>
@@ -78,6 +79,16 @@
     <progress id="progress" max="1" value="0" class="hidden"></progress>
     <div id="result" class="msg hidden"></div>
   </div>
+
+  <details class="card" open>
+    <summary><strong>Is it safe? What if the reader sleeps or the cable comes out?</strong></summary>
+    <ul>
+      <li><strong>The reader cannot fall asleep while flashing.</strong> Once Connect succeeds, the reader's chip is held in its built-in loader, so neither the stock firmware nor Inkhome is running to put it to sleep. Installing takes about one to two minutes.</li>
+      <li><strong>This page keeps your computer awake</strong> during an install. Keep the cable plugged in and the tab open until it says it is done.</li>
+      <li><strong>If anything interrupts it</strong> (cable pulled, computer sleeps, tab closed), the reader still starts the firmware it had before. The page writes Inkhome into the spare slot, checks every byte with the chip, and only then switches which slot starts. Run Install again to finish.</li>
+      <li><strong>If Inkhome ever misbehaves</strong>, connect here and press Start stock firmware. You can also switch from the reader: Apps, Switch firmware.</li>
+    </ul>
+  </details>
 
   <details class="card">
     <summary><strong>How it keeps stock safe</strong></summary>
@@ -172,9 +183,15 @@
     }
   });
 
+  // Stops the computer sleeping mid-install where the browser supports it.
+  async function keepAwake() {
+    try { return await navigator.wakeLock?.request('screen'); } catch { return null; }
+  }
+
   $('install').addEventListener('click', async () => {
     const plan = planInstall(state);
     if (plan.warn && !confirm(plan.warn + '\n\nContinue?')) return;
+    const lock = await keepAwake();
     setBusy(true);
     hide($('result'));
     const bar = $('progress');
@@ -184,16 +201,18 @@
       if (!res.ok) throw new Error(`Could not download the firmware (HTTP ${res.status}).`);
       const image = new Uint8Array(await res.arrayBuffer());
       await validateImage(image);
-      log(`Firmware OK, ${image.length} bytes. Writing to ${state.apps[plan.target].label}...`);
+      log(`Firmware OK, ${image.length} bytes. Writing to ${state.apps[plan.target].label} (about a minute; keep the cable in)...`);
       bar.classList.remove('hidden');
       await device.writeImage(plan.target, image, (p) => (bar.value = p));
-      log('Written and read back. Selecting it to start...');
+      log('Written and verified byte for byte. Selecting it to start...');
       await device.bootApp(plan.target);
       bar.classList.add('hidden');
       await finish(`Inkhome is installed in ${state.apps[plan.target].label} and will start next. ${restartHint}`);
     } catch (err) {
       bar.classList.add('hidden');
       await fail(err);
+    } finally {
+      lock?.release?.().catch(() => {});
     }
   });
 
