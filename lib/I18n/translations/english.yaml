@@ -523,3 +523,8 @@ STR_SPACING_200_PERCENT: "200%"
 
 STR_APPS: "Apps"
 STR_NO_APPS: "No apps installed"
+STR_IF_FOUND_TITLE: "If Found"
+STR_IF_FOUND_SUMMARY: "Contact details for a lost reader"
+STR_IF_FOUND_RETURN_ME: "If found, please return me"
+STR_IF_FOUND_MESSAGE: "This reader has been lost. If you have found it, please help return it by contacting:"
+STR_IF_FOUND_FILE_HINT: "Put a file called if_found.txt at the top of the SD card to replace this message."
