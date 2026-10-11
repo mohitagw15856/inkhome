@@ -34,9 +34,9 @@
 #include "activities/Activity.h"
 #include "activities/ActivityManager.h"
 #include "activities/settings/SdFirmwareUpdateActivity.h"
-#include "apps/stats/ReadingStatsTracker.h"
 #include "components/UITheme.h"
 #include "fontIds.h"
+#include "inkhome/InkhomeLoop.h"
 #include "inkhome/NoSdCardActivity.h"
 #include "inkhome/SdState.h"
 #include "platform/UsbSerialJtagHandoff.h"
@@ -296,7 +296,7 @@ void enterDeepSleep(bool fromTimeout = false) {
     WiFi.mode(WIFI_OFF);
   }
 
-  inkhome::stats::flush();  // Inkhome: close the reading session before the card sleeps
+  inkhome::beforeSleep();  // Inkhome: close the reading session before the card sleeps
   halTiltSensor.deepSleep();
   display.deepSleep();
   Storage.prepareForDeepSleep();
@@ -660,7 +660,7 @@ void loop() {
     lastActivityTime = millis();         // Reset inactivity timer
     powerManager.setPowerSaving(false);  // Restore normal CPU frequency on user activity
   }
-  inkhome::stats::tick(activityManager.isReaderActivity(), userActivity);  // Inkhome: reading time
+  inkhome::tick(activityManager.isReaderActivity(), userActivity);  // Inkhome: stats, timers, gestures
 
   // Let wake continue as soon as its hold has been verified. The release can
   // arrive after setup, so consume that one input frame rather than making it
