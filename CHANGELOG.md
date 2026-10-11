@@ -3,7 +3,15 @@
 Inkhome versions are `<upstream-version>.<n>-inkhome`. Upstream changes are
 in CrossPoint's own release notes.
 
-## 1.6.5.1-inkhome (unreleased)
+## 1.6.5.2-inkhome (pre-release)
+
+### Changed
+- Start-up and default sleep screens say Inkhome (with "Based on CrossPoint
+  Reader" on start-up), so it is clear which firmware is running.
+- The flasher verifies the whole image on the chip before switching slots,
+  and keeps the computer awake during installs.
+
+## 1.6.5.1-inkhome (pre-release)
 
 Based on CrossPoint Reader 1.6.5. Not yet verified on a device; see
 docs/inkhome/TESTING.md.
