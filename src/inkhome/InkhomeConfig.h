@@ -5,6 +5,8 @@
 namespace inkhome {
 
 constexpr char FORK_NAME[] = "Inkhome";
+// Product names are not translated.
+constexpr const char* FORK_NAME_FOR_UI = FORK_NAME;
 // OTA checks this repository's latest release, never upstream's, so a fork
 // build is not offered stock CrossPoint as an "update".
 constexpr char RELEASE_API_URL[] = "https://api.github.com/repos/mohitagw15856/inkhome/releases/latest";
