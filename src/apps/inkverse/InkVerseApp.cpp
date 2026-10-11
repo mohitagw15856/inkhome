@@ -152,14 +152,10 @@ Layout layoutBody(const GfxRenderer& renderer, const Verse& verse, const int wid
   Layout layout;
   for (const int fontId : VERSE_FONT_IDS) {
     layout.fontId = fontId;
-    bool fits = true;
-    for (const auto& line : verse.lines) {
-      if (renderer.getTextWidth(fontId, line.c_str()) > width) {
-        fits = false;
-        break;
-      }
-    }
-    if (fits) break;
+    const bool overflows = std::any_of(verse.lines.begin(), verse.lines.end(), [&](const std::string& line) {
+      return renderer.getTextWidth(fontId, line.c_str()) > width;
+    });
+    if (!overflows) break;
   }
   layout.body.reserve(verse.lines.size());
   for (const auto& line : verse.lines) {
