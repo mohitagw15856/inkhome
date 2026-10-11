@@ -17,9 +17,11 @@
 
 #include "FirmwareBoardTag.h"
 #include "FirmwareFlasher.h"
+#include "inkhome/InkhomeConfig.h"
+#include "inkhome/InkhomeVersion.h"
 
 namespace {
-constexpr char latestReleaseUrl[] = "https://api.github.com/repos/crosspoint-reader/crosspoint-reader/releases/latest";
+constexpr const char* latestReleaseUrl = inkhome::RELEASE_API_URL;
 }  // namespace
 
 OtaUpdater::OtaUpdaterError OtaUpdater::checkForUpdate() {
@@ -48,7 +50,8 @@ OtaUpdater::OtaUpdaterError OtaUpdater::checkForUpdate() {
       releaseParser.feed(reinterpret_cast<const char*>(data + offset), 1);
       offset++;
       if (releaseParser.foundTag()) {
-        snprintf(assetName, sizeof(assetName), "crosspoint-%s%s.bin", releaseParser.getTagName(), assetSuffix);
+        snprintf(assetName, sizeof(assetName), "%s%s%s.bin", inkhome::ASSET_PREFIX, releaseParser.getTagName(),
+                 assetSuffix);
         releaseParser.setFirmwareAssetName(assetName);
         assetNameSet = true;
       }
@@ -90,37 +93,11 @@ bool OtaUpdater::isUpdateNewer() const {
     return false;
   }
 
-  int currentMajor, currentMinor, currentPatch;
-  int latestMajor, latestMinor, latestPatch;
-
   const auto currentVersion = CROSSPOINT_VERSION;
+  if (inkhome::isVersionNewer(latestVersion.c_str(), currentVersion)) return true;
+  if (inkhome::isVersionNewer(currentVersion, latestVersion.c_str())) return false;
 
-  // semantic version check (only match on 3 segments)
-  sscanf(latestVersion.c_str(), "%d.%d.%d", &latestMajor, &latestMinor, &latestPatch);
-  sscanf(currentVersion, "%d.%d.%d", &currentMajor, &currentMinor, &currentPatch);
-
-  /*
-   * Compare major versions.
-   * If they differ, return true if latest major version greater than current major version
-   * otherwise return false.
-   */
-  if (latestMajor != currentMajor) return latestMajor > currentMajor;
-
-  /*
-   * Compare minor versions.
-   * If they differ, return true if latest minor version greater than current minor version
-   * otherwise return false.
-   */
-  if (latestMinor != currentMinor) return latestMinor > currentMinor;
-
-  /*
-   * Check patch versions.
-   */
-  if (latestPatch != currentPatch) return latestPatch > currentPatch;
-
-  // If we reach here, it means all segments are equal.
-  // One final check, if we're on an RC build (contains "-rc"), we should consider the latest version as newer even if
-  // the segments are equal, since RC builds are pre-release versions.
+  // Equal versions: an RC build treats the matching final release as newer.
   if (strstr(currentVersion, "-rc") != nullptr) {
     return true;
   }

@@ -12,6 +12,8 @@ permissions:
 
 jobs:
   build-release:
+    # Inkhome: upstream's multi-device release only runs upstream; the fork uses inkhome-release.yml.
+    if: github.repository == 'crosspoint-reader/crosspoint-reader'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

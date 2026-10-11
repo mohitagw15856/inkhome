@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Install Inkhome</title>
+  <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+  <style>
+    :root { --bg: #f6f5f1; --fg: #1b1b1b; --muted: #5b5b5b; --card: #fff; --line: #dcd9d0; --accent: #1b1b1b; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #151515; --fg: #ecebe6; --muted: #a5a39b; --card: #1f1f1f; --line: #34332f; --accent: #ecebe6; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.55 Georgia, "Iowan Old Style", serif; }
+    main { max-width: 640px; margin: 0 auto; padding: 48px 16px 64px; }
+    h1 { font-size: 2.2rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+    .version { color: var(--muted); font-family: ui-monospace, Menlo, monospace; font-size: 0.85rem; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 20px; margin: 24px 0; }
+    ol { padding-left: 1.2em; }
+    li { margin: 6px 0; }
+    .warn { border-left: 4px solid var(--accent); padding-left: 12px; }
+    code { font-family: ui-monospace, Menlo, monospace; font-size: 0.9em; }
+    esp-web-install-button button[slot="activate"] {
+      font: inherit; background: var(--accent); color: var(--bg); border: 0; border-radius: 8px; padding: 12px 20px; cursor: pointer;
+    }
+    a { color: inherit; }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Inkhome</h1>
+  <div class="version">version __VERSION__ &middot; Xteink X3 and X4</div>
+  <p>An X3-first build of CrossPoint Reader that also hosts the inkkit e-ink apps. One binary serves both the X3 and the X4; the device is detected when it starts.</p>
+
+  <div class="card">
+    <p><esp-web-install-button manifest="manifest.json">
+      <button slot="activate">Connect and install</button>
+      <span slot="unsupported">Your browser cannot flash devices. Use Chrome or Edge on a desktop computer.</span>
+      <span slot="not-allowed">Flashing needs a secure (https) page.</span>
+    </esp-web-install-button></p>
+    <ol>
+      <li>Connect the reader with a data USB-C cable and wake it.</li>
+      <li>Press <strong>Connect and install</strong> and pick the serial port (often <code>usbmodem</code> on a Mac).</li>
+      <li>Wait for the install to finish, then press the reset button or hold Power to restart.</li>
+    </ol>
+  </div>
+
+  <div class="card warn">
+    <p><strong>Before you install.</strong> This writes a full image, including the partition table. It replaces the stock firmware and any second firmware slot. Take a full backup first if you may want stock back (for example <code>esptool.py read_flash 0 0x1000000 backup.bin</code>).</p>
+    <p>Already on Inkhome or CrossPoint? Update from the reader instead: copy <code>inkhome-&lt;version&gt;-x3-x4.bin</code> from the release page to the SD card and use Settings, then SD Card Firmware Update.</p>
+  </div>
+
+  <p>Source, credits and licence: <a href="https://github.com/mohitagw15856/inkhome">github.com/mohitagw15856/inkhome</a>. Built on <a href="https://github.com/crosspoint-reader/crosspoint-reader">CrossPoint Reader</a> (MIT).</p>
+</main>
+</body>
+</html>

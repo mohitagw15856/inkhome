@@ -1,0 +1,11 @@
+{
+  "name": "Inkhome",
+  "version": "__VERSION__",
+  "new_install_prompt_erase": false,
+  "builds": [
+    {
+      "chipFamily": "ESP32-C3",
+      "parts": [{ "path": "inkhome-x3-x4-factory.bin", "offset": 0 }]
+    }
+  ]
+}
