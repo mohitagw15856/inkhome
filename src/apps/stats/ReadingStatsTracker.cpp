@@ -6,6 +6,7 @@
 #include <KOReaderDocumentId.h>
 #include <Logging.h>
 
+#include <atomic>
 #include <ctime>
 #include <string>
 
@@ -29,6 +30,9 @@ constexpr unsigned long MAX_TURN_MS = 5UL * 60 * 1000;
 constexpr int MIN_TURNS_FOR_PACE = 8;
 constexpr float PACE_WEIGHT = 0.15f;
 
+constexpr uint8_t FINISHED_PERCENT = 100;
+std::atomic<int> lastChapterPagesLeft{-1};
+std::atomic<int> pendingPercent{-1};
 float paceSeconds = 0;
 int paceSamples = 0;
 unsigned long lastTurnMs = 0;
@@ -235,6 +239,34 @@ uint64_t pendingMs() { return session.pendingMs; }
 
 float secondsPerPage() { return paceSamples >= MIN_TURNS_FOR_PACE ? paceSeconds : 0.0f; }
 
+int chapterPagesLeft() { return lastChapterPagesLeft.load(); }
+
+// Runs on the render task: only hands values over; tick() applies them.
+void noteProgress(const float bookPercent, const int chapterPage, const int chapterPages) {
+  lastChapterPagesLeft.store(chapterPages >= chapterPage ? chapterPages - chapterPage : -1);
+  const int percent = bookPercent < 0 ? 0 : bookPercent > 100 ? 100 : static_cast<int>(bookPercent + 0.5f);
+  pendingPercent.store(percent);
+}
+
+void applyPendingProgress() {
+  const int pending = pendingPercent.exchange(-1);
+  if (pending < 0 || !session.active || session.bookIndex < 0) return;
+  auto& book = stats.books[static_cast<size_t>(session.bookIndex)];
+  const auto percent = static_cast<uint8_t>(pending);
+  if (percent != book.lastProgressPercent) {
+    book.lastProgressPercent = percent;
+    dirty = true;
+  }
+  if (percent >= FINISHED_PERCENT && !book.completed) {
+    book.completed = true;
+    uint32_t day = 0;
+    uint32_t epoch = 0;
+    clockNow(day, epoch);
+    book.completedAt = epoch;
+    dirty = true;
+  }
+}
+
 void tick(const bool readerActive, const bool userActivity) {
   const unsigned long now = millis();
   const std::string& path = APP_STATE.openEpubPath;
@@ -250,6 +282,7 @@ void tick(const bool readerActive, const bool userActivity) {
     return;
   }
 
+  applyPendingProgress();
   if (userActivity) {
     session.lastInputMs = now;
     const unsigned long turnGap = now - lastTurnMs;

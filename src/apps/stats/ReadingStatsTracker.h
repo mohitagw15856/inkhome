@@ -37,6 +37,11 @@ uint64_t pendingMs();
 // Seconds per page from this owner's recent page turns (an average that
 // ignores pauses), or 0 until there are enough turns to say.
 float secondsPerPage();
+// From the reader's status bar on every page: book percentage and chapter
+// position. Updates the open book's progress (and marks it finished at the end).
+void noteProgress(float bookPercent, int chapterPage, int chapterPages);
+// Pages left in the current chapter at the last status bar draw, or -1.
+int chapterPagesLeft();
 
 bool exportTo(const char* path = EXPORT_PATH);
 bool importFrom(const char* path = EXPORT_PATH);

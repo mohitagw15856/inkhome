@@ -552,10 +552,13 @@ void SleepActivity::onEnter() {
     GUI.drawPopup(renderer, tr(STR_ENTERING_SLEEP));
   }
 
-  overlays = inkhome::sleep::current(SETTINGS.sleepScreen == CrossPointSettings::SLEEP_SCREEN_MODE::CUSTOM_STATS);
+  overlays = inkhome::sleep::current(SETTINGS.sleepScreen == CrossPointSettings::SLEEP_SCREEN_MODE::CUSTOM_STATS ||
+                                     SETTINGS.sleepScreen == CrossPointSettings::SLEEP_SCREEN_MODE::COVER_STATS);
   switch (SETTINGS.sleepScreen) {
     case (CrossPointSettings::SLEEP_SCREEN_MODE::CUSTOM_STATS):
       return renderCustomSleepScreen();
+    case (CrossPointSettings::SLEEP_SCREEN_MODE::COVER_STATS):
+      return APP_STATE.lastSleepFromReader ? renderCoverSleepScreen() : renderCustomSleepScreen();
     case (CrossPointSettings::SLEEP_SCREEN_MODE::VERSE):
       inkverse::drawSleepVerse(renderer);
       inkhome::sleep::draw(renderer, overlays);
@@ -816,6 +819,7 @@ void SleepActivity::renderCoverSleepScreen() const {
   void (SleepActivity::*renderNoCoverSleepScreen)() const;
   switch (SETTINGS.sleepScreen) {
     case (CrossPointSettings::SLEEP_SCREEN_MODE::COVER_CUSTOM):
+    case (CrossPointSettings::SLEEP_SCREEN_MODE::COVER_STATS):  // Inkhome
       renderNoCoverSleepScreen = &SleepActivity::renderCustomSleepScreen;
       break;
     default:
