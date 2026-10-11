@@ -1,8 +1,7 @@
 # Inkhome: plan
 
 Inkhome is an X3-first fork of CrossPoint Reader that also hosts the inkkit
-e-ink apps as native on-device Apps. "Inkhome" is a working name; it lives in
-one place (`[inkhome]` section of `platformio.ini`) so renaming is cheap.
+e-ink apps as native on-device Apps.
 
 This file is the Phase 0 deliverable: architecture map, feature tables,
 scope, roadmap, risks and open questions.
@@ -255,8 +254,7 @@ See `docs/inkhome/SIZES.md`, updated on every feature branch.
 
 ## 8. Open questions for you
 
-1. **Name.** Keep "Inkhome" or choose another? (Rename touches
-   `platformio.ini`, README and the release asset names only.)
+1. **Name.** Answered: Inkhome.
 2. **GitHub.** Answered: published at `mohitagw15856/inkhome`.
 3. **App data location.** Phase 1 uses `/apps/<id>/` for user content
    (recipes you copy over) and `/.crosspoint/apps/<id>/` for app state.
