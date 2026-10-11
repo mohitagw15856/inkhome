@@ -181,12 +181,13 @@ report ([SIZES](docs/inkhome/SIZES.md)) and on-device checks
 | `docs/readme-screens` | README screenshots, checklists, size report |
 | `feat/stats-core` | Reading stats (roadmap 2.1 and the heatmap, 2.3) |
 | `feat/sleep-stats-overlay` | Custom + stats sleep screen (roadmap 2.2) |
+| `feat/apps-inkverse` | Verse app and Verse sleep screen (roadmap 2.4) |
 
 Sleep wallpaper: upstream's Custom mode is untouched and new sleep modes
 (stats overlay, roadmap 2.2) will be appended beside it.
 
-Not done yet, in order: the roadmap below from 2.4 (InkVerse), then
-achievements, text darkness and the remaining inkkit apps. Reading stats is a
+Not done yet, in order: achievements (2.5), text darkness (2.6), then the
+remaining inkkit apps (2.7 onwards). Reading stats is a
 lean reimplementation of vCodex's format rather than a copy of its 4,200
 lines; progress percentages, Sync Day and per-book correction are not in it
 yet.
