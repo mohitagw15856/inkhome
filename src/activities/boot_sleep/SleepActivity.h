@@ -25,4 +25,6 @@ class SleepActivity final : public Activity {
   void renderBlankSleepScreen() const;
 
   bool fromTimeout = false;
+  // Inkhome: Custom + stats renders the wallpaper in black and white and draws the stats card over it.
+  bool statsCard = false;
 };
