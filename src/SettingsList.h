@@ -359,6 +359,8 @@ inline std::vector<SettingInfo> getSettingsList(const SdCardFontRegistry* regist
             {StrId::STR_IGNORE, StrId::STR_SLEEP, StrId::STR_PAGE_TURN, StrId::STR_FORCE_REFRESH, StrId::STR_FOOTNOTES},
             "shortPwrBtn", StrId::STR_CAT_CONTROLS),
 #endif
+        SettingInfo::Toggle(StrId::STR_TIME_LEFT_IN_CHAPTER, &CrossPointSettings::statusBarTimeLeft,
+                            "statusBarTimeLeft", StrId::STR_CAT_READER),
         // Erased below unless the QMI8658 IMU is present (X3).
         SettingInfo::Enum(StrId::STR_TILT_PAGE_TURN, &CrossPointSettings::tiltPageTurn,
                           {StrId::STR_STATE_OFF, StrId::STR_NORMAL, StrId::STR_INVERTED}, "tiltPageTurn",

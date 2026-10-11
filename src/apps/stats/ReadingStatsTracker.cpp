@@ -23,6 +23,15 @@ constexpr unsigned long COMMIT_EVERY_MS = 60UL * 1000;    // fold pending time i
 constexpr unsigned long SAVE_EVERY_MS = 10UL * 60 * 1000;
 constexpr uint32_t MIN_SESSION_MS = 30UL * 1000;  // shorter opens are not counted as sessions
 constexpr int MIN_VALID_YEAR = 2024;
+// Page-pace average: turns closer than this are skips, further apart are pauses.
+constexpr unsigned long MIN_TURN_MS = 2000;
+constexpr unsigned long MAX_TURN_MS = 5UL * 60 * 1000;
+constexpr int MIN_TURNS_FOR_PACE = 8;
+constexpr float PACE_WEIGHT = 0.15f;
+
+float paceSeconds = 0;
+int paceSamples = 0;
+unsigned long lastTurnMs = 0;
 
 ReadingStats stats;
 LoadState loadState = LoadState::NotLoaded;
@@ -224,6 +233,8 @@ uint32_t todayOrdinal() {
 
 uint64_t pendingMs() { return session.pendingMs; }
 
+float secondsPerPage() { return paceSamples >= MIN_TURNS_FOR_PACE ? paceSeconds : 0.0f; }
+
 void tick(const bool readerActive, const bool userActivity) {
   const unsigned long now = millis();
   const std::string& path = APP_STATE.openEpubPath;
@@ -239,7 +250,16 @@ void tick(const bool readerActive, const bool userActivity) {
     return;
   }
 
-  if (userActivity) session.lastInputMs = now;
+  if (userActivity) {
+    session.lastInputMs = now;
+    const unsigned long turnGap = now - lastTurnMs;
+    if (lastTurnMs != 0 && turnGap >= MIN_TURN_MS && turnGap <= MAX_TURN_MS) {
+      const float seconds = static_cast<float>(turnGap) / 1000.0f;
+      paceSeconds = paceSamples == 0 ? seconds : paceSeconds + PACE_WEIGHT * (seconds - paceSeconds);
+      ++paceSamples;
+    }
+    lastTurnMs = now;
+  }
   const unsigned long gap = now - session.lastTickMs;
   session.lastTickMs = now;
   if (gap < MAX_TICK_GAP_MS && now - session.lastInputMs <= IDLE_LIMIT_MS) session.pendingMs += gap;
