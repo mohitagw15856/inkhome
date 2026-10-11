@@ -802,6 +802,7 @@ void BaseTheme::drawStatusBar(GfxRenderer& renderer, const float bookProgress, c
 
     // Inkhome: "~6 min" left in the chapter, from the owner's own page pace.
     char timeLeft[16] = "";
+    inkhome::stats::noteProgress(bookProgress, currentPage, pageCount);
     const float pace = inkhome::stats::secondsPerPage();
     if (SETTINGS.statusBarTimeLeft && sb.showChapterPageCount && pace > 0 && pageCount >= currentPage) {
       const int minutes = static_cast<int>((pageCount - currentPage) * pace / 60.0f + 0.5f);

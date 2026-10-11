@@ -80,6 +80,14 @@ EXTRA_SD=sim-sd-verse shoot simulator_x3 x3-sleep-verse '1500:SLEEP;4500:QUIT'
 EXTRA_SD=sim-sd-xth shoot simulator_x3 x3-sleep-pushed '1500:SLEEP;5000:QUIT'
 EXTRA_SD='sim-sd-xth sim-sd-owner' shoot simulator_x3 x3-sleep-owner '1500:SLEEP;5000:QUIT'
 
+# A reading session: open the sample book (Project Gutenberg's The Time Machine), turn eleven
+# pages at a steady pace so the time-left estimate appears, then sleep on Cover + stats.
+READ='900:ENTER;2000:DOWN;2400:ENTER;3600:ENTER'
+t=10000
+for _ in $(seq 1 11); do READ="$READ;$t:RIGHT"; t=$((t + 2600)); done
+shoot simulator_x3 x3-reader "$READ;$((t + 800)):QUIT"
+EXTRA_SD=sim-sd-cover shoot simulator_x3 x3-sleep-cover "$READ;$((t + 500)):SLEEP;$((t + 5600)):QUIT"
+
 # Into and back out of every app, then Home: a key path that hangs fails here.
 shoot simulator_x3 x3-roundtrip   "$APPS;2100:ENTER;2800:BACK;3300:DOWN;3600:ENTER;4200:BACK;4700:DOWN;5000:ENTER;5600:BACK;6100:DOWN;6400:ENTER;7000:ENTER;7600:RIGHT;8000:BACK;8500:BACK;9000:DOWN;9300:ENTER;9900:BACK;10400:DOWN;10700:ENTER;11300:BACK;11800:BACK;13500:QUIT"
 grep -q 'Entering activity: Home' "$WORK/x3-roundtrip.log" || { echo "FAIL roundtrip: never returned Home"; exit 1; }
