@@ -6,6 +6,7 @@
 #include <Memory.h>
 
 #include <algorithm>
+#include <iterator>
 
 #include "MappedInputManager.h"
 #include "apps/AppPaths.h"
@@ -95,7 +96,8 @@ void IfFoundActivity::loadContent() {
     if (wrapped.empty()) {
       bodyLines.push_back(raw);
     } else {
-      for (auto& line : wrapped) bodyLines.push_back(std::move(line));
+      bodyLines.insert(bodyLines.end(), std::make_move_iterator(wrapped.begin()),
+                       std::make_move_iterator(wrapped.end()));
     }
   }
   while (!bodyLines.empty() && bodyLines.back().empty()) bodyLines.pop_back();
@@ -115,9 +117,7 @@ int IfFoundActivity::visibleBodyLines() const {
   return std::max(1, viewport / renderer.getLineHeight(UI_10_FONT_ID));
 }
 
-int IfFoundActivity::maxScroll() const {
-  return std::max(0, static_cast<int>(bodyLines.size()) - visibleBodyLines());
-}
+int IfFoundActivity::maxScroll() const { return std::max(0, static_cast<int>(bodyLines.size()) - visibleBodyLines()); }
 
 void IfFoundActivity::loop() {
   if (mappedInput.wasReleased(MappedInputManager::Button::Back)) {
@@ -128,8 +128,8 @@ void IfFoundActivity::loop() {
   const auto swipe = mappedInput.wasSwipe();
   if (swipe == MappedInputManager::SwipeDir::Up || swipe == MappedInputManager::SwipeDir::Down) {
     const int page = visibleBodyLines();
-    const int next = std::clamp(scrollOffset + (swipe == MappedInputManager::SwipeDir::Up ? page : -page), 0,
-                                maxScroll());
+    const int next =
+        std::clamp(scrollOffset + (swipe == MappedInputManager::SwipeDir::Up ? page : -page), 0, maxScroll());
     if (next != scrollOffset) {
       scrollOffset = next;
       requestUpdate();
@@ -175,7 +175,8 @@ void IfFoundActivity::render(RenderLock&&) {
   const int end = std::min(static_cast<int>(bodyLines.size()), scrollOffset + visible);
   y = top;
   for (int i = scrollOffset; i < end; ++i) {
-    if (!bodyLines[i].empty()) renderer.drawText(UI_10_FONT_ID, side, y, bodyLines[i].c_str(), true, EpdFontFamily::BOLD);
+    if (!bodyLines[i].empty())
+      renderer.drawText(UI_10_FONT_ID, side, y, bodyLines[i].c_str(), true, EpdFontFamily::BOLD);
     y += lineHeight;
   }
 

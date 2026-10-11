@@ -16,7 +16,7 @@
 namespace inkhome::stats {
 
 constexpr uint32_t FORMAT_VERSION = 6;
-constexpr size_t MAX_SESSION_LOG = 128;   // vCodex ReadingSessionLog::MAX_ENTRIES
+constexpr size_t MAX_SESSION_LOG = 128;  // vCodex ReadingSessionLog::MAX_ENTRIES
 constexpr size_t MAX_KNOWN_PATHS = 8;
 
 struct DayStats {

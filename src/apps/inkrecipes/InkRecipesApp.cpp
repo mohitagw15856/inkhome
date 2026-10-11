@@ -40,15 +40,14 @@ constexpr int COOK_FONT_ID = UI_12_FONT_ID;
 #endif
 
 bool endsWithRcp(const std::string& name) {
-  return name.size() > 4 && (name.compare(name.size() - 4, 4, ".rcp") == 0 || name.compare(name.size() - 4, 4, ".RCP") == 0);
+  return name.size() > 4 &&
+         (name.compare(name.size() - 4, 4, ".rcp") == 0 || name.compare(name.size() - 4, 4, ".RCP") == 0);
 }
 
 // "one-pan-pasta.rcp" -> "One pan pasta"
 std::string labelFromFile(const std::string& file) {
   std::string label = file.substr(0, file.size() - 4);
-  for (char& c : label) {
-    if (c == '-' || c == '_') c = ' ';
-  }
+  std::replace_if(label.begin(), label.end(), [](char c) { return c == '-' || c == '_'; }, ' ');
   if (!label.empty() && label[0] >= 'a' && label[0] <= 'z') label[0] = static_cast<char>(label[0] - 'a' + 'A');
   return label;
 }

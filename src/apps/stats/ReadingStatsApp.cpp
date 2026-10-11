@@ -140,9 +140,9 @@ int ReadingStatsActivity::drawSummary(const int top) {
   int y = top + ((4 + columns - 1) / columns) * (cardHeight + 8);
 
   char line[96];
-  snprintf(line, sizeof(line), "%s %u  |  %s %u  |  %s %u", tr(STR_STATS_BOOKS), static_cast<unsigned>(sum.booksStarted),
-           tr(STR_STATS_FINISHED), static_cast<unsigned>(sum.booksFinished), tr(STR_STATS_LONGEST),
-           static_cast<unsigned>(sum.longestStreak));
+  snprintf(line, sizeof(line), "%s %u  |  %s %u  |  %s %u", tr(STR_STATS_BOOKS),
+           static_cast<unsigned>(sum.booksStarted), tr(STR_STATS_FINISHED), static_cast<unsigned>(sum.booksFinished),
+           tr(STR_STATS_LONGEST), static_cast<unsigned>(sum.longestStreak));
   renderer.drawText(SMALL_FONT_ID, side, y, line, true);
   return y + labelHeight + 8;
 }
@@ -225,7 +225,8 @@ void ReadingStatsActivity::drawBooks(const int top, const int bottom) {
     const int timeWidth = renderer.getTextWidth(UI_10_FONT_ID, time);
     const std::string& name = b.title.empty() ? b.path : b.title;
     const std::string fitted = renderer.truncatedText(UI_10_FONT_ID, name.c_str(), width - timeWidth - 12);
-    renderer.drawText(UI_10_FONT_ID, side, y, fitted.c_str(), true, b.completed ? EpdFontFamily::BOLD : EpdFontFamily::REGULAR);
+    renderer.drawText(UI_10_FONT_ID, side, y, fitted.c_str(), true,
+                      b.completed ? EpdFontFamily::BOLD : EpdFontFamily::REGULAR);
     renderer.drawText(UI_10_FONT_ID, side + width - timeWidth, y, time, true);
     y += rowHeight;
   }
@@ -243,8 +244,8 @@ void ReadingStatsActivity::render(RenderLock&&) {
   const LoadState state = ensureLoaded();
   if (state != LoadState::Ready) {
     const StrId message = state == LoadState::TooLarge ? StrId::STR_STATS_TOO_LARGE
-                          : state == LoadState::NoCard  ? StrId::STR_STATS_NO_CARD
-                                                        : StrId::STR_STATS_UNREADABLE;
+                          : state == LoadState::NoCard ? StrId::STR_STATS_NO_CARD
+                                                       : StrId::STR_STATS_UNREADABLE;
     for (const auto& l :
          renderer.wrappedText(UI_10_FONT_ID, I18N.get(message), pageWidth - metrics.contentSidePadding * 2, 6)) {
       renderer.drawText(UI_10_FONT_ID, metrics.contentSidePadding, y, l.c_str(), true);

@@ -2,9 +2,9 @@
 
 #include <HalStorage.h>
 
-#include "inkhome/SdState.h"
-
 #include <cstdio>
+
+#include "inkhome/SdState.h"
 
 namespace inkhome::apps {
 

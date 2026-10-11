@@ -1,5 +1,6 @@
 #include "AppRegistry.h"
 
+#include <algorithm>
 #include <array>
 #include <cassert>
 
@@ -26,13 +27,7 @@ bool isAvailable(const AppDescriptor& app) { return app.isAvailable == nullptr |
 
 }  // namespace
 
-size_t availableCount() {
-  size_t count = 0;
-  for (const auto& app : APPS) {
-    if (isAvailable(app)) ++count;
-  }
-  return count;
-}
+size_t availableCount() { return static_cast<size_t>(std::count_if(APPS.begin(), APPS.end(), isAvailable)); }
 
 const AppDescriptor& availableAt(const size_t index) {
   size_t seen = 0;

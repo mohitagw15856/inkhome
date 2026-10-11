@@ -1,7 +1,5 @@
 #include "InkVerseApp.h"
 
-#include "SleepVerse.h"
-
 #include <GfxRenderer.h>
 #include <HalClock.h>
 #include <HalStorage.h>
@@ -16,6 +14,7 @@
 
 #include "CrossPointSettings.h"
 #include "MappedInputManager.h"
+#include "SleepVerse.h"
 #include "apps/AppPaths.h"
 #include "components/UITheme.h"
 #include "core/BuiltInVerses.h"
@@ -77,9 +76,7 @@ void addFolder(const char* dir, std::vector<CollectionEntry>& out) {
     if (slash != std::string::npos) name = name.substr(slash + 1);
     if (name.empty() || name[0] == '.' || !endsWith(name, ".verse")) continue;
     std::string label = name.substr(0, name.size() - 6);
-    for (char& c : label) {
-      if (c == '-' || c == '_') c = ' ';
-    }
+    std::replace_if(label.begin(), label.end(), [](char c) { return c == '-' || c == '_'; }, ' ');
     if (!label.empty() && label[0] >= 'a' && label[0] <= 'z') label[0] = static_cast<char>(label[0] - 'a' + 'A');
     out.push_back({label, std::string(dir) + "/" + name});
   }
