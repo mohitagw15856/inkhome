@@ -59,7 +59,7 @@ shoot simulator_x3 x3-home        '2600:QUIT'
 shoot simulator_x3 x3-apps        "$APPS;3200:QUIT"
 shoot simulator_x3 x3-recipes     "$APPS;2100:ENTER;3800:QUIT"
 shoot simulator_x3 x3-recipe      "$APPS;2100:ENTER;2800:ENTER;4400:QUIT"
-shoot simulator_x3 x3-cooking     "$APPS;2100:ENTER;2800:ENTER;3400:RIGHT;3700:RIGHT;4000:RIGHT;4300:RIGHT;4600:RIGHT;4900:RIGHT;5200:RIGHT;5500:RIGHT;5800:RIGHT;6100:RIGHT;6400:RIGHT;6700:RIGHT;8400:QUIT"
+shoot simulator_x3 x3-cooking     "$APPS;2100:ENTER;2800:ENTER;3500:UP;3900:ENTER;4600:ENTER;6400:QUIT"
 shoot simulator_x3 x3-iffound     "$APPS;2100:DOWN;2400:ENTER;4000:QUIT"
 shoot simulator_x3 x3-fwswitch    "$APPS;2100:DOWN;2400:DOWN;2700:ENTER;4300:QUIT"
 shoot simulator_x3 x3-no-sd       '2600:QUIT' INKHOME_SIM_NO_SD=1

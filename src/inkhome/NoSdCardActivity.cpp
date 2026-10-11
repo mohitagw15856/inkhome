@@ -58,6 +58,12 @@ void NoSdCardActivity::activateIndex(const int index) {
   }
 }
 
+void NoSdCardActivity::drawFooter() {
+  // No Back label: there is nowhere to go back to without a card.
+  const auto labels = mappedInput.mapLabels("", tr(STR_SELECT), tr(STR_DIR_UP), tr(STR_DIR_DOWN));
+  GUI.drawButtonHints(renderer, labels.btn1, labels.btn2, labels.btn3, labels.btn4);
+}
+
 void NoSdCardActivity::buildScreen(UiScreen& screen) {
   const auto& metrics = UITheme::getInstance().getMetrics();
   screen.setContentMarginFromScreen(fui::Insets{static_cast<int16_t>(metrics.topPadding + metrics.headerHeight), 0,
