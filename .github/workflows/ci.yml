@@ -196,6 +196,10 @@ jobs:
       - name: Run tests
         run: ctest --test-dir build/test --output-on-failure -j
 
+      # Inkhome: web flasher slot-selection and otadata logic.
+      - name: Run flasher tests
+        run: node --test test/inkhome/flasher.test.mjs
+
   # This job is used as the PR required actions check, allows for changes to other steps in the future without breaking
   # PR requirements.
   test-status:
