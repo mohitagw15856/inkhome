@@ -93,7 +93,7 @@ void drawSleepCard(const GfxRenderer& renderer) {
   } else {
     fileReader = makeUniqueNoThrow<FileReader>(file);
   }
-  ByteReader* reader =
+  ByteReader* const reader =
       memoryReader ? static_cast<ByteReader*>(memoryReader.get()) : static_cast<ByteReader*>(fileReader.get());
   if (!reader) return;
   DeckReader deck(*reader);

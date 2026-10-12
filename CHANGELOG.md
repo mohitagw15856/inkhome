@@ -3,6 +3,14 @@
 Inkhome versions are `<upstream-version>.<n>-inkhome`. Upstream changes are
 in CrossPoint's own release notes.
 
+## 1.6.5.4-inkhome (pre-release)
+
+### Added
+- Flashcards app (native port of Inkcards) and a Flashcard sleep screen.
+- Habits app (native port of Habitink) and Habits on sleep screen.
+- Break reminder after 30, 45 or 60 minutes of continuous reading.
+- Quiet hours (X3): three times fewer full-screen flashes from 22:00 to 07:00.
+
 ## 1.6.5.3-inkhome (pre-release)
 
 ### Added
@@ -15,13 +23,6 @@ in CrossPoint's own release notes.
   BQ27220 gauge, with a daily capacity chart.
 - Motion sensor screen (X3), and experimental shake to bookmark and face down
   to sleep in Settings, Controls (off by default).
-- Flashcard sleep screen: a card from the last studied deck each sleep.
-- Habits app (native port of Habitink), using Habitink's /.habitink files, and
-  Habits on sleep screen.
-- Flashcards app (native port of Inkcards): SM-2 spaced repetition, built-in
-  demo and world capitals decks, .deck files from /apps/inkcards/.
-- Break reminder after 30, 45 or 60 minutes of continuous reading.
-- Quiet hours (X3): three times fewer full-screen flashes from 22:00 to 07:00.
 - Focus timer app: read for 15 to 60 minutes, then a break screen.
 - Owner details on sleep screen: your If Found note across the top of every
   sleep screen.

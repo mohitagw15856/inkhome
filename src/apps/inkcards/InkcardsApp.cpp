@@ -198,8 +198,8 @@ void StudyActivity::onEnter() {
     } else if (inkhome::sdMounted() && Storage.openFileForRead("ICD", entry.source.c_str(), state->file)) {
       state->fileReader = makeUniqueNoThrow<FileReader>(state->file);
     }
-    ByteReader* reader = state->memoryReader ? static_cast<ByteReader*>(state->memoryReader.get())
-                                             : static_cast<ByteReader*>(state->fileReader.get());
+    ByteReader* const reader = state->memoryReader ? static_cast<ByteReader*>(state->memoryReader.get())
+                                                   : static_cast<ByteReader*>(state->fileReader.get());
     if (reader) state->deck = makeUniqueNoThrow<DeckReader>(*reader);
     failed = !state->deck || !state->deck->open();
   }

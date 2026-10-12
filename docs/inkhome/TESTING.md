@@ -157,6 +157,11 @@ to hand before step 1.
 - [ ] Settings, Display, Habits on sleep screen = On: today's habits show as
       tick boxes along the bottom of the sleep screen, under any stats card.
 
+## 18. Flashcard sleep screen
+- [ ] Study any deck in Flashcards, then Settings, Display, Sleep Screen =
+      Flashcard: each sleep shows the next card from that deck (front, then
+      pinyin and answer). Without any study it uses world capitals.
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log
