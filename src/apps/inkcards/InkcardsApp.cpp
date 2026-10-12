@@ -11,6 +11,7 @@
 #include <cstring>
 
 #include "MappedInputManager.h"
+#include "SleepCard.h"
 #include "apps/AppPaths.h"
 #include "apps/stats/ReadingStatsTracker.h"
 #include "components/UITheme.h"
@@ -186,6 +187,7 @@ StudyActivity::~StudyActivity() = default;
 
 void StudyActivity::onEnter() {
   Activity::onEnter();
+  rememberLastDeck(entry.source.c_str(), entry.label.c_str());
   state = makeUniqueNoThrow<State>();
   failed = !state;
   if (!failed) {

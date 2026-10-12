@@ -15,6 +15,7 @@ in CrossPoint's own release notes.
   BQ27220 gauge, with a daily capacity chart.
 - Motion sensor screen (X3), and experimental shake to bookmark and face down
   to sleep in Settings, Controls (off by default).
+- Flashcard sleep screen: a card from the last studied deck each sleep.
 - Habits app (native port of Habitink), using Habitink's /.habitink files, and
   Habits on sleep screen.
 - Flashcards app (native port of Inkcards): SM-2 spaced repetition, built-in
