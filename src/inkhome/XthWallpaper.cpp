@@ -55,7 +55,7 @@ bool pickXth(std::string& outPath, const bool bmpAvailable) {
   return true;
 }
 
-bool drawXth(GfxRenderer& renderer, const std::string& path, const sleep::Overlays& overlays) {
+bool drawXth(const GfxRenderer& renderer, const std::string& path, const sleep::Overlays& overlays) {
   HalFile file;
   if (!Storage.openFileForRead("XTH", path.c_str(), file)) return false;
   xtc::XtgPageHeader header{};

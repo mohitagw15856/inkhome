@@ -362,6 +362,9 @@ inline std::vector<SettingInfo> getSettingsList(const SdCardFontRegistry* regist
             {StrId::STR_IGNORE, StrId::STR_SLEEP, StrId::STR_PAGE_TURN, StrId::STR_FORCE_REFRESH, StrId::STR_FOOTNOTES},
             "shortPwrBtn", StrId::STR_CAT_CONTROLS),
 #endif
+        SettingInfo::Enum(StrId::STR_DAILY_GOAL, &CrossPointSettings::dailyGoalTarget,
+                          {StrId::STR_GOAL_15, StrId::STR_GOAL_30, StrId::STR_GOAL_45, StrId::STR_GOAL_60},
+                          "dailyGoalTarget", StrId::STR_CAT_READER),
         SettingInfo::Toggle(StrId::STR_TIME_LEFT_IN_CHAPTER, &CrossPointSettings::statusBarTimeLeft,
                             "statusBarTimeLeft", StrId::STR_CAT_READER),
         // Erased below unless the QMI8658 IMU is present (X3).
