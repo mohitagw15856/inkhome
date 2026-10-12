@@ -1,3 +1,13 @@
+# Inkhome (this fork)
+
+This is Inkhome, a fork of CrossPoint Reader. When the owner says "continue",
+read `docs/inkhome/HANDOFF.md` and carry on from its "Next" list. Fork rules
+(British English, no em dashes, apps in `src/apps/`, small marked hunks in
+upstream files) are in `SCOPE.md` and `docs/inkhome/APPS.md`. The CrossPoint
+guide below still applies to all code.
+
+---
+
 # CrossPoint Reader Development Guide
 
 Project: Open-source e-reader firmware for Xteink X4 (ESP32-C3)
