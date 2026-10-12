@@ -14,6 +14,7 @@
 #include "ReaderFontSizes.h"
 #include "SettingsList.h"
 #include "fontIds.h"
+#include "inkhome/QuietHours.h"
 
 namespace {
 
@@ -360,6 +361,11 @@ unsigned long CrossPointSettings::getSleepTimeoutMs() const {
 }
 
 int CrossPointSettings::getRefreshFrequency() const {
+  // Inkhome: quiet hours stretch the interval at night.
+  return inkhome::quietHoursRefreshFrequency(baseRefreshFrequency());
+}
+
+int CrossPointSettings::baseRefreshFrequency() const {
   switch (refreshFrequency) {
     case REFRESH_1:
       return 1;

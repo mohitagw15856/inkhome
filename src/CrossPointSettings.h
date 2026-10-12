@@ -364,6 +364,9 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
   // Inkhome: experimental IMU gestures (X3), off until tuned on hardware.
   uint8_t motionShakeBookmark = 0;
   uint8_t motionFlipSleep = 0;
+  // Inkhome: fewer full refreshes 22:00-07:00; break reminder after N minutes (0 off, 1 30, 2 45, 3 60).
+  uint8_t quietHours = 0;
+  uint8_t breakReminder = 0;
   // Master reader-touch toggle on boards with a touch controller.
   uint8_t touchReaderControls = TOUCH_READER_ON;
   // Which gestures turn the page in each direction (PAGE_TURN_GESTURE).
@@ -462,6 +465,7 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
   float getReaderLineCompression() const;
   unsigned long getSleepTimeoutMs() const;
   int getRefreshFrequency() const;
+  int baseRefreshFrequency() const;  // Inkhome: before quiet hours
 };
 
 // Helper macro to access settings

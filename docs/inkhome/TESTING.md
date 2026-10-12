@@ -134,6 +134,12 @@ to hand before step 1.
       buttons, laying the reader screen down for two seconds sends it to
       sleep. Lying face up on a table must not.
 
+## 15. Break reminder and quiet hours
+- [ ] Settings, Reader, Break reminder = 30 min: after 30 minutes of reading
+      in one go, the break screen appears; Done returns to the book.
+- [ ] Settings, Reader, Quiet hours = On, clock after 22:00: full-screen
+      flashes come about three times less often than in the day.
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log
