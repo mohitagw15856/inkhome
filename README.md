@@ -93,6 +93,8 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
   - **Motion sensor** (X3): live readings, plus experimental shake to bookmark
     and face down to sleep (off until you turn them on).
   - **Switch firmware**: restarts into the stock firmware.
+- **Text darkness**: Normal, Crisp or Darker anti-aliased text (from
+  CPR-vCodex), in Settings, Reader.
 - **Tilt page turn on by default** on the X3 when its QMI8658 sensor is
   detected. Turn it off in Settings, Controls. The X4 has no sensor and is
   unaffected.

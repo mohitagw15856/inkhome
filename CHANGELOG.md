@@ -8,6 +8,8 @@ in CrossPoint's own release notes.
 ### Added
 - Inbox app: books and pictures sent to /inbox (with File Transfer over
   Wi-Fi, or copied on a computer) open in one tap.
+- Text darkness (Settings, Reader): Normal, Crisp or Darker anti-aliased text,
+  after CPR-vCodex; uses vCodex's textDarkness setting values.
 
 ## 1.6.5.5-inkhome (pre-release)
 

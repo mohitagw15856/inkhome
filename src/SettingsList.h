@@ -365,6 +365,9 @@ inline std::vector<SettingInfo> getSettingsList(const SdCardFontRegistry* regist
             {StrId::STR_IGNORE, StrId::STR_SLEEP, StrId::STR_PAGE_TURN, StrId::STR_FORCE_REFRESH, StrId::STR_FOOTNOTES},
             "shortPwrBtn", StrId::STR_CAT_CONTROLS),
 #endif
+        SettingInfo::Enum(StrId::STR_TEXT_DARKNESS, &CrossPointSettings::textDarkness,
+                          {StrId::STR_DARKNESS_NORMAL, StrId::STR_DARKNESS_CRISP, StrId::STR_DARKNESS_DARKER},
+                          "textDarkness", StrId::STR_CAT_READER),
         SettingInfo::Enum(StrId::STR_DAILY_GOAL, &CrossPointSettings::dailyGoalTarget,
                           {StrId::STR_GOAL_15, StrId::STR_GOAL_30, StrId::STR_GOAL_45, StrId::STR_GOAL_60},
                           "dailyGoalTarget", StrId::STR_CAT_READER),

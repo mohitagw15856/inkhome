@@ -199,6 +199,11 @@ to hand before step 1.
       Inbox lists it; Confirm opens it in the reader. A BMP opens in the
       picture viewer.
 
+## 24. Text darkness
+- [ ] Settings, Reader, Text darkness = Darker: the grey edges of letters in a
+      book look heavier; Crisp makes them lighter; Normal matches upstream.
+      (Text anti-aliasing must be on.)
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log
