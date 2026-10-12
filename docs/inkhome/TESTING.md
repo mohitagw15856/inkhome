@@ -140,6 +140,15 @@ to hand before step 1.
 - [ ] Settings, Reader, Quiet hours = On, clock after 22:00: full-screen
       flashes come about three times less often than in the day.
 
+## 16. Flashcards
+- [ ] Apps, Flashcards, World capitals: a country shows; Show reveals the
+      capital; Left = Again, Confirm = Good, Right = Easy, side Down = Hard.
+      The header counts down.
+- [ ] Leave and return: graded cards are not shown again today
+      (`/.crosspoint/apps/inkcards/builtin-capitals.rev` exists).
+- [ ] Copy `hsk1.deck` to `/apps/inkcards/` with a CJK SD font installed:
+      hanzi show on the front, pinyin and English on the back.
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log
