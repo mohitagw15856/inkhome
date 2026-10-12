@@ -11,6 +11,10 @@ in CrossPoint's own release notes.
 - Year in books: your reading year on one card, saved as a picture or a sleep screen.
 - Achievements: 62 badges compatible with CPR-vCodex's achievements.json, and a
   Daily reading goal setting.
+- Battery health (X3): capacity, cycles, health and temperature from the
+  BQ27220 gauge, with a daily capacity chart.
+- Motion sensor screen (X3), and experimental shake to bookmark and face down
+  to sleep in Settings, Controls (off by default).
 - Focus timer app: read for 15 to 60 minutes, then a break screen.
 - Owner details on sleep screen: your If Found note across the top of every
   sleep screen.

@@ -155,8 +155,8 @@ void AchievementsActivity::onEnter() {
     return ratio(x) > ratio(y);
   });
 
-  const int unlocked = static_cast<int>(std::count_if(a.states.begin(), a.states.end(),
-                                                      [](const AchievementState& s) { return s.unlocked; }));
+  const int unlocked = static_cast<int>(
+      std::count_if(a.states.begin(), a.states.end(), [](const AchievementState& s) { return s.unlocked; }));
   char head[48];
   snprintf(head, sizeof(head), tr(STR_ACH_HEADER), unlocked, static_cast<int>(ACHIEVEMENT_COUNT));
   header = head;

@@ -120,6 +120,20 @@ to hand before step 1.
       date, and `/.crosspoint/achievements.json` exists.
 - [ ] Copy a vCodex `achievements.json` over: its unlocked badges show.
 
+## 14. Battery health and motion (X3)
+- [ ] Apps, Battery health: health %, full charge / design mAh, cycles, charge,
+      current and temperature look plausible. After a few days of sleeping
+      the chart shows a line. (Not listed on an X4.)
+- [ ] Apps, Motion sensor: values change as you tilt the reader; total is
+      about 1.00 g when still. After a few button presses "Screen faces"
+      shows +Z or -Z.
+- [ ] Settings, Controls, Shake to bookmark = On: in a book, three firm
+      jolts add a bookmark (the bookmark message appears). Note whether a
+      page also turns.
+- [ ] Settings, Controls, Face down to sleep = On: after pressing a few
+      buttons, laying the reader screen down for two seconds sends it to
+      sleep. Lying face up on a table must not.
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log

@@ -11,22 +11,22 @@ constexpr uint64_t MINUTE_MS = 60ULL * 1000;
 
 // Order and targets match vCodex's AchievementId enum and kDefinitions.
 const std::array<AchievementDef, ACHIEVEMENT_COUNT> ACHIEVEMENTS = {{
-    {Metric::BooksStarted, 1},        // FirstBookStarted
-    {Metric::BooksStarted, 5},        // FiveBooksStarted
-    {Metric::BooksStarted, 10},       // TenBooksStarted
-    {Metric::BooksStarted, 25},       // TwentyFiveBooksStarted
-    {Metric::BooksStarted, 50},       // FiftyBooksStarted
-    {Metric::Sessions, 1},            // FirstSession
-    {Metric::Sessions, 10},           // TenSessions
-    {Metric::Sessions, 25},           // TwentyFiveSessions
-    {Metric::Sessions, 50},           // FiftySessions
-    {Metric::Sessions, 100},          // OneHundredSessions
-    {Metric::Sessions, 200},          // TwoHundredSessions
-    {Metric::BooksFinished, 1},       // FirstBookFinished
-    {Metric::BooksFinished, 3},       // ThreeBooksFinished
-    {Metric::BooksFinished, 5},       // FiveBooksFinished
-    {Metric::BooksFinished, 10},      // TenBooksFinished
-    {Metric::BooksFinished, 20},      // TwentyBooksFinished
+    {Metric::BooksStarted, 1},                // FirstBookStarted
+    {Metric::BooksStarted, 5},                // FiveBooksStarted
+    {Metric::BooksStarted, 10},               // TenBooksStarted
+    {Metric::BooksStarted, 25},               // TwentyFiveBooksStarted
+    {Metric::BooksStarted, 50},               // FiftyBooksStarted
+    {Metric::Sessions, 1},                    // FirstSession
+    {Metric::Sessions, 10},                   // TenSessions
+    {Metric::Sessions, 25},                   // TwentyFiveSessions
+    {Metric::Sessions, 50},                   // FiftySessions
+    {Metric::Sessions, 100},                  // OneHundredSessions
+    {Metric::Sessions, 200},                  // TwoHundredSessions
+    {Metric::BooksFinished, 1},               // FirstBookFinished
+    {Metric::BooksFinished, 3},               // ThreeBooksFinished
+    {Metric::BooksFinished, 5},               // FiveBooksFinished
+    {Metric::BooksFinished, 10},              // TenBooksFinished
+    {Metric::BooksFinished, 20},              // TwentyBooksFinished
     {Metric::TotalReadingMs, 1 * HOUR_MS},    // ReadingOneHour
     {Metric::TotalReadingMs, 5 * HOUR_MS},    // ReadingFiveHours
     {Metric::TotalReadingMs, 10 * HOUR_MS},   // ReadingTenHours
@@ -34,45 +34,45 @@ const std::array<AchievementDef, ACHIEVEMENT_COUNT> ACHIEVEMENTS = {{
     {Metric::TotalReadingMs, 50 * HOUR_MS},   // ReadingFiftyHours
     {Metric::TotalReadingMs, 100 * HOUR_MS},  // ReadingOneHundredHours
     {Metric::TotalReadingMs, 200 * HOUR_MS},  // ReadingTwoHundredHours
-    {Metric::GoalDays, 1},            // FirstGoalDay
-    {Metric::GoalDays, 7},            // SevenGoalDays
-    {Metric::GoalDays, 30},           // ThirtyGoalDays
-    {Metric::GoalDays, 60},           // SixtyGoalDays
-    {Metric::GoalDays, 80},           // EightyGoalDays
-    {Metric::MaxGoalStreak, 3},       // ThreeGoalStreak
-    {Metric::MaxGoalStreak, 7},       // SevenGoalStreak
-    {Metric::MaxGoalStreak, 14},      // FourteenGoalStreak
-    {Metric::MaxGoalStreak, 30},      // ThirtyGoalStreak
-    {Metric::MaxGoalStreak, 60},      // SixtyGoalStreak
-    {Metric::Bookmarks, 1},           // FirstBookmark
-    {Metric::Bookmarks, 10},          // TenBookmarks
-    {Metric::Bookmarks, 25},          // TwentyFiveBookmarks
-    {Metric::Bookmarks, 50},          // FiftyBookmarks
+    {Metric::GoalDays, 1},                    // FirstGoalDay
+    {Metric::GoalDays, 7},                    // SevenGoalDays
+    {Metric::GoalDays, 30},                   // ThirtyGoalDays
+    {Metric::GoalDays, 60},                   // SixtyGoalDays
+    {Metric::GoalDays, 80},                   // EightyGoalDays
+    {Metric::MaxGoalStreak, 3},               // ThreeGoalStreak
+    {Metric::MaxGoalStreak, 7},               // SevenGoalStreak
+    {Metric::MaxGoalStreak, 14},              // FourteenGoalStreak
+    {Metric::MaxGoalStreak, 30},              // ThirtyGoalStreak
+    {Metric::MaxGoalStreak, 60},              // SixtyGoalStreak
+    {Metric::Bookmarks, 1},                   // FirstBookmark
+    {Metric::Bookmarks, 10},                  // TenBookmarks
+    {Metric::Bookmarks, 25},                  // TwentyFiveBookmarks
+    {Metric::Bookmarks, 50},                  // FiftyBookmarks
     {Metric::MaxSessionMs, 15 * MINUTE_MS},   // FifteenMinuteSession
     {Metric::MaxSessionMs, 30 * MINUTE_MS},   // ThirtyMinuteSession
     {Metric::MaxSessionMs, 45 * MINUTE_MS},   // FortyFiveMinuteSession
     {Metric::MaxSessionMs, 60 * MINUTE_MS},   // SixtyMinuteSession
     {Metric::MaxSessionMs, 90 * MINUTE_MS},   // NinetyMinuteSession
     {Metric::MaxSessionMs, 120 * MINUTE_MS},  // TwoHourSession
-    {Metric::BooksFinished, 2},       // TwoBooksFinished
-    {Metric::BooksFinished, 7},       // SevenBooksFinished
-    {Metric::BooksFinished, 15},      // FifteenBooksFinished
-    {Metric::BooksFinished, 25},      // TwentyFiveBooksFinished
-    {Metric::BooksFinished, 30},      // ThirtyBooksFinished
-    {Metric::BooksFinished, 40},      // FortyBooksFinished
-    {Metric::BooksFinished, 50},      // FiftyBooksFinished
-    {Metric::BooksFinished, 60},      // SixtyBooksFinished
-    {Metric::BooksFinished, 75},      // SeventyFiveBooksFinished
-    {Metric::BooksFinished, 100},     // OneHundredBooksFinished
-    {Metric::BooksFinished, 35},      // ThirtyFiveBooksFinished
-    {Metric::BooksFinished, 45},      // FortyFiveBooksFinished
-    {Metric::BooksFinished, 55},      // FiftyFiveBooksFinished
-    {Metric::BooksFinished, 65},      // SixtyFiveBooksFinished
-    {Metric::BooksFinished, 70},      // SeventyBooksFinished
-    {Metric::BooksFinished, 80},      // EightyBooksFinished
-    {Metric::BooksFinished, 85},      // EightyFiveBooksFinished
-    {Metric::BooksFinished, 90},      // NinetyBooksFinished
-    {Metric::BooksFinished, 95},      // NinetyFiveBooksFinished
+    {Metric::BooksFinished, 2},               // TwoBooksFinished
+    {Metric::BooksFinished, 7},               // SevenBooksFinished
+    {Metric::BooksFinished, 15},              // FifteenBooksFinished
+    {Metric::BooksFinished, 25},              // TwentyFiveBooksFinished
+    {Metric::BooksFinished, 30},              // ThirtyBooksFinished
+    {Metric::BooksFinished, 40},              // FortyBooksFinished
+    {Metric::BooksFinished, 50},              // FiftyBooksFinished
+    {Metric::BooksFinished, 60},              // SixtyBooksFinished
+    {Metric::BooksFinished, 75},              // SeventyFiveBooksFinished
+    {Metric::BooksFinished, 100},             // OneHundredBooksFinished
+    {Metric::BooksFinished, 35},              // ThirtyFiveBooksFinished
+    {Metric::BooksFinished, 45},              // FortyFiveBooksFinished
+    {Metric::BooksFinished, 55},              // FiftyFiveBooksFinished
+    {Metric::BooksFinished, 65},              // SixtyFiveBooksFinished
+    {Metric::BooksFinished, 70},              // SeventyBooksFinished
+    {Metric::BooksFinished, 80},              // EightyBooksFinished
+    {Metric::BooksFinished, 85},              // EightyFiveBooksFinished
+    {Metric::BooksFinished, 90},              // NinetyBooksFinished
+    {Metric::BooksFinished, 95},              // NinetyFiveBooksFinished
 }};
 
 Progress computeProgress(const ReadingStats& stats, const Achievements& current, const uint64_t dailyGoalMs) {

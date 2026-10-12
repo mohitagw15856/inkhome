@@ -367,6 +367,10 @@ inline std::vector<SettingInfo> getSettingsList(const SdCardFontRegistry* regist
                           "dailyGoalTarget", StrId::STR_CAT_READER),
         SettingInfo::Toggle(StrId::STR_TIME_LEFT_IN_CHAPTER, &CrossPointSettings::statusBarTimeLeft,
                             "statusBarTimeLeft", StrId::STR_CAT_READER),
+        SettingInfo::Toggle(StrId::STR_SHAKE_BOOKMARK, &CrossPointSettings::motionShakeBookmark, "motionShakeBookmark",
+                            StrId::STR_CAT_CONTROLS),
+        SettingInfo::Toggle(StrId::STR_FLIP_SLEEP, &CrossPointSettings::motionFlipSleep, "motionFlipSleep",
+                            StrId::STR_CAT_CONTROLS),
         // Erased below unless the QMI8658 IMU is present (X3).
         SettingInfo::Enum(StrId::STR_TILT_PAGE_TURN, &CrossPointSettings::tiltPageTurn,
                           {StrId::STR_STATE_OFF, StrId::STR_NORMAL, StrId::STR_INVERTED}, "tiltPageTurn",
@@ -507,6 +511,8 @@ inline std::vector<SettingInfo> getSettingsList(const SdCardFontRegistry* regist
     if (!BoardConfig::isX4Pro()) eraseEntry(StrId::STR_DBL_CLICK_PWR_LIGHT);
     // Tilt page turn needs the QMI8658 IMU (X3).
     if (!halTiltSensor.isAvailable()) eraseEntry(StrId::STR_TILT_PAGE_TURN);
+    if (!halTiltSensor.isAvailable()) eraseEntry(StrId::STR_SHAKE_BOOKMARK);  // Inkhome
+    if (!halTiltSensor.isAvailable()) eraseEntry(StrId::STR_FLIP_SLEEP);      // Inkhome
     return v;
   }();
 

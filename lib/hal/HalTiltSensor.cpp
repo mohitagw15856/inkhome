@@ -67,11 +67,12 @@ void HalTiltSensor::update(const uint8_t mode, const uint8_t orientation, const 
     return;
   }
 
-  // State machine: wake up or sleep based on the enabled flag
-  if ((mode != CrossPointTiltPageTurn::TILT_OFF) && !_isAwake) {
+  // State machine: wake up or sleep based on the enabled flag (Inkhome: or a motion gesture)
+  const bool wantAwake = mode != CrossPointTiltPageTurn::TILT_OFF || _keepAwake;
+  if (wantAwake && !_isAwake) {
     _isAwake = wake();
     return;
-  } else if ((mode == CrossPointTiltPageTurn::TILT_OFF) && _isAwake) {
+  } else if (!wantAwake && _isAwake) {
     _isAwake = !deepSleep();
     return;
   }
@@ -153,6 +154,19 @@ bool HalTiltSensor::wasTiltedBack() {
   const bool val = _tiltBackEvent;
   _tiltBackEvent = false;
   return val;
+}
+
+bool HalTiltSensor::readMotion(float& ax, float& ay, float& az, float& gx, float& gy, float& gz) {
+  if (!_available || !_isAwake || (millis() - _wakeMs) < WAKE_STABILIZE_MS) return false;
+  Imu::Sample s;
+  if (!_sdkImu.read(s)) return false;
+  ax = s.ax;
+  ay = s.ay;
+  az = s.az;
+  gx = s.gx;
+  gy = s.gy;
+  gz = s.gz;
+  return true;
 }
 
 bool HalTiltSensor::hadActivity() {

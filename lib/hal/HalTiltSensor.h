@@ -25,6 +25,7 @@ class HalTiltSensor {
   bool _hadActivity = false;       // Non-consuming flag for sleep timer
   bool _inTilt = false;            // Currently tilted past threshold
   bool _isAwake = false;           // Tracks power state
+  bool _keepAwake = false;         // Inkhome: stay awake for motion gestures
   unsigned long _initMs = 0;       // Timestamp of sensor init
   unsigned long _lastTiltMs = 0;   // Debounce / cooldown
   unsigned long _wakeMs = 0;       // Timestamp of last wake() for stabilization
@@ -52,6 +53,10 @@ class HalTiltSensor {
 
   // True if an IMU is present on this device
   bool isAvailable() const { return _available; }
+  // Inkhome: keeps the IMU awake even with tilt page turn off (motion gestures, sensor test).
+  void setKeepAwake(bool keepAwake) { _keepAwake = keepAwake; }
+  // Inkhome: latest acceleration (g) and rotation (deg/s); false while asleep or on error.
+  bool readMotion(float& ax, float& ay, float& az, float& gx, float& gy, float& gz);
 
   // Poll the accelerometer and update tilt gesture state.
   void update(const uint8_t mode, const uint8_t orientation, const bool inReader);

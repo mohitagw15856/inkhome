@@ -361,6 +361,9 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
   uint8_t sleepOwnerStrip = 0;
   // Inkhome: daily reading goal for achievements (vCodex dailyGoalTarget: 15/30/45/60 min).
   uint8_t dailyGoalTarget = 1;
+  // Inkhome: experimental IMU gestures (X3), off until tuned on hardware.
+  uint8_t motionShakeBookmark = 0;
+  uint8_t motionFlipSleep = 0;
   // Master reader-touch toggle on boards with a touch controller.
   uint8_t touchReaderControls = TOUCH_READER_ON;
   // Which gestures turn the page in each direction (PAGE_TURN_GESTURE).
