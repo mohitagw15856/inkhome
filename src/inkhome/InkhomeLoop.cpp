@@ -2,6 +2,7 @@
 
 #include "apps/device/BatteryHealth.h"
 #include "apps/focus/FocusTimer.h"
+#include "apps/notes/NotesApp.h"
 #include "apps/stats/ReadingStatsTracker.h"
 #include "inkhome/Motion.h"
 
@@ -16,6 +17,7 @@ void tick(const bool readerActive, const bool userActivity) {
 void beforeSleep() {
   stats::flush();
   battery::logDaily(stats::todayOrdinal());
+  notes::exportCurrentBook();
 }
 
 }  // namespace inkhome

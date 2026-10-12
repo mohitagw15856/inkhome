@@ -79,6 +79,8 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
     book and favourite day on one card, saved as a picture or a sleep screen.
   - **Achievements**: 62 badges for books, hours, daily goals and streaks,
     compatible with CPR-vCodex's `achievements.json`.
+  - **Notes**: your bookmarks as Markdown files in `/notes/inkhome/`, ready for
+    Obsidian; the current book's file refreshes whenever the reader sleeps.
   - **Focus timer**: read for 15 to 60 minutes, then a break screen.
   - **If Found**: shows your contact note so a lost reader can find its way home,
     and can put it across the top of every sleep screen.

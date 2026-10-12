@@ -8,6 +8,8 @@ in CrossPoint's own release notes.
 ### Added
 - StoryScapes app (native port): illustrated history packs from
   /apps/storyscapes/, with progress saved per pack.
+- Notes: bookmarks exported as Markdown to /notes/inkhome/, refreshed for the
+  current book on every sleep.
 
 ## 1.6.5.4-inkhome (pre-release)
 

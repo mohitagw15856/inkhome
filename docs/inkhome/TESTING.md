@@ -177,6 +177,14 @@ to hand before step 1.
       width; the map plate shows whole (turned sideways) with its caption.
 - [ ] Back and reopen: it returns to the same page.
 
+## 21. Notes
+- [ ] Add two bookmarks in a book (reader menu), then sleep: the card has
+      `/notes/inkhome/<book title>.md` listing both with percentages and the
+      page's opening words.
+- [ ] Apps, Notes lists books with bookmarks; Confirm exports them all and
+      each row says how many were written. Your own files in `/notes` are
+      never touched.
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log
