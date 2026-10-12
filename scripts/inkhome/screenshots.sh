@@ -58,7 +58,7 @@ shoot() {
 # Home list order without recent books: Browse Files, Library, Apps, File Transfer, Settings.
 APPS='900:DOWN;1200:DOWN;1500:ENTER'
 # Launcher order, as in src/apps/AppRegistry.cpp.
-APP_ORDER=(stats year achievements focus habits inkcards inkrecipes inkverse iffound battery motion fwswitch)
+APP_ORDER=(stats year achievements focus habits inkcards chessink inkrecipes inkverse iffound battery motion fwswitch)
 
 # app <id> [extra steps...]: input script that opens an app from Home, then runs
 # "ms-offset:KEY" steps relative to the moment the app opened. Prints the script
@@ -94,6 +94,8 @@ shoot_app simulator_x3 x3-focus    focus
 shoot_app simulator_x3 x3-habits   habits
 shoot_app simulator_x3 x3-card     inkcards 0:DOWN 400:ENTER
 shoot_app simulator_x3 x3-card-back inkcards 0:DOWN 400:ENTER 1500:ENTER
+shoot_app simulator_x3 x3-chess    chessink 0:ENTER 900:DOWN 1200:DOWN 1500:DOWN 1800:ENTER
+shoot_app simulator_x3 x3-xiangqi  chessink 0:DOWN 400:ENTER
 shoot_app simulator_x3 x3-recipes  inkrecipes
 shoot_app simulator_x3 x3-recipe   inkrecipes 0:ENTER
 shoot_app simulator_x3 x3-cooking  inkrecipes 0:ENTER 700:UP 1100:ENTER 1800:ENTER

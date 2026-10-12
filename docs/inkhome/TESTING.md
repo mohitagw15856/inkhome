@@ -162,6 +162,14 @@ to hand before step 1.
       Flashcard: each sleep shows the next card from that deck (front, then
       pinyin and answer). Without any study it uses world capitals.
 
+## 19. Chess puzzles
+- [ ] Apps, Chess puzzles, Chess tactics: Left/Right/Up/Down move the cursor;
+      Confirm on your piece shows dots on its legal moves; Confirm on a dot
+      plays it. The right move shows "Solved!", a wrong one shows the answer.
+      Confirm goes to the next puzzle; rating and streak update in the header.
+- [ ] Xiangqi endgames: Chinese piece characters on the intersections, palaces
+      and the river drawn; moves work the same way.
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log

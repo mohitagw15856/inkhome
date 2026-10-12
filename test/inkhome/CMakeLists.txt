@@ -54,3 +54,11 @@ target_sources(InkhomeTests PRIVATE
   ${REPO_ROOT}/src/apps/habits/core/Stats.cpp
 )
 target_include_directories(InkhomeTests PRIVATE ${REPO_ROOT}/src/apps/habits/core)
+
+# ChessInk cores.
+target_sources(InkhomeTests PRIVATE
+  ChessTest.cpp
+  ${REPO_ROOT}/src/apps/chessink/core/Puzzle.cpp
+  ${REPO_ROOT}/src/apps/chessink/core/chess/Chess.cpp
+  ${REPO_ROOT}/src/apps/chessink/core/xiangqi/Xiangqi.cpp
+)
