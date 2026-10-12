@@ -69,3 +69,9 @@ target_sources(InkhomeTests PRIVATE
   ${REPO_ROOT}/src/apps/storyscapes/core/Ssp.cpp
 )
 target_compile_definitions(InkhomeTests PRIVATE REPO_ROOT_DIR="${REPO_ROOT}")
+
+# Bookmarks to notes.
+target_sources(InkhomeTests PRIVATE
+  NotesTest.cpp
+  ${REPO_ROOT}/src/apps/notes/core/NotesFormat.cpp
+)
