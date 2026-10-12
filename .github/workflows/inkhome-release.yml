@@ -69,7 +69,9 @@ jobs:
           uv pip install --python ~/.platformio/penv/bin/python "pioarduino==6.1.19"
 
       - name: Build gh_release
-        run: pio run -e gh_release -j1 | tee pio.log
+        run: |
+          set -o pipefail
+          pio run -e gh_release -j1 | tee pio.log
 
       - name: Size summary
         run: |
