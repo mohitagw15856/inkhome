@@ -149,6 +149,14 @@ to hand before step 1.
 - [ ] Copy `hsk1.deck` to `/apps/inkcards/` with a CJK SD font installed:
       hanzi show on the front, pinyin and English on the back.
 
+## 17. Habits
+- [ ] Apps, Habits (clock set): with no `/.habitink` it starts with three
+      example habits. Confirm ticks the selected one; the count in the
+      header and its streak update. `/.habitink/logs/01.log` gains a line.
+- [ ] An existing Habitink card shows its own habits and streaks.
+- [ ] Settings, Display, Habits on sleep screen = On: today's habits show as
+      tick boxes along the bottom of the sleep screen, under any stats card.
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log

@@ -21,7 +21,7 @@ constexpr int BOTTOM_MARGIN = 40;
 constexpr int BAR_HEIGHT = 8;
 }  // namespace
 
-void drawSleepCard(const GfxRenderer& renderer) {
+void drawSleepCard(const GfxRenderer& renderer, const int bottomReserve) {
   if (ensureLoaded() != LoadState::Ready) return;
   const auto& s = data();
   const uint32_t today = todayOrdinal();
@@ -50,7 +50,7 @@ void drawSleepCard(const GfxRenderer& renderer) {
   const int bookRows = book ? (smallHeight + 4) * 2 + BAR_HEIGHT + 4 : 0;
   const int height = PADDING * 2 + bigHeight + bookRows;
   const int x = (pageWidth - width) / 2;
-  const int y = pageHeight - height - BOTTOM_MARGIN;
+  const int y = pageHeight - height - BOTTOM_MARGIN - bottomReserve;
 
   renderer.fillRect(x - BORDER, y - BORDER, width + BORDER * 2, height + BORDER * 2, true);
   renderer.fillRect(x, y, width, height, false);

@@ -58,7 +58,7 @@ shoot() {
 # Home list order without recent books: Browse Files, Library, Apps, File Transfer, Settings.
 APPS='900:DOWN;1200:DOWN;1500:ENTER'
 # Launcher order, as in src/apps/AppRegistry.cpp.
-APP_ORDER=(stats year achievements focus inkcards inkrecipes inkverse iffound battery motion fwswitch)
+APP_ORDER=(stats year achievements focus habits inkcards inkrecipes inkverse iffound battery motion fwswitch)
 
 # app <id> [extra steps...]: input script that opens an app from Home, then runs
 # "ms-offset:KEY" steps relative to the moment the app opened. Prints the script
@@ -91,6 +91,7 @@ shoot_app simulator_x3 x3-stats    stats
 shoot_app simulator_x3 x3-year     year
 shoot_app simulator_x3 x3-achievements achievements
 shoot_app simulator_x3 x3-focus    focus
+shoot_app simulator_x3 x3-habits   habits
 shoot_app simulator_x3 x3-card     inkcards 0:DOWN 400:ENTER
 shoot_app simulator_x3 x3-card-back inkcards 0:DOWN 400:ENTER 1500:ENTER
 shoot_app simulator_x3 x3-recipes  inkrecipes
@@ -117,6 +118,7 @@ t=10000
 for _ in $(seq 1 11); do READ="$READ;$t:RIGHT"; t=$((t + 2600)); done
 shoot simulator_x3 x3-reader "$READ;$((t + 800)):QUIT"
 EXTRA_SD=sim-sd-cover shoot simulator_x3 x3-sleep-cover "$READ;$((t + 500)):SLEEP;$((t + 5600)):QUIT"
+EXTRA_SD=sim-sd-habits shoot simulator_x3 x3-sleep-habits "$READ;$((t + 500)):SLEEP;$((t + 5600)):QUIT"
 
 # Into and back out of every app, then Home: a key path that hangs fails here.
 RT="$APPS"; t=2100

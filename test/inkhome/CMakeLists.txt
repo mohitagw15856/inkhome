@@ -42,3 +42,15 @@ target_sources(InkhomeTests PRIVATE
   ${REPO_ROOT}/src/apps/inkcards/core/Session.cpp
   ${REPO_ROOT}/src/apps/inkcards/core/Sm2.cpp
 )
+
+# Habitink's HabitCore.
+target_sources(InkhomeTests PRIVATE
+  HabitsTest.cpp
+  ${REPO_ROOT}/src/apps/habits/core/CompletionLog.cpp
+  ${REPO_ROOT}/src/apps/habits/core/Date.cpp
+  ${REPO_ROOT}/src/apps/habits/core/Habit.cpp
+  ${REPO_ROOT}/src/apps/habits/core/HabitConfig.cpp
+  ${REPO_ROOT}/src/apps/habits/core/IconSet.cpp
+  ${REPO_ROOT}/src/apps/habits/core/Stats.cpp
+)
+target_include_directories(InkhomeTests PRIVATE ${REPO_ROOT}/src/apps/habits/core)

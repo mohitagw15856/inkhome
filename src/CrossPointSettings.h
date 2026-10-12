@@ -367,6 +367,8 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
   // Inkhome: fewer full refreshes 22:00-07:00; break reminder after N minutes (0 off, 1 30, 2 45, 3 60).
   uint8_t quietHours = 0;
   uint8_t breakReminder = 0;
+  // Inkhome: today's habits along the bottom of every sleep screen.
+  uint8_t sleepHabits = 0;
   // Master reader-touch toggle on boards with a touch controller.
   uint8_t touchReaderControls = TOUCH_READER_ON;
   // Which gestures turn the page in each direction (PAGE_TURN_GESTURE).

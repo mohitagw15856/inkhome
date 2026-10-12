@@ -9,7 +9,8 @@ namespace inkhome::sleep {
 struct Overlays {
   bool statsCard = false;
   bool ownerStrip = false;
-  bool any() const { return statsCard || ownerStrip; }
+  bool habits = false;
+  bool any() const { return statsCard || ownerStrip || habits; }
 };
 
 // From the sleep mode and settings.
