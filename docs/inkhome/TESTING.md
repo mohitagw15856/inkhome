@@ -113,6 +113,13 @@ to hand before step 1.
       Save writes `/exports/year-in-books-<year>.bmp`; Sleep writes it into
       `/sleep`, where Custom picks it up.
 
+## 13. Achievements
+- [ ] Settings, Reader, Daily reading goal: 15/30/45/60 min (30 by default).
+- [ ] Read for a minute and leave the book: Apps, Achievements shows "Start
+      your first book" and "Your first reading session" unlocked with today's
+      date, and `/.crosspoint/achievements.json` exists.
+- [ ] Copy a vCodex `achievements.json` over: its unlocked badges show.
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log

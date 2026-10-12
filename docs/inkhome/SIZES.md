@@ -19,6 +19,8 @@ in each module's header comment.
 | Reading stats | 5,681,487 | +24,014 | 58,048 |
 | Custom + stats sleep screen | 5,683,045 | +1,558 | 58,048 |
 | Verse (InkVerse) and Verse sleep screen | 5,698,113 | +15,068 | 58,048 |
+| Style fixes, branding, .xth pictures, time left, focus timer, owner strip, Cover + stats, Year in books | 5,714,981 | +16,868 | 58,048 |
+| Achievements | 5,733,365 | +18,384 | 58,048 |
 
 `gh_release` env (what users install): **5,610,373 bytes, 85.6%** of the
 partition; image file 5,624,448 bytes. Headroom about 929 KB.

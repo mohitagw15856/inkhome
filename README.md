@@ -68,6 +68,8 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
     public-domain collections built in.
   - **Year in books**: hours, days, finished books, longest streak, most-read
     book and favourite day on one card, saved as a picture or a sleep screen.
+  - **Achievements**: 62 badges for books, hours, daily goals and streaks,
+    compatible with CPR-vCodex's `achievements.json`.
   - **Focus timer**: read for 15 to 60 minutes, then a break screen.
   - **If Found**: shows your contact note so a lost reader can find its way home,
     and can put it across the top of every sleep screen.
