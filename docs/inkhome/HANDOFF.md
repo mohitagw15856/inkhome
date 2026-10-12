@@ -14,7 +14,7 @@ upstream files to small marked hunks).
 
 ## Where things stand (2026-10-12, evening)
 
-Published pre-releases up to 1.6.5.7 (text darkness, InkQuest). All 20
+Published pre-releases up to 1.6.5.8 (PocketWiki). All 20
 features the owner asked for are built (see PLAN.md section 4
 for the three that were reshaped or declined).
 
@@ -32,8 +32,7 @@ works on the device. Checklist: `docs/inkhome/TESTING.md`.
 
 ## Next, in order
 
-1. Release 1.6.5.8 (PocketWiki) once CI is green on `main`.
-2. Ask the owner before InkWriter (needs BLE, 40 to 60 KB RAM). Flash use is
+1. Ask the owner before InkWriter (needs BLE, 40 to 60 KB RAM). Flash use is
    90.0% of the slot, so check sizes before anything large.
 
 ## How to work in this repo
