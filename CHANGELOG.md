@@ -3,13 +3,15 @@
 Inkhome versions are `<upstream-version>.<n>-inkhome`. Upstream changes are
 in CrossPoint's own release notes.
 
-## 1.6.5.5-inkhome (unreleased)
+## 1.6.5.5-inkhome (pre-release)
 
 ### Added
 - StoryScapes app (native port): illustrated history packs from
   /apps/storyscapes/, with progress saved per pack.
 - Notes: bookmarks exported as Markdown to /notes/inkhome/, refreshed for the
   current book on every sleep.
+- DailyDrop app (native port): .drop digests from /apps/dailydrop/, and a
+  one-off "Fetch today's drop" over saved Wi-Fi.
 
 ## 1.6.5.4-inkhome (pre-release)
 

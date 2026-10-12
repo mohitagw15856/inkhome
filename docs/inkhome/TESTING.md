@@ -185,6 +185,15 @@ to hand before step 1.
       each row says how many were written. Your own files in `/notes` are
       never touched.
 
+## 22. DailyDrop
+- [ ] Copy a `.drop` digest to `/apps/dailydrop/`: Apps, DailyDrop lists it;
+      Left/Right move between sections, Up/Down scroll a long one.
+- [ ] Put `url=https://...your digest...` in `/apps/dailydrop/config.txt`.
+      Fetch today's drop: pick or confirm your saved Wi-Fi, the download
+      runs, then "Today's drop is ready". Back restarts quietly to Home with
+      Wi-Fi off; the new file is in the list.
+- [ ] A bad URL shows "could not be fetched" and leaves no stray file.
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log

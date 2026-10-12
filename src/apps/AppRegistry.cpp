@@ -5,6 +5,7 @@
 #include <cassert>
 
 #include "apps/chessink/ChessInkApp.h"
+#include "apps/dailydrop/DailyDropApp.h"
 #include "apps/device/BatteryHealth.h"
 #include "apps/device/MotionTest.h"
 #include "apps/focus/FocusTimer.h"
@@ -25,7 +26,7 @@ namespace inkhome::apps {
 namespace {
 
 // Launcher order. Add an app by including its header and appending its descriptor.
-constexpr std::array<AppDescriptor, 15> APPS{{
+constexpr std::array<AppDescriptor, 16> APPS{{
     stats::DESCRIPTOR,
     stats::YEAR_DESCRIPTOR,
     stats::ACHIEVEMENTS_DESCRIPTOR,
@@ -37,6 +38,7 @@ constexpr std::array<AppDescriptor, 15> APPS{{
     inkrecipes::DESCRIPTOR,
     inkverse::DESCRIPTOR,
     storyscapes::DESCRIPTOR,
+    dailydrop::DESCRIPTOR,
     iffound::DESCRIPTOR,
     battery::DESCRIPTOR,
     motion::TEST_DESCRIPTOR,

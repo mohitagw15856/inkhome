@@ -75,3 +75,9 @@ target_sources(InkhomeTests PRIVATE
   NotesTest.cpp
   ${REPO_ROOT}/src/apps/notes/core/NotesFormat.cpp
 )
+
+# DailyDrop digest parser.
+target_sources(InkhomeTests PRIVATE
+  DailyDropTest.cpp
+  ${REPO_ROOT}/src/apps/dailydrop/core/DropDoc.cpp
+)
