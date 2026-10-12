@@ -91,6 +91,10 @@ __attribute__((always_inline)) inline void paint(uint8_t* buffer, int destinatio
 //   both grays, LSB paints dark gray only. 1bpp glyphs paint ink with state on
 //   every plane.
 // Clipping happens before pixel decoding, so fully hidden glyphs cost nothing.
+// Inkhome: anti-aliased text darkness, after CPR-vCodex (from the crosspet fork):
+// 0 normal, 1 crisp (lighter grey edges), 2 darker (grey edges painted darker).
+inline uint8_t textDarkness = 0;
+
 inline void draw(const uint8_t* bitmap, int width, int height, bool twoBit, Plane plane, bool state,
                  const Target& target, Clip clip) {
   // Bit n of levels set means source value n is painted.
@@ -98,6 +102,8 @@ inline void draw(const uint8_t* bitmap, int width, int height, bool twoBit, Plan
   bool clearBits = state;
   if (twoBit) {
     levels = plane == Plane::BW ? 0x0e : plane == Plane::GrayMSB ? 0x06 : 0x04;
+    if (plane == Plane::GrayMSB && textDarkness == 1) levels = 0x02;  // Inkhome
+    if (plane == Plane::GrayLSB && textDarkness >= 2) levels = 0x06;  // Inkhome
     if (plane != Plane::BW) clearBits = false;
   }
 
