@@ -170,6 +170,13 @@ to hand before step 1.
 - [ ] Xiangqi endgames: Chinese piece characters on the intersections, palaces
       and the river drawn; moves work the same way.
 
+## 20. StoryScapes
+- [ ] Copy `isle-of-serpents.ssp` (StoryScapes' demo pack) to
+      `/apps/storyscapes/`. Apps, StoryScapes lists it; Confirm opens it.
+- [ ] Right/Down/Confirm go forward, Left/Up back. Text pages fill the
+      width; the map plate shows whole (turned sideways) with its caption.
+- [ ] Back and reopen: it returns to the same page.
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log

@@ -3,6 +3,12 @@
 Inkhome versions are `<upstream-version>.<n>-inkhome`. Upstream changes are
 in CrossPoint's own release notes.
 
+## 1.6.5.5-inkhome (unreleased)
+
+### Added
+- StoryScapes app (native port): illustrated history packs from
+  /apps/storyscapes/, with progress saved per pack.
+
 ## 1.6.5.4-inkhome (pre-release)
 
 ### Added

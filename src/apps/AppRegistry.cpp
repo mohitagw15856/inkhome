@@ -17,13 +17,14 @@
 #include "apps/stats/AchievementsApp.h"
 #include "apps/stats/ReadingStatsApp.h"
 #include "apps/stats/YearInBooksApp.h"
+#include "apps/storyscapes/StoryScapesApp.h"
 
 namespace inkhome::apps {
 
 namespace {
 
 // Launcher order. Add an app by including its header and appending its descriptor.
-constexpr std::array<AppDescriptor, 13> APPS{{
+constexpr std::array<AppDescriptor, 14> APPS{{
     stats::DESCRIPTOR,
     stats::YEAR_DESCRIPTOR,
     stats::ACHIEVEMENTS_DESCRIPTOR,
@@ -33,6 +34,7 @@ constexpr std::array<AppDescriptor, 13> APPS{{
     chessink::DESCRIPTOR,
     inkrecipes::DESCRIPTOR,
     inkverse::DESCRIPTOR,
+    storyscapes::DESCRIPTOR,
     iffound::DESCRIPTOR,
     battery::DESCRIPTOR,
     motion::TEST_DESCRIPTOR,
