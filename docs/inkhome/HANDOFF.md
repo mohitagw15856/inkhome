@@ -14,14 +14,14 @@ upstream files to small marked hunks).
 
 ## Where things stand (2026-10-12, evening)
 
-Published pre-releases up to 1.6.5.8 (PocketWiki). All 20
+Published pre-releases up to 1.6.5.9 (InkWriter). All 20
 features the owner asked for are built (see PLAN.md section 4
 for the three that were reshaped or declined).
 
 Apps on `main`: Inbox, Reading stats, Year in books, Achievements, Notes,
 Focus timer, Habits (Habitink), Flashcards (Inkcards), Chess puzzles
 (ChessInk), Recipes (InkRecipes), Verse (InkVerse), StoryScapes, DailyDrop,
-InkQuest, PocketWiki, If Found, Battery health, Motion sensor, Switch firmware.
+InkWriter, InkQuest, PocketWiki, If Found, Battery health, Motion sensor, Switch firmware.
 
 Sleep modes appended after upstream's: Custom + stats (8), Verse (9),
 Cover + stats (10), Flashcard (11); overlays: owner strip, habits strip;
@@ -32,8 +32,9 @@ works on the device. Checklist: `docs/inkhome/TESTING.md`.
 
 ## Next, in order
 
-1. Ask the owner before InkWriter (needs BLE, 40 to 60 KB RAM). Flash use is
-   90.0% of the slot, so check sizes before anything large.
+1. All planned features are built. Wait for the owner's hardware results
+   (TESTING.md), especially InkWriter's heap numbers. Flash is at 94% of the
+   slot (release 93.3%), so ask before adding anything large.
 
 ## How to work in this repo
 
@@ -78,6 +79,9 @@ Notes:
 - CI's cppcheck still occasionally flags a parameter that could be
   `const GfxRenderer&`; make renderer parameters `const` when only `const`
   methods are used.
+- After an edit to `APPS` in `src/apps/AppRegistry.cpp`, check it really
+  landed: clang-format packs the list into a grid. A `static_assert` now
+  catches a size larger than the list.
 - No cmake on the Mac: `uvx cmake ...` works in its place.
 - Inkkit's byte streams are shared in `src/apps/inkkit/` (`ByteStream.h`,
   `HalFileReader.h`); include those rather than copying them into a port.

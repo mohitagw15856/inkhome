@@ -25,8 +25,9 @@ in each module's header comment.
 | Sleep modes, flashcards, habits, chess, StoryScapes, notes, DailyDrop, Inbox | 5,855,317 | +111,562 | 58,216 |
 | Text darkness and InkQuest (engine and built-in story) | 5,880,799 | +25,482 | 58,216 |
 | PocketWiki (archive reader, puff, layout) | 5,900,045 | +19,246 | 58,928 |
+| InkWriter and the NimBLE Bluetooth stack | 6,161,291 | +261,246 | 67,816 |
 
-`gh_release` env (what users install): **5,610,373 bytes, 85.6%** of the
-partition; image file 5,624,448 bytes. Headroom about 929 KB.
+`gh_release` env (what users install), 1.6.5.9: **6,113,201 bytes, 93.3%** of
+the partition. Headroom about 440 KB.
 
 Tilt default and OTA changes did not move the size measurably.

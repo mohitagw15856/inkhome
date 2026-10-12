@@ -17,6 +17,7 @@
 #include "apps/inkquest/InkQuestApp.h"
 #include "apps/inkrecipes/InkRecipesApp.h"
 #include "apps/inkverse/InkVerseApp.h"
+#include "apps/inkwriter/InkWriterApp.h"
 #include "apps/notes/NotesApp.h"
 #include "apps/pocketwiki/PocketWikiApp.h"
 #include "apps/stats/AchievementsApp.h"
@@ -29,13 +30,20 @@ namespace inkhome::apps {
 namespace {
 
 // Launcher order. Add an app by including its header and appending its descriptor.
-constexpr std::array<AppDescriptor, 19> APPS{{
-    inbox::DESCRIPTOR,    stats::DESCRIPTOR,       stats::YEAR_DESCRIPTOR, stats::ACHIEVEMENTS_DESCRIPTOR,
-    notes::DESCRIPTOR,    focus::DESCRIPTOR,       habits::DESCRIPTOR,     inkcards::DESCRIPTOR,
-    chessink::DESCRIPTOR, inkrecipes::DESCRIPTOR,  inkverse::DESCRIPTOR,   storyscapes::DESCRIPTOR,
-    inkquest::DESCRIPTOR, pocketwiki::DESCRIPTOR,  dailydrop::DESCRIPTOR,  iffound::DESCRIPTOR,
-    battery::DESCRIPTOR,  motion::TEST_DESCRIPTOR, fwswitch::DESCRIPTOR,
+constexpr std::array<AppDescriptor, 20> APPS{{
+    inbox::DESCRIPTOR,       stats::DESCRIPTOR,     stats::YEAR_DESCRIPTOR,  stats::ACHIEVEMENTS_DESCRIPTOR,
+    notes::DESCRIPTOR,       inkwriter::DESCRIPTOR, focus::DESCRIPTOR,       habits::DESCRIPTOR,
+    inkcards::DESCRIPTOR,    chessink::DESCRIPTOR,  inkrecipes::DESCRIPTOR,  inkverse::DESCRIPTOR,
+    storyscapes::DESCRIPTOR, inkquest::DESCRIPTOR,  pocketwiki::DESCRIPTOR,  dailydrop::DESCRIPTOR,
+    iffound::DESCRIPTOR,     battery::DESCRIPTOR,   motion::TEST_DESCRIPTOR, fwswitch::DESCRIPTOR,
 }};
+
+// A size larger than the list leaves empty descriptors that would crash the launcher.
+constexpr bool allComplete() {
+  return std::all_of(APPS.begin(), APPS.end(),
+                     [](const AppDescriptor& app) { return app.create != nullptr && app.id != nullptr; });
+}
+static_assert(allComplete(), "APPS has an empty slot: its size is larger than the list");
 
 bool isAvailable(const AppDescriptor& app) { return app.isAvailable == nullptr || app.isAvailable(); }
 

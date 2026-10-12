@@ -222,6 +222,22 @@ to hand before step 1.
       turns pages. On the last page Confirm highlights Physics; Confirm
       opens it; Back returns to Ada Lovelace, Back again to the list.
 
+## 27. InkWriter (Bluetooth keyboard)
+- [ ] Apps, InkWriter opens; serial shows "Free heap ... before Bluetooth,
+      ... after". Please send me both numbers.
+- [ ] Keyboard row, put a BLE keyboard in pairing mode: it is listed;
+      Confirm connects (type the code shown if asked). Back: the row now
+      shows the keyboard's name.
+- [ ] New draft: typing appears after a short pause; Backspace, Enter,
+      arrows, Home/End work; Tab shows only the current paragraph.
+- [ ] Confirm starts a sprint ("15 min left"), Confirm again stops it.
+- [ ] Keep typing for 10 minutes: the device does not go to sleep. Leave
+      it: it sleeps on the usual timer and the draft is saved.
+- [ ] Back saves; reopen the draft: the text is all there. Copy the file to
+      a computer: plain Markdown.
+- [ ] Leave InkWriter, open a book: reading still works normally (Bluetooth
+      is off again).
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log
