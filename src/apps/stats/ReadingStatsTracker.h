@@ -34,6 +34,8 @@ const ReadingStats& data();
 uint32_t todayOrdinal();
 // Time in the open session that is not yet folded into data().
 uint64_t pendingMs();
+// Reading time in the open session so far (0 when not reading).
+uint64_t currentSessionMs();
 // Seconds per page from this owner's recent page turns (an average that
 // ignores pauses), or 0 until there are enough turns to say.
 float secondsPerPage();

@@ -240,6 +240,8 @@ uint32_t todayOrdinal() {
 
 uint64_t pendingMs() { return session.pendingMs; }
 
+uint64_t currentSessionMs() { return session.active ? session.sessionMs + session.pendingMs : 0; }
+
 float secondsPerPage() { return paceSamples >= MIN_TURNS_FOR_PACE ? paceSeconds : 0.0f; }
 
 int chapterPagesLeft() { return lastChapterPagesLeft.load(); }

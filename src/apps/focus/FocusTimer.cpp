@@ -7,9 +7,11 @@
 
 #include <cstdio>
 
+#include "CrossPointSettings.h"
 #include "CrossPointState.h"
 #include "MappedInputManager.h"
 #include "RecentBooksStore.h"
+#include "apps/stats/ReadingStatsTracker.h"
 #include "components/UITheme.h"
 #include "fontIds.h"
 
@@ -53,7 +55,25 @@ void stop() { running = false; }
 bool active() { return running; }
 uint8_t lengthMinutes() { return minutes; }
 
+// Break reminder: once per reading session, after the chosen minutes of reading.
+static bool reminderShown = false;
+
+static void remindIfDue(const bool readerActive) {
+  static constexpr uint32_t REMINDER_MINUTES[] = {0, 30, 45, 60};
+  const uint32_t minutesSetting = REMINDER_MINUTES[SETTINGS.breakReminder < 4 ? SETTINGS.breakReminder : 0];
+  const uint64_t sessionMs = stats::currentSessionMs();
+  if (sessionMs == 0) reminderShown = false;  // a new session starts the count again
+  if (minutesSetting == 0 || !readerActive || reminderShown || running) return;
+  if (sessionMs < static_cast<uint64_t>(minutesSetting) * 60000ULL) return;
+  reminderShown = true;
+  minutes = static_cast<uint8_t>(minutesSetting);
+  if (auto screen = makeUniqueNoThrow<BreakActivity>(::renderer, ::mappedInputManager)) {
+    activityManager.pushActivity(std::move(screen));
+  }
+}
+
 void tick(const bool readerActive) {
+  remindIfDue(readerActive);
   if (!running || breakShown) return;
   if (static_cast<long>(millis() - endMs) < 0) return;
   running = false;

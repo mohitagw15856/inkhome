@@ -15,6 +15,8 @@ in CrossPoint's own release notes.
   BQ27220 gauge, with a daily capacity chart.
 - Motion sensor screen (X3), and experimental shake to bookmark and face down
   to sleep in Settings, Controls (off by default).
+- Break reminder after 30, 45 or 60 minutes of continuous reading.
+- Quiet hours (X3): three times fewer full-screen flashes from 22:00 to 07:00.
 - Focus timer app: read for 15 to 60 minutes, then a break screen.
 - Owner details on sleep screen: your If Found note across the top of every
   sleep screen.
