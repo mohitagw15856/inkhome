@@ -14,8 +14,8 @@ upstream files to small marked hunks).
 
 ## Where things stand (2026-10-12, evening)
 
-Published pre-releases up to 1.6.5.6 (Inbox); `main` carries text darkness
-and InkQuest for 1.6.5.7. All 20 features the owner asked for are built (see PLAN.md section 4
+Published pre-releases up to 1.6.5.7 (text darkness, InkQuest). All 20
+features the owner asked for are built (see PLAN.md section 4
 for the three that were reshaped or declined).
 
 Apps on `main`: Inbox, Reading stats, Year in books, Achievements, Notes,
@@ -32,8 +32,7 @@ works on the device. Checklist: `docs/inkhome/TESTING.md`.
 
 ## Next, in order
 
-1. Release 1.6.5.7 (text darkness, InkQuest) once CI is green on `main`.
-2. PocketWiki port, then ask the owner before InkWriter (needs BLE, 40 to
+1. PocketWiki port, then ask the owner before InkWriter (needs BLE, 40 to
    60 KB RAM). Flash use is 89.7% of the slot, so check sizes first.
 
 ## How to work in this repo

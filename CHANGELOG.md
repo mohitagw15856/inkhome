@@ -3,7 +3,7 @@
 Inkhome versions are `<upstream-version>.<n>-inkhome`. Upstream changes are
 in CrossPoint's own release notes.
 
-## 1.6.5.7-inkhome (unreleased)
+## 1.6.5.7-inkhome (pre-release)
 
 ### Added
 - InkQuest app (native port): interactive fiction from /apps/inkquest/ and
