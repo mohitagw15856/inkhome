@@ -6,6 +6,8 @@ in CrossPoint's own release notes.
 ## 1.6.5.4-inkhome (pre-release)
 
 ### Added
+- Chess puzzles app (native port of ChessInk): chess and xiangqi, with
+  built-in samplers, legal-move highlighting, rating and streak.
 - Flashcards app (native port of Inkcards) and a Flashcard sleep screen.
 - Habits app (native port of Habitink) and Habits on sleep screen.
 - Break reminder after 30, 45 or 60 minutes of continuous reading.

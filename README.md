@@ -32,7 +32,7 @@ firmware stays on the device.
     <td align="center"><img src="docs/images/inkhome/x3-reader.png" width="200" alt="Reader with time left in chapter"><br><sub>Time left in chapter</sub></td>
     <td align="center"><img src="docs/images/inkhome/x3-recipe.png" width="200" alt="Recipe ingredients with servings"><br><sub>Recipes</sub></td>
     <td align="center"><img src="docs/images/inkhome/x3-cooking.png" width="200" alt="Cooking mode with step timer"><br><sub>Cooking mode</sub></td>
-    <td align="center"><img src="docs/images/inkhome/x3-verse.png" width="200" alt="A poem in the Verse app"><br><sub>Verse</sub></td>
+    <td align="center"><img src="docs/images/inkhome/x3-chess.png" width="200" alt="Chess puzzle with legal moves shown"><br><sub>Chess puzzles</sub></td>
   </tr>
   <tr>
     <td align="center"><img src="docs/images/inkhome/x3-fwswitch.png" width="200" alt="Switch firmware screen"><br><sub>Switch to stock</sub></td>
@@ -66,6 +66,8 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
   - **Flashcards** (Inkcards): spaced-repetition decks with SM-2 scheduling;
     the demo and world capitals decks are built in. A **Flashcard** sleep
     screen shows the next card of your last deck each time the reader sleeps.
+  - **Chess puzzles** (ChessInk): chess and xiangqi puzzles with legal-move
+    dots, a rating and a streak; xiangqi uses real Chinese piece glyphs.
   - **Recipes** (InkRecipes): ingredient checklist with a servings scaler and
     a cooking mode with large type and step timers. Includes a built-in recipe.
   - **Verse** (InkVerse): poems and quotations one at a time, and a **Verse**
