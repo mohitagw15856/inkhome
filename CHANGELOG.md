@@ -3,6 +3,24 @@
 Inkhome versions are `<upstream-version>.<n>-inkhome`. Upstream changes are
 in CrossPoint's own release notes.
 
+## 1.6.5.9-inkhome (pre-release)
+
+### Added
+- InkWriter app (native port): write with a Bluetooth Low Energy keyboard.
+  Pair from the app, drafts in /apps/inkwriter/drafts/ (and the legacy
+  /inkwriter/drafts/), autosave every 5 seconds through a temporary file,
+  word goal, sprints, streak and focus mode. Bluetooth (NimBLE, from the
+  FreeInk SDK's BleKeyboardHost) starts when the app opens and stops when it
+  closes.
+
+### Changed
+- Flash use rises to 94% of the slot (release build 93.3%) and static RAM by
+  about 9 KB, the cost of the Bluetooth stack.
+
+### Fixed
+- The app registry now refuses to build with an empty slot (a 20th app
+  briefly crashed the launcher in the simulator before release).
+
 ## 1.6.5.8-inkhome (pre-release)
 
 ### Added

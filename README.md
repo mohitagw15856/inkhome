@@ -72,6 +72,10 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
     dots, a rating and a streak; xiangqi uses real Chinese piece glyphs.
   - **StoryScapes**: illustrated history packs, text reflowed for the panel and
     picture pages streamed from the card (landscape plates turned to fit).
+  - **InkWriter**: distraction-free writing with a Bluetooth Low Energy
+    keyboard: Markdown drafts saved every 5 seconds, a word goal bar, sprints
+    (Confirm) and a daily streak; Tab shows only the current paragraph.
+    Bluetooth runs only while InkWriter is open.
   - **InkQuest**: choose-your-path stories; pick a choice with the side
     buttons, progress saved after every choice. Includes a built-in story.
   - **PocketWiki**: an offline reference library: search titles with the

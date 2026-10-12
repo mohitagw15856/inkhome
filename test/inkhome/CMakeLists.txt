@@ -96,3 +96,11 @@ target_sources(InkhomeTests PRIVATE
   ${REPO_ROOT}/src/apps/pocketwiki/core/WikiLayout.cpp
   ${REPO_ROOT}/src/apps/pocketwiki/core/puff/puff.c
 )
+
+# InkWriter editor, session and wrapping.
+target_sources(InkhomeTests PRIVATE
+  InkWriterTest.cpp
+  ${REPO_ROOT}/src/apps/inkwriter/core/Editor.cpp
+  ${REPO_ROOT}/src/apps/inkwriter/core/Session.cpp
+  ${REPO_ROOT}/src/apps/inkwriter/core/WrapRows.cpp
+)
