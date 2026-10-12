@@ -213,6 +213,15 @@ to hand before step 1.
       were. Reach an ending: "The end"; Confirm plays again from the start.
 - [ ] Copy an `.iqs` story to `/apps/inkquest/`: it is listed and plays.
 
+## 26. PocketWiki
+- [ ] Without a card, Apps, PocketWiki says to copy archives; Back works.
+- [ ] Copy `foundations-of-science.pwa` (from PocketWiki's
+      `companion/sample/`) to `/apps/pocketwiki/`. Open it: 50 titles.
+- [ ] Search titles, type `mar`: Mars, Marie Curie, Mary Anning.
+- [ ] Open Ada Lovelace: words are spaced normally, headings are bold, Down
+      turns pages. On the last page Confirm highlights Physics; Confirm
+      opens it; Back returns to Ada Lovelace, Back again to the list.
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log

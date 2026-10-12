@@ -18,6 +18,7 @@
 #include "apps/inkrecipes/InkRecipesApp.h"
 #include "apps/inkverse/InkVerseApp.h"
 #include "apps/notes/NotesApp.h"
+#include "apps/pocketwiki/PocketWikiApp.h"
 #include "apps/stats/AchievementsApp.h"
 #include "apps/stats/ReadingStatsApp.h"
 #include "apps/stats/YearInBooksApp.h"
@@ -28,25 +29,12 @@ namespace inkhome::apps {
 namespace {
 
 // Launcher order. Add an app by including its header and appending its descriptor.
-constexpr std::array<AppDescriptor, 18> APPS{{
-    inbox::DESCRIPTOR,
-    stats::DESCRIPTOR,
-    stats::YEAR_DESCRIPTOR,
-    stats::ACHIEVEMENTS_DESCRIPTOR,
-    notes::DESCRIPTOR,
-    focus::DESCRIPTOR,
-    habits::DESCRIPTOR,
-    inkcards::DESCRIPTOR,
-    chessink::DESCRIPTOR,
-    inkrecipes::DESCRIPTOR,
-    inkverse::DESCRIPTOR,
-    storyscapes::DESCRIPTOR,
-    inkquest::DESCRIPTOR,
-    dailydrop::DESCRIPTOR,
-    iffound::DESCRIPTOR,
-    battery::DESCRIPTOR,
-    motion::TEST_DESCRIPTOR,
-    fwswitch::DESCRIPTOR,
+constexpr std::array<AppDescriptor, 19> APPS{{
+    inbox::DESCRIPTOR,    stats::DESCRIPTOR,       stats::YEAR_DESCRIPTOR, stats::ACHIEVEMENTS_DESCRIPTOR,
+    notes::DESCRIPTOR,    focus::DESCRIPTOR,       habits::DESCRIPTOR,     inkcards::DESCRIPTOR,
+    chessink::DESCRIPTOR, inkrecipes::DESCRIPTOR,  inkverse::DESCRIPTOR,   storyscapes::DESCRIPTOR,
+    inkquest::DESCRIPTOR, pocketwiki::DESCRIPTOR,  dailydrop::DESCRIPTOR,  iffound::DESCRIPTOR,
+    battery::DESCRIPTOR,  motion::TEST_DESCRIPTOR, fwswitch::DESCRIPTOR,
 }};
 
 bool isAvailable(const AppDescriptor& app) { return app.isAvailable == nullptr || app.isAvailable(); }

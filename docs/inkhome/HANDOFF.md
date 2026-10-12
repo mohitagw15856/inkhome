@@ -21,7 +21,7 @@ for the three that were reshaped or declined).
 Apps on `main`: Inbox, Reading stats, Year in books, Achievements, Notes,
 Focus timer, Habits (Habitink), Flashcards (Inkcards), Chess puzzles
 (ChessInk), Recipes (InkRecipes), Verse (InkVerse), StoryScapes, DailyDrop,
-InkQuest, If Found, Battery health, Motion sensor, Switch firmware.
+InkQuest, PocketWiki, If Found, Battery health, Motion sensor, Switch firmware.
 
 Sleep modes appended after upstream's: Custom + stats (8), Verse (9),
 Cover + stats (10), Flashcard (11); overlays: owner strip, habits strip;
@@ -32,8 +32,9 @@ works on the device. Checklist: `docs/inkhome/TESTING.md`.
 
 ## Next, in order
 
-1. PocketWiki port, then ask the owner before InkWriter (needs BLE, 40 to
-   60 KB RAM). Flash use is 89.7% of the slot, so check sizes first.
+1. Release 1.6.5.8 (PocketWiki) once CI is green on `main`.
+2. Ask the owner before InkWriter (needs BLE, 40 to 60 KB RAM). Flash use is
+   90.0% of the slot, so check sizes before anything large.
 
 ## How to work in this repo
 

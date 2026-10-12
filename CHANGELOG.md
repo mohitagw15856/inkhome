@@ -3,6 +3,13 @@
 Inkhome versions are `<upstream-version>.<n>-inkhome`. Upstream changes are
 in CrossPoint's own release notes.
 
+## 1.6.5.8-inkhome (unreleased)
+
+### Added
+- PocketWiki app (native port): offline .pwa reference archives from
+  /apps/pocketwiki/ and the legacy /pocketwiki/, with title search, article
+  pages laid out in the reader's fonts, and links between articles.
+
 ## 1.6.5.7-inkhome (pre-release)
 
 ### Added
