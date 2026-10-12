@@ -68,6 +68,8 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
     screen shows the next card of your last deck each time the reader sleeps.
   - **Chess puzzles** (ChessInk): chess and xiangqi puzzles with legal-move
     dots, a rating and a streak; xiangqi uses real Chinese piece glyphs.
+  - **StoryScapes**: illustrated history packs, text reflowed for the panel and
+    picture pages streamed from the card (landscape plates turned to fit).
   - **Recipes** (InkRecipes): ingredient checklist with a servings scaler and
     a cooking mode with large type and step timers. Includes a built-in recipe.
   - **Verse** (InkVerse): poems and quotations one at a time, and a **Verse**

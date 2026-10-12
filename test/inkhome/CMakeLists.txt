@@ -62,3 +62,10 @@ target_sources(InkhomeTests PRIVATE
   ${REPO_ROOT}/src/apps/chessink/core/chess/Chess.cpp
   ${REPO_ROOT}/src/apps/chessink/core/xiangqi/Xiangqi.cpp
 )
+
+# StoryScapes pack parser.
+target_sources(InkhomeTests PRIVATE
+  StoryScapesTest.cpp
+  ${REPO_ROOT}/src/apps/storyscapes/core/Ssp.cpp
+)
+target_compile_definitions(InkhomeTests PRIVATE REPO_ROOT_DIR="${REPO_ROOT}")
