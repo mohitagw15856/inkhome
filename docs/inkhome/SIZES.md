@@ -24,6 +24,7 @@ in each module's header comment.
 | Battery health, motion sensor, gestures | 5,743,755 | +10,390 | 58,048 |
 | Sleep modes, flashcards, habits, chess, StoryScapes, notes, DailyDrop, Inbox | 5,855,317 | +111,562 | 58,216 |
 | Text darkness and InkQuest (engine and built-in story) | 5,880,799 | +25,482 | 58,216 |
+| PocketWiki (archive reader, puff, layout) | 5,900,045 | +19,246 | 58,928 |
 
 `gh_release` env (what users install): **5,610,373 bytes, 85.6%** of the
 partition; image file 5,624,448 bytes. Headroom about 929 KB.

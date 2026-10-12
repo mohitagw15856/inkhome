@@ -74,6 +74,9 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
     picture pages streamed from the card (landscape plates turned to fit).
   - **InkQuest**: choose-your-path stories; pick a choice with the side
     buttons, progress saved after every choice. Includes a built-in story.
+  - **PocketWiki**: an offline reference library: search titles with the
+    on-screen keyboard, read articles with headings and lists, and follow
+    links between them (Confirm, then Up/Down to pick a link).
   - **DailyDrop**: a daily digest read offline; "Fetch today's drop" uses your
     saved Wi-Fi once and switches it off again. Nothing runs in the background.
   - **Recipes** (InkRecipes): ingredient checklist with a servings scaler and
@@ -177,6 +180,8 @@ vCodex file across (or import `/exports/stats_exported`) and back.
 - **crosspoint-simulator** by Julia Nguyen (MIT): screenshots and smoke tests.
 - **FreeInk SDK** (MIT), the hardware layer CrossPoint is built on.
 - **inkkit apps** by Mohit (MIT): InkRecipes and the rest of the ecosystem.
+- **puff** by Mark Adler (zlib licence), the inflater PocketWiki uses,
+  vendored unmodified in `src/apps/pocketwiki/core/puff/`.
 
 Inkhome does not include vCodex's built-in Bookerly font, which is not
 openly licensed, and does not host Xteink's stock firmware.

@@ -7,7 +7,7 @@ cd "$(dirname "$0")/../.."
 CPPCHECK="${CPPCHECK:-$HOME/.platformio/packages/tool-cppcheck/cppcheck}"
 out="$("$CPPCHECK" --enable=all --check-level=exhaustive --std=c++20 --language=c++ \
   --suppress=missingIncludeSystem --suppress=missingInclude --suppress=unusedFunction \
-  --suppress=unmatchedSuppression --suppress=checkersReport --suppress=badBitmaskCheck --inline-suppr --quiet -USIMULATOR \
+  --suppress=unmatchedSuppression --suppress=checkersReport --suppress=badBitmaskCheck --suppress='*:*/pocketwiki/core/puff/*' --inline-suppr --quiet -USIMULATOR \
   --template='{file}:{line}: [{severity}:{id}] {message}' \
   src/apps src/inkhome 2>&1 || true)"
 if [ -n "$out" ]; then

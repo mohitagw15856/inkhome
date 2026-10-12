@@ -88,3 +88,11 @@ target_sources(InkhomeTests PRIVATE
   ${REPO_ROOT}/src/apps/inkquest/core/StoryEngine.cpp
   ${REPO_ROOT}/src/apps/inkquest/core/SaveGame.cpp
 )
+
+# PocketWiki archive reader and layout.
+target_sources(InkhomeTests PRIVATE
+  PocketWikiTest.cpp
+  ${REPO_ROOT}/src/apps/pocketwiki/core/PwaReader.cpp
+  ${REPO_ROOT}/src/apps/pocketwiki/core/WikiLayout.cpp
+  ${REPO_ROOT}/src/apps/pocketwiki/core/puff/puff.c
+)
