@@ -15,6 +15,8 @@ in CrossPoint's own release notes.
   BQ27220 gauge, with a daily capacity chart.
 - Motion sensor screen (X3), and experimental shake to bookmark and face down
   to sleep in Settings, Controls (off by default).
+- Flashcards app (native port of Inkcards): SM-2 spaced repetition, built-in
+  demo and world capitals decks, .deck files from /apps/inkcards/.
 - Break reminder after 30, 45 or 60 minutes of continuous reading.
 - Quiet hours (X3): three times fewer full-screen flashes from 22:00 to 07:00.
 - Focus timer app: read for 15 to 60 minutes, then a break screen.

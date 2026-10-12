@@ -61,6 +61,8 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
   and time per book. Import and export use vCodex's `/exports/stats_exported`.
 - **Apps.** A launcher on Home and a small framework (`src/apps/`) where each
   app is a self-contained module with its own SD folder.
+  - **Flashcards** (Inkcards): spaced-repetition decks with SM-2 scheduling;
+    the demo and world capitals decks are built in.
   - **Recipes** (InkRecipes): ingredient checklist with a servings scaler and
     a cooking mode with large type and step timers. Includes a built-in recipe.
   - **Verse** (InkVerse): poems and quotations one at a time, and a **Verse**

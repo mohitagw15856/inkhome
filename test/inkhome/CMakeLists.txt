@@ -33,3 +33,12 @@ target_link_libraries(InkhomeTests PRIVATE
 )
 
 gtest_discover_tests(InkhomeTests)
+
+# Inkcards core (its own byte streams, no Arduino).
+target_sources(InkhomeTests PRIVATE
+  InkcardsTest.cpp
+  ${REPO_ROOT}/src/apps/inkcards/core/DeckReader.cpp
+  ${REPO_ROOT}/src/apps/inkcards/core/ReviewState.cpp
+  ${REPO_ROOT}/src/apps/inkcards/core/Session.cpp
+  ${REPO_ROOT}/src/apps/inkcards/core/Sm2.cpp
+)
