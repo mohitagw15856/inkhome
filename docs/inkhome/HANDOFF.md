@@ -12,54 +12,30 @@ stock firmware. Read `README.md`, `SCOPE.md` and `PLAN.md` for the rules
 (British English, no em dashes, no hard-coded screen sizes, RAM budget, keep
 upstream files to small marked hunks).
 
-## Where things stand (2026-10-12)
+## Where things stand (2026-10-12, evening)
 
-Published pre-releases: 1.6.5.1, 1.6.5.2, 1.6.5.3. `main` is ahead of 1.6.5.3.
+Published pre-releases up to 1.6.5.5; `main` carries 1.6.5.6 (Inbox) awaiting
+release. All 20 features the owner asked for are built (see PLAN.md section 4
+for the three that were reshaped or declined).
 
-Done on `main` (each was its own `feat/...` branch):
+Apps on `main`: Inbox, Reading stats, Year in books, Achievements, Notes,
+Focus timer, Habits (Habitink), Flashcards (Inkcards), Chess puzzles
+(ChessInk), Recipes (InkRecipes), Verse (InkVerse), StoryScapes, DailyDrop,
+If Found, Battery health, Motion sensor, Switch firmware.
 
-- Apps framework, If Found, Switch firmware, no-SD menu, slot guard, web flasher
-- Recipes (InkRecipes), Verse (InkVerse), Flashcards (Inkcards), Habits (Habitink)
-- Reading stats (vCodex format), Year in books, Achievements (vCodex format)
-- Focus timer, break reminder, quiet hours, time left in chapter
-- Sleep screens: Custom + stats (8), Verse (9), Cover + stats (10),
-  Flashcard (11), stock .xth pictures, owner strip, habits strip
-- Battery health, Motion sensor screen, experimental shake to bookmark and
-  face down to sleep (off by default)
+Sleep modes appended after upstream's: Custom + stats (8), Verse (9),
+Cover + stats (10), Flashcard (11); overlays: owner strip, habits strip;
+Custom also shows stock .xth pictures.
 
 Not verified on hardware. The owner flashes and tests; never claim anything
-works on the device. Checklist: `docs/inkhome/TESTING.md` (add a section per
-feature).
+works on the device. Checklist: `docs/inkhome/TESTING.md`.
 
 ## Next, in order
 
-1. Flashcard sleep mode (merged, built): add a simulator shot
-   (`sim-sd-...` settings with `"sleepScreen":11`), a TESTING.md section and a
-   README line, then release **1.6.5.4** (see Releasing).
-2. **ChessInk** (`../chessink` in the owner's workspace; on GitHub
-   `mohitagw15856/chessink`): puzzles. Copy `src/core/` (chess, xiangqi,
-   puzzle) unchanged, rewrite the board view with GfxRenderer primitives,
-   puzzles from `/apps/chessink/` and legacy `/chessink/puzzles`.
-3. **StoryScapes** (`mohitagw15856/storyscapes`): `.ssp` illustrated packs;
-   stream image rows to the renderer, centre on the panel.
-4. **Highlights to notes** (#10): when a bookmark is added in the reader,
-   append the page's snippet to `/notes/<book title>.md`. Hook through the
-   bookmark path without editing the reader if possible (see how shake to
-   bookmark injects `HomeButtonAction::Bookmark`).
-5. **DailyDrop** (`mohitagw15856/dailydrop`, needs Wi-Fi): fetch once on the
-   first wake after 06:00 using CrossPoint's saved Wi-Fi credentials, store the
-   `.drop` on the card, show it in an app and as a sleep mode. Never keep
-   Wi-Fi on in the background.
-6. **Send to reader** (#19): the reader already has File Transfer (web
-   upload). Add an "Inbox" view in Library or Apps listing files uploaded in
-   the last day; do not add a new network service.
-7. **Auto-rotate** (#3): decided against for the reader (re-layout cost and
-   accidental rotations). Document that in PLAN.md rather than building it,
-   unless the owner asks again.
-
-After each: build, host tests, simulator shots, docs (README, CHANGELOG,
-TESTING, SIZES), merge with `--no-ff`, push. Release after every two or
-three features.
+1. Release 1.6.5.6 once CI is green on `main` (see Releasing).
+2. Ask the owner which to do next; the open items are text darkness, the
+   InkQuest and PocketWiki ports, and InkWriter (needs BLE, 40 to 60 KB RAM).
+   Flash use is 89% of the slot, so check sizes before anything large.
 
 ## How to work in this repo
 

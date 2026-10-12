@@ -185,8 +185,18 @@ report ([SIZES](docs/inkhome/SIZES.md)) and on-device checks
 Sleep wallpaper: upstream's Custom mode is untouched and new sleep modes
 (stats overlay, roadmap 2.2) will be appended beside it.
 
-Not done yet, in order: achievements (2.5), text darkness (2.6), then the
-remaining inkkit apps (2.7 onwards). Reading stats is a
+Since then, the 20 suggested features were built and released (1.6.5.3 to
+1.6.5.6) except:
+
+- **Auto-rotate:** declined. Re-paginating a book on every rotation costs
+  seconds on the C3, and readers lying down would rotate by accident.
+  Orientation stays a setting.
+- **Posture nudge:** replaced by the break reminder, since a lying-down
+  guess from the IMU would misfire while reading time is reliable.
+- **Send to reader:** done as the Inbox app on top of CrossPoint's existing
+  File Transfer rather than a new network service.
+
+Still open: text darkness (2.6), InkQuest, PocketWiki and InkWriter (BLE). Reading stats is a
 lean reimplementation of vCodex's format rather than a copy of its 4,200
 lines; progress percentages, Sync Day and per-book correction are not in it
 yet.

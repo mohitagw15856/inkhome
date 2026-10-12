@@ -3,6 +3,12 @@
 Inkhome versions are `<upstream-version>.<n>-inkhome`. Upstream changes are
 in CrossPoint's own release notes.
 
+## 1.6.5.6-inkhome (unreleased)
+
+### Added
+- Inbox app: books and pictures sent to /inbox (with File Transfer over
+  Wi-Fi, or copied on a computer) open in one tap.
+
 ## 1.6.5.5-inkhome (pre-release)
 
 ### Added

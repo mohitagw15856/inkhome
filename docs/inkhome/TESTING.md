@@ -194,6 +194,11 @@ to hand before step 1.
       Wi-Fi off; the new file is in the list.
 - [ ] A bad URL shows "could not be fetched" and leaves no stray file.
 
+## 23. Inbox
+- [ ] File Transfer (Wi-Fi): upload an EPUB into the `inbox` folder. Apps,
+      Inbox lists it; Confirm opens it in the reader. A BMP opens in the
+      picture viewer.
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log
