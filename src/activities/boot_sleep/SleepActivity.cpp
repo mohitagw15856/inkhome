@@ -25,6 +25,7 @@
 #include "CrossPointSettings.h"
 #include "CrossPointState.h"
 #include "activities/reader/ReaderUtils.h"
+#include "apps/inkcards/SleepCard.h"
 #include "apps/inkverse/SleepVerse.h"
 #include "components/UITheme.h"
 #include "fontIds.h"
@@ -559,6 +560,11 @@ void SleepActivity::onEnter() {
       return renderCustomSleepScreen();
     case (CrossPointSettings::SLEEP_SCREEN_MODE::COVER_STATS):
       return APP_STATE.lastSleepFromReader ? renderCoverSleepScreen() : renderCustomSleepScreen();
+    case (CrossPointSettings::SLEEP_SCREEN_MODE::FLASHCARD):
+      inkcards::drawSleepCard(renderer);
+      inkhome::sleep::draw(renderer, overlays);
+      renderer.displayBuffer(HalDisplay::HALF_REFRESH);
+      return;
     case (CrossPointSettings::SLEEP_SCREEN_MODE::VERSE):
       inkverse::drawSleepVerse(renderer);
       inkhome::sleep::draw(renderer, overlays);

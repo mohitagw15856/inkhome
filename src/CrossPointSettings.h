@@ -31,6 +31,8 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
     VERSE = 9,
     // Inkhome: the book's cover with progress and stats.
     COVER_STATS = 10,
+    // Inkhome: a card from the last studied Flashcards deck.
+    FLASHCARD = 11,
     SLEEP_SCREEN_MODE_COUNT
   };
   enum SLEEP_SCREEN_COVER_MODE { FIT = 0, CROP = 1, SLEEP_SCREEN_COVER_MODE_COUNT };
