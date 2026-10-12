@@ -81,3 +81,10 @@ target_sources(InkhomeTests PRIVATE
   DailyDropTest.cpp
   ${REPO_ROOT}/src/apps/dailydrop/core/DropDoc.cpp
 )
+
+# InkQuest story engine and saves.
+target_sources(InkhomeTests PRIVATE
+  InkQuestTest.cpp
+  ${REPO_ROOT}/src/apps/inkquest/core/StoryEngine.cpp
+  ${REPO_ROOT}/src/apps/inkquest/core/SaveGame.cpp
+)

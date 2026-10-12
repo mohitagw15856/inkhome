@@ -1,6 +1,6 @@
-// From Inkkit (github.com/mohitagw15856/Inkkit, MIT): the portable byte streams StoryScapes parses through.
-// Minimal seekable byte-stream abstractions shared by inkkit's SD adapters and
-// the firmwares that consume them.
+// From Inkkit (github.com/mohitagw15856/Inkkit, MIT): the portable byte streams the StoryScapes and InkQuest cores
+// parse through. Minimal seekable byte-stream abstractions shared by inkkit's SD adapters and the firmwares that
+// consume them.
 //
 // This header is intentionally free of any Arduino / freeink-sdk dependency so
 // the interfaces compile on the host too; the SD-backed implementations live in

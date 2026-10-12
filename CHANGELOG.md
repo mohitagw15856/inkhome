@@ -3,13 +3,20 @@
 Inkhome versions are `<upstream-version>.<n>-inkhome`. Upstream changes are
 in CrossPoint's own release notes.
 
-## 1.6.5.6-inkhome (unreleased)
+## 1.6.5.7-inkhome (unreleased)
+
+### Added
+- InkQuest app (native port): interactive fiction from /apps/inkquest/ and
+  the legacy /inkquest/stories/, with The Lighthouse Keeper built in and an
+  automatic save after every choice.
+- Text darkness (Settings, Reader): Normal, Crisp or Darker anti-aliased text,
+  after CPR-vCodex; uses vCodex's textDarkness setting values.
+
+## 1.6.5.6-inkhome (pre-release)
 
 ### Added
 - Inbox app: books and pictures sent to /inbox (with File Transfer over
   Wi-Fi, or copied on a computer) open in one tap.
-- Text darkness (Settings, Reader): Normal, Crisp or Darker anti-aliased text,
-  after CPR-vCodex; uses vCodex's textDarkness setting values.
 
 ## 1.6.5.5-inkhome (pre-release)
 

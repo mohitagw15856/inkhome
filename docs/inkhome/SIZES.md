@@ -22,6 +22,8 @@ in each module's header comment.
 | Style fixes, branding, .xth pictures, time left, focus timer, owner strip, Cover + stats, Year in books | 5,714,981 | +16,868 | 58,048 |
 | Achievements | 5,733,365 | +18,384 | 58,048 |
 | Battery health, motion sensor, gestures | 5,743,755 | +10,390 | 58,048 |
+| Sleep modes, flashcards, habits, chess, StoryScapes, notes, DailyDrop, Inbox | 5,855,317 | +111,562 | 58,216 |
+| Text darkness and InkQuest (engine and built-in story) | 5,880,799 | +25,482 | 58,216 |
 
 `gh_release` env (what users install): **5,610,373 bytes, 85.6%** of the
 partition; image file 5,624,448 bytes. Headroom about 929 KB.
