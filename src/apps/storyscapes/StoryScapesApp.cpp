@@ -10,6 +10,7 @@
 
 #include "MappedInputManager.h"
 #include "apps/AppPaths.h"
+#include "apps/inkkit/HalFileReader.h"
 #include "components/UITheme.h"
 #include "fontIds.h"
 #include "inkhome/SdState.h"
@@ -33,30 +34,6 @@ constexpr int BODY_FONT_ID = NOTOSERIF_14_FONT_ID;
 #else
 constexpr int BODY_FONT_ID = UI_12_FONT_ID;
 #endif
-
-// inkkit::ByteReader over an open SD file.
-class FileReader final : public inkkit::ByteReader {
- public:
-  explicit FileReader(HalFile& f) : file(f), length(static_cast<uint32_t>(f.fileSize())) {}
-  bool seek(const uint32_t pos) override {
-    if (pos > length || !file.seek(pos)) return false;
-    cursor = pos;
-    return true;
-  }
-  uint32_t position() const override { return cursor; }
-  uint32_t size() const override { return length; }
-  size_t read(void* dst, const size_t n) override {
-    const int got = file.read(dst, n);
-    if (got <= 0) return 0;
-    cursor += static_cast<uint32_t>(got);
-    return static_cast<size_t>(got);
-  }
-
- private:
-  HalFile& file;
-  uint32_t length;
-  uint32_t cursor = 0;
-};
 
 std::string progressPath(const PackEntry& e) { return std::string(STATE_DIR) + "/" + e.label + ".txt"; }
 
@@ -147,7 +124,7 @@ PackReaderActivity::~PackReaderActivity() = default;
 void PackReaderActivity::onEnter() {
   Activity::onEnter();
   if (inkhome::sdMounted() && Storage.openFileForRead("SSP", entry.path.c_str(), file)) {
-    FileReader reader(file);
+    inkkit::HalFileReader reader(file);
     loaded = parsePack(reader, info) && !info.pages.empty();
   }
   if (loaded && Storage.exists(progressPath(entry).c_str())) {
@@ -198,7 +175,7 @@ void PackReaderActivity::loop() {
 }
 
 bool PackReaderActivity::drawImagePage(const PageEntry& entryPage) {
-  FileReader reader(file);
+  inkkit::HalFileReader reader(file);
   ImageHeader header;
   if (!readImageHeader(reader, entryPage, header) || header.width == 0 || header.height == 0) return false;
   const int width = renderer.getScreenWidth();
@@ -242,7 +219,7 @@ bool PackReaderActivity::drawImagePage(const PageEntry& entryPage) {
 }
 
 void PackReaderActivity::drawTextPage(const PageEntry& entryPage) {
-  FileReader reader(file);
+  inkkit::HalFileReader reader(file);
   if (!reader.seek(entryPage.offset)) return;
   std::string text(std::min<size_t>(entryPage.length, MAX_TEXT_BYTES), '\0');
   if (reader.read(text.data(), text.size()) != text.size()) return;

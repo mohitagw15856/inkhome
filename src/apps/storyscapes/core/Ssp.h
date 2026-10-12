@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-#include "ByteStream.h"
+#include "../../inkkit/ByteStream.h"
 
 namespace storyscapes {
 

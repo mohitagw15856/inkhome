@@ -204,6 +204,15 @@ to hand before step 1.
       book look heavier; Crisp makes them lighter; Normal matches upstream.
       (Text anti-aliasing must be on.)
 
+## 25. InkQuest
+- [ ] Apps, InkQuest: The Lighthouse Keeper is listed even with no card.
+      Confirm opens it; Up/Down move the black choice bar, Confirm takes it.
+- [ ] A long passage shows "1 / 2" on the hints: Left/Right turn its pages,
+      Confirm on an earlier page goes to the next one.
+- [ ] Take two choices, press Back, reopen the story: it resumes where you
+      were. Reach an ending: "The end"; Confirm plays again from the start.
+- [ ] Copy an `.iqs` story to `/apps/inkquest/`: it is listed and plays.
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log

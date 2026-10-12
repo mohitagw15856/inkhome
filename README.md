@@ -72,6 +72,8 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
     dots, a rating and a streak; xiangqi uses real Chinese piece glyphs.
   - **StoryScapes**: illustrated history packs, text reflowed for the panel and
     picture pages streamed from the card (landscape plates turned to fit).
+  - **InkQuest**: choose-your-path stories; pick a choice with the side
+    buttons, progress saved after every choice. Includes a built-in story.
   - **DailyDrop**: a daily digest read offline; "Fetch today's drop" uses your
     saved Wi-Fi once and switches it off again. Nothing runs in the background.
   - **Recipes** (InkRecipes): ingredient checklist with a servings scaler and

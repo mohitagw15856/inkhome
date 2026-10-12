@@ -14,6 +14,7 @@
 #include "apps/iffound/IfFoundApp.h"
 #include "apps/inbox/InboxApp.h"
 #include "apps/inkcards/InkcardsApp.h"
+#include "apps/inkquest/InkQuestApp.h"
 #include "apps/inkrecipes/InkRecipesApp.h"
 #include "apps/inkverse/InkVerseApp.h"
 #include "apps/notes/NotesApp.h"
@@ -27,7 +28,7 @@ namespace inkhome::apps {
 namespace {
 
 // Launcher order. Add an app by including its header and appending its descriptor.
-constexpr std::array<AppDescriptor, 17> APPS{{
+constexpr std::array<AppDescriptor, 18> APPS{{
     inbox::DESCRIPTOR,
     stats::DESCRIPTOR,
     stats::YEAR_DESCRIPTOR,
@@ -40,6 +41,7 @@ constexpr std::array<AppDescriptor, 17> APPS{{
     inkrecipes::DESCRIPTOR,
     inkverse::DESCRIPTOR,
     storyscapes::DESCRIPTOR,
+    inkquest::DESCRIPTOR,
     dailydrop::DESCRIPTOR,
     iffound::DESCRIPTOR,
     battery::DESCRIPTOR,
