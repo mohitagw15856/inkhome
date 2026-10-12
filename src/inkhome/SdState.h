@@ -16,6 +16,11 @@ inline bool simulateNoSd() {
 #endif
 }
 
-inline bool sdMounted() { return !simulateNoSd() && Storage.ready(); }
+inline bool sdMounted() {
+#ifdef SIMULATOR
+  if (simulateNoSd()) return false;
+#endif
+  return Storage.ready();
+}
 
 }  // namespace inkhome

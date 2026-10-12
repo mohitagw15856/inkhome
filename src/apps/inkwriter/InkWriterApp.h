@@ -85,7 +85,7 @@ class EditorActivity final : public Activity {
   void noteWriting();
 
   std::string path;
-  std::string name;
+  std::string draftName;
   Editor editor;
   Sprint sprint;
   Streak streak;

@@ -360,7 +360,7 @@ void PairActivity::render(RenderLock&&) {
 // ---------------------------------------------------------------- editor
 
 EditorActivity::EditorActivity(GfxRenderer& renderer, MappedInputManager& mappedInput, std::string path)
-    : Activity("InkWriterEditor", renderer, mappedInput), path(std::move(path)), name(baseName(this->path)) {}
+    : Activity("InkWriterEditor", renderer, mappedInput), path(std::move(path)), draftName(baseName(this->path)) {}
 
 void EditorActivity::loadConfig() {
   std::string text;
@@ -457,12 +457,12 @@ void EditorActivity::loop() {
     requestUpdate();
   }
 
-  freeink::KeyEvent ev;
   bool edited = false;
   bool typed = false;
   {
     RenderLock lock(*this);
     using SK = freeink::SpecialKey;
+    freeink::KeyEvent ev;
     while (ble().popKey(ev)) {
       edited = true;
       switch (ev.special) {
@@ -542,7 +542,7 @@ void EditorActivity::render(RenderLock&&) {
   renderer.clearScreen();
   const auto& metrics = UITheme::getInstance().getMetrics();
   const int width = renderer.getScreenWidth();
-  GUI.drawHeader(renderer, Rect{0, metrics.topPadding, width, metrics.headerHeight}, name.c_str());
+  GUI.drawHeader(renderer, Rect{0, metrics.topPadding, width, metrics.headerHeight}, draftName.c_str());
   if (refused) {
     renderer.drawCenteredText(UI_12_FONT_ID, renderer.getScreenHeight() / 2, tr(STR_WRITER_TOO_LARGE), true,
                               EpdFontFamily::BOLD);

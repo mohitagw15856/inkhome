@@ -66,6 +66,7 @@ git add -N .                            # so the formatter sees new files
 pip install 'clang-format==21.*'        # CI uses clang-format 21; 22 formats differently
 ./bin/clang-format-fix                  # with clang-format 21 first on PATH
 scripts/inkhome/cppcheck-like-ci.sh     # approximates CI's cppcheck
+pio check -e default --fail-on-defect low --fail-on-defect medium --fail-on-defect high  # CI's exact check
 scripts/inkhome/screenshots.sh          # simulator shots and button smoke test (needs SDL2)
 ```
 
