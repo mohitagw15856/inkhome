@@ -4,6 +4,8 @@
 #include <array>
 #include <cassert>
 
+#include "apps/device/BatteryHealth.h"
+#include "apps/device/MotionTest.h"
 #include "apps/focus/FocusTimer.h"
 #include "apps/fwswitch/FirmwareSwitchApp.h"
 #include "apps/iffound/IfFoundApp.h"
@@ -18,7 +20,7 @@ namespace inkhome::apps {
 namespace {
 
 // Launcher order. Add an app by including its header and appending its descriptor.
-constexpr std::array<AppDescriptor, 8> APPS{{
+constexpr std::array<AppDescriptor, 10> APPS{{
     stats::DESCRIPTOR,
     stats::YEAR_DESCRIPTOR,
     stats::ACHIEVEMENTS_DESCRIPTOR,
@@ -26,6 +28,8 @@ constexpr std::array<AppDescriptor, 8> APPS{{
     inkrecipes::DESCRIPTOR,
     inkverse::DESCRIPTOR,
     iffound::DESCRIPTOR,
+    battery::DESCRIPTOR,
+    motion::TEST_DESCRIPTOR,
     fwswitch::DESCRIPTOR,
 }};
 

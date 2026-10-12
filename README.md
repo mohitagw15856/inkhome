@@ -73,6 +73,10 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
   - **Focus timer**: read for 15 to 60 minutes, then a break screen.
   - **If Found**: shows your contact note so a lost reader can find its way home,
     and can put it across the top of every sleep screen.
+  - **Battery health** (X3): capacity, charge cycles and health from the
+    battery gauge, with a daily chart.
+  - **Motion sensor** (X3): live readings, plus experimental shake to bookmark
+    and face down to sleep (off until you turn them on).
   - **Switch firmware**: restarts into the stock firmware.
 - **Tilt page turn on by default** on the X3 when its QMI8658 sensor is
   detected. Turn it off in Settings, Controls. The X4 has no sensor and is

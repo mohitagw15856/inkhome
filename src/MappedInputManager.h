@@ -95,6 +95,10 @@ class MappedInputManager {
   bool wasHomeGesture() const;
   // Configured one-frame action, independent of the gesture that triggered it.
   HomeButtonAction homeButtonAction() const { return homeAction; }
+  // Inkhome: delivers an action (e.g. Bookmark from a shake) on the next update(), as if the Home key sent it.
+  void injectHomeButtonAction(HomeButtonAction action) const {
+    if (deferredHomeAction == HomeButtonAction::Ignore) deferredHomeAction = action;
+  }
   void resetHomeButtonInput() const {
     homeButtonInput.reset();
     deferredHomeAction = HomeButtonAction::Ignore;

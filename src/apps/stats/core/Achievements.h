@@ -17,8 +17,16 @@
 
 namespace inkhome::stats {
 
-enum class Metric : uint8_t { BooksStarted, BooksFinished, Sessions, TotalReadingMs, GoalDays, MaxGoalStreak,
-                              Bookmarks, MaxSessionMs };
+enum class Metric : uint8_t {
+  BooksStarted,
+  BooksFinished,
+  Sessions,
+  TotalReadingMs,
+  GoalDays,
+  MaxGoalStreak,
+  Bookmarks,
+  MaxSessionMs
+};
 
 struct AchievementDef {
   Metric metric;
