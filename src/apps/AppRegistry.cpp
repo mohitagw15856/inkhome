@@ -24,18 +24,19 @@
 #include "apps/stats/ReadingStatsApp.h"
 #include "apps/stats/YearInBooksApp.h"
 #include "apps/storyscapes/StoryScapesApp.h"
+#include "apps/wallpaper/WallpaperApp.h"
 
 namespace inkhome::apps {
 
 namespace {
 
 // Launcher order. Add an app by including its header and appending its descriptor.
-constexpr std::array<AppDescriptor, 20> APPS{{
+constexpr std::array<AppDescriptor, 21> APPS{{
     inbox::DESCRIPTOR,       stats::DESCRIPTOR,     stats::YEAR_DESCRIPTOR,  stats::ACHIEVEMENTS_DESCRIPTOR,
     notes::DESCRIPTOR,       inkwriter::DESCRIPTOR, focus::DESCRIPTOR,       habits::DESCRIPTOR,
     inkcards::DESCRIPTOR,    chessink::DESCRIPTOR,  inkrecipes::DESCRIPTOR,  inkverse::DESCRIPTOR,
     storyscapes::DESCRIPTOR, inkquest::DESCRIPTOR,  pocketwiki::DESCRIPTOR,  dailydrop::DESCRIPTOR,
-    iffound::DESCRIPTOR,     battery::DESCRIPTOR,   motion::TEST_DESCRIPTOR, fwswitch::DESCRIPTOR,
+    wallpaper::DESCRIPTOR, iffound::DESCRIPTOR,     battery::DESCRIPTOR,   motion::TEST_DESCRIPTOR, fwswitch::DESCRIPTOR,
 }};
 
 // A size larger than the list leaves empty descriptors that would crash the launcher.

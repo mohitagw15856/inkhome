@@ -238,6 +238,16 @@ to hand before step 1.
 - [ ] Leave InkWriter, open a book: reading still works normally (Bluetooth
       is off again).
 
+## 28. Wallpaper
+- [ ] Apps, Wallpaper lists your Pushed Images pictures (and any in /sleep);
+      "Rotate through all pictures" says In use.
+- [ ] Confirm a picture: it fills the screen in grey. Confirm again: back in
+      the list it says In use. Sleep the device several times: it is that
+      picture every time.
+- [ ] Choose "Rotate through all pictures": sleeps vary again.
+- [ ] Delete the chosen picture from the card: the sleep screen still works
+      (it rotates).
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log

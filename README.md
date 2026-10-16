@@ -81,6 +81,10 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
   - **PocketWiki**: an offline reference library: search titles with the
     on-screen keyboard, read articles with headings and lists, and follow
     links between them (Confirm, then Up/Down to pick a link).
+  - **Wallpaper**: pick one picture for the sleep screen instead of rotating:
+    the stock firmware's Pushed Images and your /sleep pictures, with a
+    full-screen preview. "Rotate through all pictures" goes back to a new one
+    each sleep.
   - **DailyDrop**: a daily digest read offline; "Fetch today's drop" uses your
     saved Wi-Fi once and switches it off again. Nothing runs in the background.
   - **Recipes** (InkRecipes): ingredient checklist with a servings scaler and

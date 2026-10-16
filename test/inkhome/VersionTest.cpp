@@ -30,3 +30,8 @@ TEST(InkhomeVersion, GarbageIsNeverNewer) {
   EXPECT_FALSE(isVersionNewer("latest", "1.6.5.1-inkhome"));
   EXPECT_FALSE(isVersionNewer("1.6.5.1", "nonsense"));
 }
+
+TEST(InkhomeVersion, TwoDigitForkSegmentIsNumeric) {
+  EXPECT_TRUE(isVersionNewer("1.6.5.10-inkhome", "1.6.5.9-inkhome"));
+  EXPECT_FALSE(isVersionNewer("1.6.5.9-inkhome", "1.6.5.10-inkhome"));
+}

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #include "SleepOverlays.h"
 
@@ -21,5 +22,19 @@ bool pickXth(std::string& outPath, bool bmpAvailable);
 // Peak heap: the whole image (about 100 KB for a full-screen .xth), freed on
 // return. False (nothing displayed) on a bad file or low memory.
 bool drawXth(const GfxRenderer& renderer, const std::string& path, const sleep::Overlays& overlays);
+
+// True for .xth/.xtg file names.
+bool isXth(const std::string& path);
+
+// Every picture the sleep screen can use (.xth/.xtg/.bmp in /Pushed Images,
+// /sleep and /.sleep, plus /sleep.bmp), sorted by folder then name.
+std::vector<std::string> listAll();
+
+// The wallpaper pinned in the Wallpaper app, if it is still on the card.
+bool pinnedPath(std::string& out);
+
+// Pins `path` so every Custom sleep screen shows it; empty goes back to
+// rotating. False if the choice could not be saved.
+bool setPinned(const std::string& path);
 
 }  // namespace inkhome::wallpaper
