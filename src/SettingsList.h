@@ -380,6 +380,8 @@ inline std::vector<SettingInfo> getSettingsList(const SdCardFontRegistry* regist
                             "statusBarTimeLeft", StrId::STR_CAT_READER),
         SettingInfo::Toggle(StrId::STR_SHAKE_BOOKMARK, &CrossPointSettings::motionShakeBookmark, "motionShakeBookmark",
                             StrId::STR_CAT_CONTROLS),
+        SettingInfo::Toggle(StrId::STR_BATTERY_SAVER, &CrossPointSettings::batterySaver, "batterySaver",
+                            StrId::STR_CAT_SYSTEM),
         SettingInfo::Toggle(StrId::STR_FLIP_SLEEP, &CrossPointSettings::motionFlipSleep, "motionFlipSleep",
                             StrId::STR_CAT_CONTROLS),
         // Erased below unless the QMI8658 IMU is present (X3).
