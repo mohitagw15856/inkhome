@@ -26,6 +26,7 @@
 #include "html/HomePageHtml.generated.h"
 #include "html/SettingsPageHtml.generated.h"
 #include "html/js/jszip_minJs.generated.h"
+#include "inkhome/SendNote.h"
 #include "util/BookCacheUtils.h"
 #include "util/TaskWatchdog.h"
 
@@ -173,6 +174,10 @@ void CrossPointWebServer::begin() {
   server->on("/delete", HTTP_POST, [this] { handleDelete(); });
 
   // Settings endpoints
+  // Inkhome: "Send a note" into /inbox.
+  server->on("/send", HTTP_GET, [this] { inkhome::web::serveSendPage(*server); });
+  server->on("/api/send", HTTP_POST, [this] { inkhome::web::handleSendNote(*server); });
+
   server->on("/settings", HTTP_GET, [this] { handleSettingsPage(); });
   server->on("/api/settings", HTTP_GET, [this] { handleGetSettings(); });
   server->on("/api/settings", HTTP_POST, [this] { handlePostSettings(); });
