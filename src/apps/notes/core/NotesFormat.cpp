@@ -51,4 +51,13 @@ std::string markdownFor(const std::string& title, const std::string& author, con
   return md;
 }
 
+std::string highlightsHeader(const std::string& title) { return "# " + title + "\n*Highlights*\n\n"; }
+
+std::string highlightEntry(const std::string& passage, const int percent) {
+  std::string quoted;
+  quoted.reserve(passage.size() + 2);
+  for (const char c : passage) quoted.push_back(c == '\n' || c == '\r' ? ' ' : c);
+  return "> " + quoted + "\n\n*" + std::to_string(percent) + "%*\n\n";
+}
+
 }  // namespace inkhome::notes

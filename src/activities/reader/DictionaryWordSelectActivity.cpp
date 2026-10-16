@@ -6,12 +6,14 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
+#include <algorithm>
 #include <cctype>
 #include <climits>
 #include <cstdlib>
 
 #include "CrossPointSettings.h"
 #include "DictionaryDefinitionActivity.h"
+#include "apps/notes/Highlights.h"
 #include "components/UITheme.h"
 
 namespace {
@@ -229,21 +231,58 @@ void DictionaryWordSelectActivity::performLookup() {
   requestUpdate();
 }
 
+// Inkhome: first Confirm anchors the passage, the second saves it.
+void DictionaryWordSelectActivity::confirmHighlight() {
+  if (anchor < 0) {
+    anchor = selected;
+    snapshotIdx = -1;  // the passage is drawn in full from now on
+    requestUpdate();
+    return;
+  }
+  const int first = std::min(anchor, selected);
+  const int last = std::max(anchor, selected);
+  std::string passage;
+  for (int i = first; i <= last; i++) {
+    if (!passage.empty()) passage.push_back(' ');
+    passage += words[i].text;
+  }
+  const bool ok = inkhome::notes::saveHighlight(bookTitle, passage, bookPercent);
+  popup = ok ? Popup::NotFound : Popup::Error;  // both are timed popups
+  popupMsg = ok ? StrId::STR_HIGHLIGHT_SAVED : StrId::STR_HIGHLIGHT_FAILED;
+  popupTime = millis();
+  finishAfterPopup = ok;
+  requestUpdate();
+}
+
 void DictionaryWordSelectActivity::loop() {
   if (popup == Popup::NotFound || popup == Popup::Error) {
     if (millis() - popupTime >= POPUP_DURATION_MS) {
       popup = Popup::None;
+      if (finishAfterPopup) {
+        finish();
+        return;
+      }
       requestUpdate();
     }
     return;
   }
 
   if (mappedInput.wasReleased(MappedInputManager::Button::Back)) {
+    if (highlightMode && anchor >= 0) {  // Inkhome: Back first drops the start word
+      anchor = -1;
+      snapshotIdx = -1;
+      requestUpdate();
+      return;
+    }
     finish();
     return;
   }
   if (mappedInput.wasReleased(MappedInputManager::Button::Confirm) && !words.empty()) {
-    performLookup();
+    if (highlightMode) {
+      confirmHighlight();
+    } else {
+      performLookup();
+    }
     return;
   }
 
@@ -265,7 +304,11 @@ void DictionaryWordSelectActivity::loop() {
     const int hit = wordAt(tx, ty);
     if (hit >= 0) {
       selected = hit;
-      performLookup();
+      if (highlightMode) {
+        confirmHighlight();
+      } else {
+        performLookup();
+      }
     }
     return;
   }
@@ -342,8 +385,11 @@ void DictionaryWordSelectActivity::drawHints() const {
     GUI.drawButtonHints(renderer, labels.btn1, labels.btn2, labels.btn3, labels.btn4);
     return;
   }
-  const auto labels = mappedInput.mapDirectionalLabels(tr(STR_BACK), tr(STR_LOOKUP), tr(STR_DIR_LEFT),
-                                                       tr(STR_DIR_RIGHT), tr(STR_DIR_UP), tr(STR_DIR_DOWN));
+  const char* confirm = !highlightMode ? tr(STR_LOOKUP)
+                        : anchor < 0   ? tr(STR_HIGHLIGHT_START)
+                                       : tr(STR_HIGHLIGHT_SAVE);  // Inkhome
+  const auto labels = mappedInput.mapDirectionalLabels(tr(STR_BACK), confirm, tr(STR_DIR_LEFT), tr(STR_DIR_RIGHT),
+                                                       tr(STR_DIR_UP), tr(STR_DIR_DOWN));
   GUI.drawButtonHints(renderer, labels.btn1, labels.btn2, labels.btn3, labels.btn4);
 }
 
@@ -352,7 +398,7 @@ void DictionaryWordSelectActivity::render(RenderLock&&) {
   // still holds a clean page (no popup or sub-activity since the last full
   // repaint). Restore the pixels under the old highlight, draw the new one,
   // and push — skipping the two-pass page render entirely.
-  if (popup == Popup::None && snapshotIdx >= 0 && !words.empty() && selected != snapshotIdx) {
+  if (popup == Popup::None && snapshotIdx >= 0 && !words.empty() && selected != snapshotIdx && anchor < 0) {
     renderer.writeFramebufferRegion(snapshotX, snapshotY, snapshotW, snapshotH, snapshot.get());
     // The full path's PrewarmScope cleared the glyph cache on exit; batch-load
     // just the highlighted word's glyphs before drawing them white-on-black.
@@ -376,7 +422,15 @@ void DictionaryWordSelectActivity::render(RenderLock&&) {
   scope.endScanAndPrewarm();
   page->render(renderer, fontId, marginLeft, marginTop);
 
-  if (!words.empty()) {
+  if (!words.empty() && anchor >= 0) {
+    // Inkhome: the whole passage from the start word to the cursor.
+    for (int i = std::min(anchor, selected); i <= std::max(anchor, selected); i++) {
+      const WordBox& word = words[i];
+      renderer.fillRect(word.x - 2, word.y - 2, word.width + 4, lineHeight + 4, true);
+      renderer.drawText(fontId, word.x, word.y, word.text, false, word.style);
+    }
+    snapshotIdx = -1;
+  } else if (!words.empty()) {
     drawHighlightWithSnapshot();
   }
 

@@ -311,8 +311,8 @@ void EpubReaderActivity::showBuildPopup(GfxRenderer& renderer, int& pagesUntilFu
   buildPopupPending = false;
 }
 
-void EpubReaderActivity::openDictionaryWordSelect() {
-  if (SETTINGS.dictionaryName[0] == '\0') {
+void EpubReaderActivity::openDictionaryWordSelect(const bool highlight) {
+  if (!highlight && SETTINGS.dictionaryName[0] == '\0') {
     showDictionaryMessage = true;
     dictionaryMessageTime = millis();
     requestUpdate();
@@ -328,9 +328,10 @@ void EpubReaderActivity::openDictionaryWordSelect() {
   orientedMarginTop += SETTINGS.screenMargin;
   orientedMarginLeft += SETTINGS.screenMargin;
 
-  startActivityForResult(std::make_unique<DictionaryWordSelectActivity>(renderer, mappedInput, std::move(page),
-                                                                        orientedMarginLeft, orientedMarginTop),
-                         [this](const ActivityResult&) { requestUpdate(); });
+  auto select = std::make_unique<DictionaryWordSelectActivity>(renderer, mappedInput, std::move(page),
+                                                               orientedMarginLeft, orientedMarginTop);
+  if (highlight) select->setHighlightMode(epub->getTitle(), bookPercentFor(chapterPosition()));  // Inkhome
+  startActivityForResult(std::move(select), [this](const ActivityResult&) { requestUpdate(); });
 }
 
 void EpubReaderActivity::openFootnoteSelect(const bool reopenMenuOnCancel) {
@@ -885,6 +886,10 @@ void EpubReaderActivity::onReaderMenuConfirm(EpubReaderMenuActivity::MenuAction 
     }
     case EpubReaderMenuActivity::MenuAction::DICTIONARY: {
       openDictionaryWordSelect();
+      break;
+    }
+    case EpubReaderMenuActivity::MenuAction::HIGHLIGHT: {  // Inkhome
+      openDictionaryWordSelect(true);
       break;
     }
     case EpubReaderMenuActivity::MenuAction::DISPLAY_QR: {
