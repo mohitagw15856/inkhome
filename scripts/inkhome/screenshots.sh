@@ -58,7 +58,7 @@ shoot() {
 # Home list order without recent books: Browse Files, Library, Apps, File Transfer, Settings.
 APPS='900:DOWN;1200:DOWN;1500:ENTER'
 # Launcher order, as in src/apps/AppRegistry.cpp.
-APP_ORDER=(inbox stats year achievements notes inkwriter focus habits inkcards chessink inkrecipes inkverse storyscapes inkquest pocketwiki dailydrop iffound battery motion fwswitch)
+APP_ORDER=(inbox stats year achievements notes inkwriter focus habits inkcards chessink inkrecipes inkverse storyscapes inkquest pocketwiki dailydrop wallpaper iffound battery motion fwswitch)
 
 # app <id> [extra steps...]: input script that opens an app from Home, then runs
 # "ms-offset:KEY" steps relative to the moment the app opened. Prints the script
@@ -112,6 +112,8 @@ shoot_app simulator_x3 x3-wiki      pocketwiki 0:ENTER
 shoot_app simulator_x3 x3-wiki-2    pocketwiki 0:ENTER 1200:ENTER
 shoot_app simulator_x3 x3-wiki-3    pocketwiki 0:ENTER 1200:ENTER 2600:DOWN 3400:DOWN 4200:ENTER
 shoot_app simulator_x3 x3-drop     dailydrop 0:DOWN 400:ENTER
+EXTRA_SD='sim-sd-sleep sim-sd-xth' shoot_app simulator_x3 x3-wallpaper wallpaper
+EXTRA_SD='sim-sd-sleep sim-sd-xth' shoot_app simulator_x3 x3-wallpaper-2 wallpaper 0:DOWN 400:ENTER
 shoot_app simulator_x3 x3-iffound  iffound
 shoot_app simulator_x3 x3-battery battery
 shoot_app simulator_x3 x3-motion motion
@@ -124,6 +126,7 @@ EXTRA_SD=sim-sd-sleep shoot simulator_x3 x3-sleep-stats '1500:SLEEP;4500:QUIT'
 EXTRA_SD=sim-sd-verse shoot simulator_x3 x3-sleep-verse '1500:SLEEP;4500:QUIT'
 EXTRA_SD=sim-sd-flashcard shoot simulator_x3 x3-sleep-flashcard '1500:SLEEP;4500:QUIT'
 EXTRA_SD=sim-sd-xth shoot simulator_x3 x3-sleep-pushed '1500:SLEEP;5000:QUIT'
+EXTRA_SD='sim-sd-sleep sim-sd-xth sim-sd-pinned' shoot simulator_x3 x3-sleep-pinned '1500:SLEEP;5000:QUIT'
 EXTRA_SD='sim-sd-xth sim-sd-owner' shoot simulator_x3 x3-sleep-owner '1500:SLEEP;5000:QUIT'
 
 # A reading session: open the sample book (Project Gutenberg's The Time Machine), turn eleven

@@ -14,14 +14,14 @@ upstream files to small marked hunks).
 
 ## Where things stand (2026-10-12, evening)
 
-Published pre-releases up to 1.6.5.9 (InkWriter). All 20
+Published pre-releases up to 1.6.5.10 (Wallpaper picker). All 20
 features the owner asked for are built (see PLAN.md section 4
 for the three that were reshaped or declined).
 
 Apps on `main`: Inbox, Reading stats, Year in books, Achievements, Notes,
 Focus timer, Habits (Habitink), Flashcards (Inkcards), Chess puzzles
 (ChessInk), Recipes (InkRecipes), Verse (InkVerse), StoryScapes, DailyDrop,
-InkWriter, InkQuest, PocketWiki, If Found, Battery health, Motion sensor, Switch firmware.
+InkWriter, InkQuest, PocketWiki, Wallpaper, If Found, Battery health, Motion sensor, Switch firmware.
 
 Sleep modes appended after upstream's: Custom + stats (8), Verse (9),
 Cover + stats (10), Flashcard (11); overlays: owner strip, habits strip;
@@ -83,6 +83,8 @@ Notes:
 - After an edit to `APPS` in `src/apps/AppRegistry.cpp`, check it really
   landed: clang-format packs the list into a grid. A `static_assert` now
   catches a size larger than the list.
+- If the screenshot script fails with "not a git repository", macOS has
+  pruned the temp folder: delete `$TMPDIR/inkhome-sim/crosspoint-simulator`.
 - No cmake on the Mac: `uvx cmake ...` works in its place.
 - Inkkit's byte streams are shared in `src/apps/inkkit/` (`ByteStream.h`,
   `HalFileReader.h`); include those rather than copying them into a port.

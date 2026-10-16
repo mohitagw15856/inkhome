@@ -588,6 +588,27 @@ void SleepActivity::onEnter() {
 }
 
 void SleepActivity::renderCustomSleepScreen() const {
+  // Inkhome: a wallpaper pinned in the Wallpaper app shows every time.
+  std::string pinned;
+  if (inkhome::wallpaper::pinnedPath(pinned)) {
+    if (inkhome::wallpaper::isXth(pinned)) {
+      if (inkhome::wallpaper::drawXth(renderer, pinned, overlays)) return;
+    } else {
+      HalFile pinnedFile;
+      if (Storage.openFileForRead("SLP", pinned, pinnedFile)) {
+        Bitmap bitmap(pinnedFile, true,
+                      renderer.grayscaleCapabilities(sleepGrayscaleMode(renderer)).supported() &&
+                          display.getController() == HalDisplay::Controller::SSD1677 &&
+                          SETTINGS.sleepScreenCoverFilter == CrossPointSettings::SLEEP_SCREEN_COVER_FILTER::NO_FILTER);
+        if (bitmap.parseHeaders() == BmpReaderError::Ok) {
+          renderBitmapSleepScreen(bitmap);
+          return;
+        }
+      }
+    }
+    LOG_ERR("SLP", "Pinned wallpaper unreadable, rotating instead: %s", pinned.c_str());
+  }
+
   // Look for sleep.bmp on the root of the sd card to determine if we should
   // render a custom sleep screen instead of the default.
   // This takes priority over the /sleep folder.

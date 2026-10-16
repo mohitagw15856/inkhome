@@ -5,7 +5,9 @@
 #include <Logging.h>
 #include <Memory.h>
 
+#include <algorithm>
 #include <cstring>
+#include <iterator>
 #include <vector>
 
 #include "Xtc/XtcTypes.h"
@@ -19,11 +21,14 @@ constexpr size_t MAX_CANDIDATES = 64;
 constexpr size_t HEADER_BYTES = 22;
 constexpr size_t MAX_IMAGE_BYTES = 160 * 1024;
 
-bool hasXthExtension(const std::string& name) {
-  if (name.size() < 5) return false;
-  const std::string ext = name.substr(name.size() - 4);
-  return strcasecmp(ext.c_str(), ".xth") == 0 || strcasecmp(ext.c_str(), ".xtg") == 0;
+constexpr char PIN_DIR[] = "/.crosspoint/apps/wallpaper";
+constexpr char PIN_PATH[] = "/.crosspoint/apps/wallpaper/pinned.txt";
+
+bool hasExtension(const std::string& name, const char* ext) {
+  return name.size() > 4 && strcasecmp(name.c_str() + name.size() - 4, ext) == 0;
 }
+
+bool hasXthExtension(const std::string& name) { return hasExtension(name, ".xth") || hasExtension(name, ".xtg"); }
 
 // 4x4 Bayer thresholds for the black-and-white rendering of grey levels.
 bool ditherBlack(const uint8_t value, const int x, const int y) {
@@ -53,6 +58,42 @@ bool pickXth(std::string& outPath, const bool bmpAvailable) {
   if (bmpAvailable && random(2) == 0) return false;
   outPath = candidates[static_cast<size_t>(random(static_cast<long>(candidates.size())))];
   return true;
+}
+
+bool isXth(const std::string& path) { return hasXthExtension(path); }
+
+std::vector<std::string> listAll() {
+  std::vector<std::string> out;
+  out.reserve(32);
+  if (Storage.exists("/sleep.bmp")) out.emplace_back("/sleep.bmp");
+  for (const char* folder : FOLDERS) {
+    if (!Storage.exists(folder)) continue;
+    std::vector<std::string> names;
+    for (const auto& entry : Storage.listFiles(folder, MAX_CANDIDATES)) {
+      std::string name = entry.c_str();
+      const auto slash = name.find_last_of('/');
+      if (slash != std::string::npos) name = name.substr(slash + 1);
+      if (name.empty() || name[0] == '.') continue;
+      if (hasXthExtension(name) || hasExtension(name, ".bmp")) names.push_back(name);
+    }
+    std::sort(names.begin(), names.end());
+    std::transform(names.begin(), names.end(), std::back_inserter(out),
+                   [folder](const std::string& name) { return std::string(folder) + "/" + name; });
+  }
+  return out;
+}
+
+bool pinnedPath(std::string& out) {
+  if (!Storage.exists(PIN_PATH)) return false;
+  out = Storage.readFile(PIN_PATH).c_str();
+  while (!out.empty() && (out.back() == '\n' || out.back() == '\r' || out.back() == ' ')) out.pop_back();
+  return !out.empty() && Storage.exists(out.c_str());
+}
+
+bool setPinned(const std::string& path) {
+  if (path.empty()) return !Storage.exists(PIN_PATH) || Storage.remove(PIN_PATH);
+  Storage.mkdir(PIN_DIR, true);
+  return Storage.writeFile(PIN_PATH, String(path.c_str()));
 }
 
 bool drawXth(const GfxRenderer& renderer, const std::string& path, const sleep::Overlays& overlays) {

@@ -3,6 +3,14 @@
 Inkhome versions are `<upstream-version>.<n>-inkhome`. Upstream changes are
 in CrossPoint's own release notes.
 
+## 1.6.5.10-inkhome (pre-release)
+
+### Added
+- Wallpaper app: choose one picture (stock firmware Pushed Images .xth/.xtg,
+  or .bmp from /sleep) to show on every Custom sleep screen, with a preview;
+  "Rotate through all pictures" removes the choice. Choosing one switches
+  the sleep screen to Custom if a non-picture mode was set.
+
 ## 1.6.5.9-inkhome (pre-release)
 
 ### Added
