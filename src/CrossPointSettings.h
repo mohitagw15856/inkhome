@@ -377,6 +377,8 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
   uint8_t tiltSensitivity = 1;
   // Inkhome: battery saver below 20% (see inkhome/BatterySaver.h).
   uint8_t batterySaver = 0;
+  // Inkhome: minutes left for today's reading goal in the home header.
+  uint8_t homeGoalLine = 1;
   // Master reader-touch toggle on boards with a touch controller.
   uint8_t touchReaderControls = TOUCH_READER_ON;
   // Which gestures turn the page in each direction (PAGE_TURN_GESTURE).
