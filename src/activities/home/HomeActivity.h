@@ -17,6 +17,7 @@ class HomeActivity final : public Activity {
   bool recentsLoading = false;
   bool recentsLoaded = false;
   bool firstRenderDone = false;
+  std::string goalText;  // Inkhome: reading-goal line for the header
   bool hasOpdsServers = false;
   bool hasApps = false;  // Inkhome: Apps entry (list home only)
   bool hasContinueReading = false;

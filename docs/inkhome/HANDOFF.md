@@ -64,7 +64,7 @@ cmake -S test -B build/test && cmake --build build/test --target InkhomeTests &&
 node --test test/inkhome/flasher.test.mjs
 git add -N .                            # so the formatter sees new files
 pip install 'clang-format==21.*'        # CI uses clang-format 21; 22 formats differently
-./bin/clang-format-fix                  # with clang-format 21 first on PATH
+./bin/clang-format-fix                  # with clang-format 21 first on PATH; read its output
 scripts/inkhome/cppcheck-like-ci.sh     # approximates CI's cppcheck
 pio check -e default --fail-on-defect low --fail-on-defect medium --fail-on-defect high  # CI's exact check
 scripts/inkhome/screenshots.sh          # simulator shots and button smoke test (needs SDL2)
@@ -85,6 +85,9 @@ Notes:
   catches a size larger than the list.
 - If the screenshot script fails with "not a git repository", macOS has
   pruned the temp folder: delete `$TMPDIR/inkhome-sim/crosspoint-simulator`.
+- On the Mac, `~/.cache/inkhome-tools/clang-format-21` wraps
+  `uvx --from 'clang-format==21.*' clang-format`; put that folder first on
+  PATH. Do not keep tools in the session temp folder: macOS clears it.
 - No cmake on the Mac: `uvx cmake ...` works in its place.
 - Inkkit's byte streams are shared in `src/apps/inkkit/` (`ByteStream.h`,
   `HalFileReader.h`); include those rather than copying them into a port.
