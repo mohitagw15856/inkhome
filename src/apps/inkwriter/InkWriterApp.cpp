@@ -13,6 +13,7 @@
 #include <cstring>
 
 #include "MappedInputManager.h"
+#include "WritingStats.h"
 #include "apps/AppPaths.h"
 #include "apps/stats/ReadingStatsTracker.h"
 #include "components/UITheme.h"
@@ -395,6 +396,8 @@ void EditorActivity::onEnter() {
   editor.setText(text);
   editor.clearDirty();
   sessionStartWords = editor.wordCount();
+  loggedWords = sessionStartWords;
+  if (const uint8_t minutes = takePendingSprint()) sprint.start(millis(), minutes * 60000UL);  // from Focus
   lastSaveMs = millis();
   lastKeyMs = millis();
   wasConnected = ble().isConnected();
@@ -429,6 +432,10 @@ void EditorActivity::save() {
     return;
   }
   editor.clearDirty();
+  // Only growth counts as words written; deleting lowers the baseline.
+  const int words = editor.wordCount();
+  if (words > loggedWords) logWords(static_cast<uint32_t>(words - loggedWords));
+  loggedWords = words;
 }
 
 void EditorActivity::noteWriting() {

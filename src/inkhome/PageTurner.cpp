@@ -64,8 +64,8 @@ void tick(const bool readerActive) {
     using SK = freeink::SpecialKey;
     const bool next = ev.special == SK::PageDown || ev.special == SK::Right || ev.special == SK::Down ||
                       ev.special == SK::Enter || (ev.special == SK::None && ev.ch == ' ');
-    const bool prev = ev.special == SK::PageUp || ev.special == SK::Left || ev.special == SK::Up ||
-                      ev.special == SK::Backspace;
+    const bool prev =
+        ev.special == SK::PageUp || ev.special == SK::Left || ev.special == SK::Up || ev.special == SK::Backspace;
     if (next) pendingNext = true;
     if (prev) pendingPrev = true;
     if (next || prev) lastKeyMs = millis();

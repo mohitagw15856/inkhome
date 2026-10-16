@@ -20,12 +20,11 @@ namespace {
 constexpr uint8_t DIGIT_SEGMENTS[10] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F};
 
 // Indexed by tm_wday (0 Sunday); the existing strings run Monday (1) to Sunday (7).
-constexpr StrId WEEKDAYS[7] = {StrId::STR_WEEKDAY_7, StrId::STR_WEEKDAY_1, StrId::STR_WEEKDAY_2,
-                               StrId::STR_WEEKDAY_3, StrId::STR_WEEKDAY_4, StrId::STR_WEEKDAY_5,
-                               StrId::STR_WEEKDAY_6};
-constexpr StrId MONTHS[12] = {StrId::STR_MONTH_1,  StrId::STR_MONTH_2,  StrId::STR_MONTH_3, StrId::STR_MONTH_4,
-                              StrId::STR_MONTH_5,  StrId::STR_MONTH_6,  StrId::STR_MONTH_7, StrId::STR_MONTH_8,
-                              StrId::STR_MONTH_9,  StrId::STR_MONTH_10, StrId::STR_MONTH_11, StrId::STR_MONTH_12};
+constexpr StrId WEEKDAYS[7] = {StrId::STR_WEEKDAY_7, StrId::STR_WEEKDAY_1, StrId::STR_WEEKDAY_2, StrId::STR_WEEKDAY_3,
+                               StrId::STR_WEEKDAY_4, StrId::STR_WEEKDAY_5, StrId::STR_WEEKDAY_6};
+constexpr StrId MONTHS[12] = {StrId::STR_MONTH_1, StrId::STR_MONTH_2,  StrId::STR_MONTH_3,  StrId::STR_MONTH_4,
+                              StrId::STR_MONTH_5, StrId::STR_MONTH_6,  StrId::STR_MONTH_7,  StrId::STR_MONTH_8,
+                              StrId::STR_MONTH_9, StrId::STR_MONTH_10, StrId::STR_MONTH_11, StrId::STR_MONTH_12};
 
 // One digit in a w x h box with stroke t.
 void drawDigit(const GfxRenderer& renderer, const int x, const int y, const int w, const int h, const int t,
@@ -48,7 +47,7 @@ void drawClock(const GfxRenderer& renderer) {
   const int width = renderer.getScreenWidth();
   const int height = renderer.getScreenHeight();
 
-  struct tm now {};
+  struct tm now{};
   if (!halClock.isAvailable() || !halClock.localTime(now) || now.tm_year < 124) {
     renderer.drawCenteredText(UI_12_FONT_ID, height / 2 - 20, tr(STR_CLOCK_NOT_SET), true, EpdFontFamily::BOLD);
     renderer.drawCenteredText(UI_10_FONT_ID, height / 2 + 10, tr(STR_CLOCK_NOT_SET_HINT), true);

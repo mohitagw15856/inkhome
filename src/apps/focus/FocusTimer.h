@@ -37,7 +37,7 @@ class FocusActivity final : public UiListActivity {
   const char* headerTitle() const override;
 
   static constexpr int LENGTH_COUNT = 4;
-  freeink::ui::ListItem rows[LENGTH_COUNT + 1];
+  freeink::ui::ListItem rows[LENGTH_COUNT + 2];  // lengths, writing sprint, stop
   char labels[LENGTH_COUNT][24] = {};
   int rowCount = 0;
 };

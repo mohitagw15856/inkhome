@@ -92,6 +92,7 @@ class EditorActivity final : public Activity {
   int goalWords = 500;
   uint32_t sprintMinutes = 15;
   int sessionStartWords = 0;
+  int loggedWords = 0;  // word count at the last save that logged words
   bool focusMode = false;
   bool wroteToday = false;
   bool pendingRender = false;

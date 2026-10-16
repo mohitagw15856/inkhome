@@ -85,6 +85,8 @@ Regenerate with `scripts/inkhome/screenshots.sh`.</sub>
     the stock firmware's Pushed Images and your /sleep pictures, with a
     full-screen preview. "Rotate through all pictures" goes back to a new one
     each sleep.
+  - **Focus + writing**: Focus timer's Writing sprint opens InkWriter with a
+    25-minute sprint; words written show in Year in books.
   - **DailyDrop**: a daily digest read offline; "Fetch today's drop" uses your
     saved Wi-Fi once and switches it off again. Nothing runs in the background.
   - **Recipes** (InkRecipes): ingredient checklist with a servings scaler and
@@ -188,6 +190,9 @@ vCodex file across (or import `/exports/stats_exported`) and back.
 - **crosspoint-simulator** by Julia Nguyen (MIT): screenshots and smoke tests.
 - **FreeInk SDK** (MIT), the hardware layer CrossPoint is built on.
 - **inkkit apps** by Mohit (MIT): InkRecipes and the rest of the ecosystem.
+- **Noto Sans SC** (Adobe, SIL Open Font License 1.1): the Mandarin sleep
+  screen's characters are pre-rendered from it. HSK1 words from the
+  Mandarin90 app.
 - **puff** by Mark Adler (zlib licence), the inflater PocketWiki uses,
   vendored unmodified in `src/apps/pocketwiki/core/puff/`.
 
