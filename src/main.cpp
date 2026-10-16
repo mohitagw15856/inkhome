@@ -36,6 +36,7 @@
 #include "activities/settings/SdFirmwareUpdateActivity.h"
 #include "components/UITheme.h"
 #include "fontIds.h"
+#include "inkhome/BatterySaver.h"
 #include "inkhome/InkhomeLoop.h"
 #include "inkhome/NoSdCardActivity.h"
 #include "inkhome/SdState.h"
@@ -618,7 +619,8 @@ void loop() {
     return;
   }
 
-  halTiltSensor.update(SETTINGS.tiltPageTurn, SETTINGS.orientation, activityManager.isReaderActivity());
+  halTiltSensor.update(inkhome::power::tiltMode(SETTINGS.tiltPageTurn), SETTINGS.orientation,  // Inkhome
+                       activityManager.isReaderActivity());
 
   renderer.setFadingFix(SETTINGS.fadingFix);
 
@@ -733,7 +735,7 @@ void loop() {
     return;
   }
 
-  const unsigned long sleepTimeoutMs = SETTINGS.getSleepTimeoutMs();
+  const unsigned long sleepTimeoutMs = inkhome::power::sleepTimeoutMs(SETTINGS.getSleepTimeoutMs());  // Inkhome
   if (sleepTimeoutMs > 0 && millis() - lastActivityTime >= sleepTimeoutMs) {
     LOG_DBG("SLP", "Auto-sleep triggered after %lu ms of inactivity", sleepTimeoutMs);
     enterDeepSleep(true);
