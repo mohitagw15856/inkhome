@@ -32,6 +32,7 @@ class HalTiltSensor {
 
   // Tuning constants
   static constexpr float RATE_THRESHOLD_DPS = 270.0f;      // Deg/sec speed to trigger flick
+  float rateThresholdDps = RATE_THRESHOLD_DPS;             // Inkhome: set by setSensitivity()
   static constexpr float NEUTRAL_RATE_DPS = 50.0f;         // Must stop moving below this rate before next trigger
   static constexpr unsigned long COOLDOWN_MS = 600;        // Minimum ms between triggers
   static constexpr unsigned long POLL_INTERVAL_MS = 50;    // 20 Hz polling
@@ -42,6 +43,10 @@ class HalTiltSensor {
   bool readGyro(float& gx, float& gy, float& gz) const;
 
  public:
+  // Inkhome: 0 low (firmer flick), 1 normal (upstream), 2 high (lighter flick).
+  void setSensitivity(uint8_t level) {
+    rateThresholdDps = level == 0 ? 360.0f : level >= 2 ? 190.0f : RATE_THRESHOLD_DPS;
+  }
   // Call after BoardConfig has selected the active device.
   void begin();
 

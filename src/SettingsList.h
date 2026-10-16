@@ -386,6 +386,9 @@ inline std::vector<SettingInfo> getSettingsList(const SdCardFontRegistry* regist
         SettingInfo::Enum(StrId::STR_TILT_PAGE_TURN, &CrossPointSettings::tiltPageTurn,
                           {StrId::STR_STATE_OFF, StrId::STR_NORMAL, StrId::STR_INVERTED}, "tiltPageTurn",
                           StrId::STR_CAT_CONTROLS),
+        SettingInfo::Enum(StrId::STR_TILT_SENSITIVITY, &CrossPointSettings::tiltSensitivity,
+                          {StrId::STR_SENS_LOW, StrId::STR_NORMAL, StrId::STR_SENS_HIGH}, "tiltSensitivity",
+                          StrId::STR_CAT_CONTROLS),
         SettingInfo::Toggle(StrId::STR_PWR_BTN_FOOTNOTE_BACK, &CrossPointSettings::pwrBtnFootnoteBack,
                             "pwrBtnFootnoteBack", StrId::STR_CAT_CONTROLS),
         SettingInfo::Toggle(StrId::STR_BACK_SHORT_TO_FILE_BROWSER, &CrossPointSettings::backShortToFileBrowser,
@@ -524,6 +527,7 @@ inline std::vector<SettingInfo> getSettingsList(const SdCardFontRegistry* regist
     if (!halTiltSensor.isAvailable()) eraseEntry(StrId::STR_TILT_PAGE_TURN);
     if (!halTiltSensor.isAvailable()) eraseEntry(StrId::STR_SHAKE_BOOKMARK);  // Inkhome
     if (!halTiltSensor.isAvailable()) eraseEntry(StrId::STR_FLIP_SLEEP);      // Inkhome
+    if (!halTiltSensor.isAvailable()) eraseEntry(StrId::STR_TILT_SENSITIVITY);  // Inkhome
     return v;
   }();
 
