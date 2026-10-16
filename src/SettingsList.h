@@ -384,6 +384,8 @@ inline std::vector<SettingInfo> getSettingsList(const SdCardFontRegistry* regist
         SettingInfo::Enum(StrId::STR_SHAKE_ACTION, &CrossPointSettings::motionShakeBookmark,
                           {StrId::STR_STATE_OFF, StrId::STR_SHAKE_BOOKMARK_OPT, StrId::STR_SHAKE_LOOKUP_OPT},
                           "motionShakeBookmark", StrId::STR_CAT_CONTROLS),
+        SettingInfo::Toggle(StrId::STR_BLE_PAGE_TURNER, &CrossPointSettings::blePageTurner, "blePageTurner",
+                            StrId::STR_CAT_CONTROLS),
         SettingInfo::Toggle(StrId::STR_BATTERY_SAVER, &CrossPointSettings::batterySaver, "batterySaver",
                             StrId::STR_CAT_SYSTEM),
         SettingInfo::Toggle(StrId::STR_FLIP_SLEEP, &CrossPointSettings::motionFlipSleep, "motionFlipSleep",

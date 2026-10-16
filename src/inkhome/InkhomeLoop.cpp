@@ -9,6 +9,7 @@
 #include "apps/notes/NotesApp.h"
 #include "apps/stats/ReadingStatsTracker.h"
 #include "inkhome/Motion.h"
+#include "inkhome/PageTurner.h"
 
 namespace inkhome {
 
@@ -21,6 +22,7 @@ void tick(const bool readerActive, const bool userActivity) {
   stats::tick(readerActive, userActivity);
   focus::tick(readerActive);
   motion::tick(readerActive, userActivity);
+  pageturner::tick(readerActive);
 }
 
 void beforeSleep() {

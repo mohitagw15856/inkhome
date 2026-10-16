@@ -18,6 +18,7 @@
 #include "components/UITheme.h"
 #include "core/WrapRows.h"
 #include "fontIds.h"
+#include "inkhome/PageTurner.h"
 #include "inkhome/SdState.h"
 
 namespace fui = freeink::ui;
@@ -111,6 +112,7 @@ std::unique_ptr<Activity> create(GfxRenderer& renderer, MappedInputManager& mapp
 
 void DraftListActivity::onEnter() {
   UiListActivity::onEnter();
+  inkhome::pageturner::setAppOwnsBluetooth(true);
   if (!ble().isRunning()) {
     const uint32_t before = ESP.getFreeHeap();
     bleStarted = ble().begin("Inkhome");
@@ -124,6 +126,7 @@ void DraftListActivity::onEnter() {
 void DraftListActivity::onExit() {
   if (ble().isRunning()) ble().end();
   bleStarted = false;
+  inkhome::pageturner::setAppOwnsBluetooth(false);
   rows = {};
   names = {};
   paths = {};
