@@ -81,8 +81,10 @@ void MotionTestActivity::render(RenderLock&&) {
                         : "-Z");
   renderer.drawText(UI_10_FONT_ID, side, y, line, true);
   y += lineH;
-  snprintf(line, sizeof(line), "%s: %s", tr(STR_SHAKE_BOOKMARK),
-           SETTINGS.motionShakeBookmark ? tr(STR_STATE_ON) : tr(STR_STATE_OFF));
+  snprintf(line, sizeof(line), "%s: %s", tr(STR_SHAKE_ACTION),
+           SETTINGS.motionShakeBookmark == 2   ? tr(STR_SHAKE_LOOKUP_OPT)
+           : SETTINGS.motionShakeBookmark == 1 ? tr(STR_SHAKE_BOOKMARK_OPT)
+                                               : tr(STR_STATE_OFF));
   renderer.drawText(UI_10_FONT_ID, side, y, line, true);
   y += lineH;
   snprintf(line, sizeof(line), "%s: %s", tr(STR_FLIP_SLEEP),

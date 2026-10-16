@@ -76,8 +76,9 @@ void detectShake(const unsigned long now) {
     if (peakCount >= SHAKE_PEAKS && now - oldest <= SHAKE_WINDOW_MS && now - lastShakeMs > SHAKE_COOLDOWN_MS) {
       lastShakeMs = now;
       peakCount = 0;
-      LOG_INF("MOTION", "Shake: bookmark");
-      mappedInputManager.injectHomeButtonAction(HomeButtonAction::Bookmark);
+      const bool lookUp = SETTINGS.motionShakeBookmark == 2;
+      LOG_INF("MOTION", "Shake: %s", lookUp ? "look up" : "bookmark");
+      mappedInputManager.injectHomeButtonAction(lookUp ? HomeButtonAction::Dictionary : HomeButtonAction::Bookmark);
     }
   }
   aboveShake = above;
