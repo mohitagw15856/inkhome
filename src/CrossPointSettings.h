@@ -33,6 +33,8 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
     COVER_STATS = 10,
     // Inkhome: a card from the last studied Flashcards deck.
     FLASHCARD = 11,
+    // Inkhome: the time the device went to sleep, the date and the battery.
+    CLOCK = 12,
     SLEEP_SCREEN_MODE_COUNT
   };
   enum SLEEP_SCREEN_COVER_MODE { FIT = 0, CROP = 1, SLEEP_SCREEN_COVER_MODE_COUNT };
