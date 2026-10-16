@@ -49,6 +49,7 @@ git ls-files  --exclude-standard ${GIT_LS_FILES_FLAGS} \
     | grep -v -E '^lib/uzlib/' \
     | grep -v -E '^lib/miniz/third_party/' \
     | grep -v -E '^src/apps/pocketwiki/core/puff/' \
+    | grep -v -E '^src/inkhome/mandarin/HanziData.h' \
     | xargs -r "${CLANG_FORMAT_BIN}" -style=file -i
 # Restore strict pipeline failure handling for the rest of the script.
 set -o pipefail

@@ -34,6 +34,7 @@
 #include "inkhome/InkhomeConfig.h"
 #include "inkhome/SleepClock.h"
 #include "inkhome/XthWallpaper.h"
+#include "inkhome/mandarin/SleepMandarin.h"
 
 namespace {
 
@@ -563,6 +564,11 @@ void SleepActivity::onEnter() {
       return APP_STATE.lastSleepFromReader ? renderCoverSleepScreen() : renderCustomSleepScreen();
     case (CrossPointSettings::SLEEP_SCREEN_MODE::FLASHCARD):
       inkcards::drawSleepCard(renderer);
+      inkhome::sleep::draw(renderer, overlays);
+      renderer.displayBuffer(HalDisplay::HALF_REFRESH);
+      return;
+    case (CrossPointSettings::SLEEP_SCREEN_MODE::MANDARIN):
+      inkhome::mandarin::drawSleepWord(renderer);
       inkhome::sleep::draw(renderer, overlays);
       renderer.displayBuffer(HalDisplay::HALF_REFRESH);
       return;

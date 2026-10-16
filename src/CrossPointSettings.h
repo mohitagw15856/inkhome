@@ -35,6 +35,8 @@ class CrossPointSettings : public PersistableStore<CrossPointSettings> {
     FLASHCARD = 11,
     // Inkhome: the time the device went to sleep, the date and the battery.
     CLOCK = 12,
+    // Inkhome: one HSK1 Mandarin word each sleep.
+    MANDARIN = 13,
     SLEEP_SCREEN_MODE_COUNT
   };
   enum SLEEP_SCREEN_COVER_MODE { FIT = 0, CROP = 1, SLEEP_SCREEN_COVER_MODE_COUNT };
