@@ -125,6 +125,7 @@ shoot_app simulator x4-stats       stats
 EXTRA_SD=sim-sd-sleep shoot simulator_x3 x3-sleep-stats '1500:SLEEP;4500:QUIT'
 EXTRA_SD=sim-sd-verse shoot simulator_x3 x3-sleep-verse '1500:SLEEP;4500:QUIT'
 EXTRA_SD=sim-sd-clock shoot simulator_x3 x3-sleep-clock '1500:SLEEP;4500:QUIT'
+EXTRA_SD=sim-sd-mandarin shoot simulator_x3 x3-sleep-mandarin '1500:SLEEP;4500:QUIT'
 EXTRA_SD=sim-sd-flashcard shoot simulator_x3 x3-sleep-flashcard '1500:SLEEP;4500:QUIT'
 EXTRA_SD=sim-sd-xth shoot simulator_x3 x3-sleep-pushed '1500:SLEEP;5000:QUIT'
 EXTRA_SD='sim-sd-sleep sim-sd-xth sim-sd-pinned' shoot simulator_x3 x3-sleep-pinned '1500:SLEEP;5000:QUIT'
