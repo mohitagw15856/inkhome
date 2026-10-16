@@ -1,6 +1,7 @@
 #include "InkhomeLoop.h"
 
 #include <GlyphBitmap.h>
+#include <HalTiltSensor.h>
 
 #include "CrossPointSettings.h"
 #include "apps/device/BatteryHealth.h"
@@ -14,6 +15,7 @@ namespace inkhome {
 void tick(const bool readerActive, const bool userActivity) {
   // The glyph painter reads this on the render task; a byte write is enough.
   glyphBitmap::textDarkness = SETTINGS.textDarkness > 2 ? 2 : SETTINGS.textDarkness;
+  halTiltSensor.setSensitivity(SETTINGS.tiltSensitivity);
   stats::tick(readerActive, userActivity);
   focus::tick(readerActive);
   motion::tick(readerActive, userActivity);

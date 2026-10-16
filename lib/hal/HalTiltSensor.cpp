@@ -127,13 +127,13 @@ void HalTiltSensor::update(const uint8_t mode, const uint8_t orientation, const 
   } else {
     // Check for new tilt gesture (with cooldown)
     if ((now - _lastTiltMs) >= COOLDOWN_MS) {
-      if (tiltAxis > RATE_THRESHOLD_DPS) {
+      if (tiltAxis > rateThresholdDps) {
         _tiltForwardEvent = true;
         _hadActivity = true;
         _inTilt = true;
         _lastTiltMs = now;
         LOG_INF("GYR", "Forward Trigger=(%.1f) dps", tiltAxis);
-      } else if (tiltAxis < -RATE_THRESHOLD_DPS) {
+      } else if (tiltAxis < -rateThresholdDps) {
         _tiltBackEvent = true;
         _hadActivity = true;
         _inTilt = true;
