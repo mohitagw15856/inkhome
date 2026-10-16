@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inkhome - Send a note</title>
+    <style>
+      :root {
+        --font-color: #333;
+        --bg: #f5f5f5;
+        --title-color: #2c3e50;
+        --card-bg: #FFF;
+        --label-color: #7f8c8d;
+        --border-color: #eee;
+        --accent-color: rgb(110, 154, 130);
+        --accent-hover-color: #5a8c73;
+        --danger-color: #e74c3c;
+        --danger-hover: #c0392b;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --font-color: #f5f5f5;
+          --bg: #333;
+          --title-color: #ecf0f1;
+          --card-bg: #444;
+          --label-color: #bdc3c7;
+          --border-color: #555;
+          color-scheme: dark;
+        }
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: var(--bg);
+        color: var(--font-color);
+      }
+      h1 {
+        color: var(--title-color);
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 10px;
+      }
+      h2 { color: var(--title-color); margin-top: 0; }
+      h3 { margin: 0 0 8px 0; }
+      .card {
+        background: var(--card-bg);
+        border-radius: 8px;
+        padding: 20px;
+        margin: 15px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .nav-links {
+        margin: 20px 0;
+        display: flex;
+        gap: 10px;
+      }
+      .nav-links a {
+        padding: 10px 20px;
+        color: var(--font-color);
+        text-decoration: none;
+        border-radius: 4px;
+      }
+      .nav-links a.active {
+        background-color: var(--accent-color);
+        color: white;
+      }
+      .nav-links a:not(.active):hover {
+        background-color: var(--accent-hover-color);
+        color: white;
+      }
+      .family {
+        border-bottom: 1px solid var(--border-color);
+        padding: 12px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .family:last-child { border-bottom: none; }
+      .family-info { flex: 1; }
+      .family-meta { color: var(--label-color); font-size: 0.9em; }
+      .btn {
+        padding: 6px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9em;
+      }
+      .btn-danger {
+        background: var(--danger-color);
+        color: white;
+      }
+      .btn-danger:hover { background: var(--danger-hover); }
+      .btn-primary {
+        background: var(--accent-color);
+        color: white;
+      }
+      .btn-primary:hover { background: var(--accent-hover-color); }
+      .upload-form {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .upload-form input[type="text"] {
+        padding: 6px 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        background: var(--bg);
+        color: var(--font-color);
+      }
+      .upload-form input[type="file"] { flex: 1; min-width: 200px; }
+      #status {
+        margin-top: 10px;
+        padding: 8px;
+        border-radius: 4px;
+        display: none;
+      }
+      .status-ok { background: #d4edda; color: #155724; display: block !important; }
+      .status-err { background: #f8d7da; color: #721c24; display: block !important; }
+      .empty { color: var(--label-color); text-align: center; padding: 20px; }
+          label { display: block; margin: 12px 0 6px; color: var(--label-color); }
+      input[type=text], textarea {
+        width: 100%; box-sizing: border-box; padding: 10px; font: inherit;
+        border: 1px solid var(--border-color); border-radius: 6px;
+        background: var(--bg); color: var(--font-color);
+      }
+      textarea { min-height: 240px; }
+      button {
+        margin-top: 14px; padding: 10px 22px; border: none; border-radius: 6px;
+        background: var(--accent-color); color: #fff; font: inherit; cursor: pointer;
+      }
+      button:hover { background: var(--accent-hover-color); }
+      #status { display: none; margin-top: 12px; padding: 10px; border-radius: 6px; }
+    </style>
+  </head>
+  <body>
+    <h1>📚 Inkhome</h1>
+
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/files">File Manager</a>
+      <a href="/send" class="active">Send a note</a>
+      <a href="/settings">Settings</a>
+      <a href="/fonts">Fonts</a>
+    </div>
+
+    <div class="card">
+      <h2>Send a note or link</h2>
+      <p>It arrives in Apps, Inbox on the reader as a Markdown file.</p>
+      <form id="form">
+        <label for="title">Title</label>
+        <input type="text" id="title" maxlength="80" placeholder="Article to read later" />
+        <label for="link">Link (optional)</label>
+        <input type="text" id="link" maxlength="400" placeholder="https://" />
+        <label for="text">Text</label>
+        <textarea id="text" maxlength="32000" placeholder="Paste an article, a list or a note"></textarea>
+        <button type="submit">Send to the reader</button>
+      </form>
+      <div id="status"></div>
+    </div>
+
+    <script>
+      const form = document.getElementById('form');
+      const status = document.getElementById('status');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const body = new URLSearchParams();
+        body.set('title', document.getElementById('title').value.trim());
+        body.set('link', document.getElementById('link').value.trim());
+        body.set('text', document.getElementById('text').value);
+        status.className = '';
+        try {
+          const res = await fetch('/api/send', { method: 'POST', body });
+          const msg = await res.text();
+          status.textContent = res.ok ? 'Sent: ' + msg : 'Not sent: ' + msg;
+          status.className = res.ok ? 'status-ok' : 'status-err';
+          if (res.ok) form.reset();
+        } catch (err) {
+          status.textContent = 'Not sent: the reader did not answer.';
+          status.className = 'status-err';
+        }
+      });
+    </script>
+  </body>
+</html>
