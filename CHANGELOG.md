@@ -10,6 +10,28 @@ in CrossPoint's own release notes.
   or .bmp from /sleep) to show on every Custom sleep screen, with a preview;
   "Rotate through all pictures" removes the choice. Choosing one switches
   the sleep screen to Custom if a non-picture mode was set.
+- Clock sleep screen: the time the device went to sleep (labelled "Asleep
+  since"), the date and the battery.
+- Mandarin word sleep screen: one HSK1 word per sleep (characters, pinyin,
+  meaning) from the Mandarin90 list; characters drawn from Noto Sans SC.
+- Highlights: reader menu, Highlight a passage; the passage and book
+  percentage go to /notes/inkhome/highlights/<title>.md.
+- Bluetooth page turner (Settings, Controls; off by default): a paired BLE
+  remote or keyboard turns pages while a book is open. Bluetooth runs only
+  then, and only with 100 KB of memory free. Pair from InkWriter.
+- Shake setting is now Off, Bookmark or Look up a word.
+- Tilt sensitivity (Settings, Controls): Low, Normal or High.
+- Battery saver below 20% (Settings, System): tilt off, half as many full
+  refreshes, sleep after 3 minutes idle, while on battery.
+- Daily goal on Home: minutes left for today's reading goal in the Home
+  header (Settings, Reader).
+- Send a note: File Transfer's web page saves a title, link and text into
+  /inbox as Markdown.
+- Focus timer: Writing sprint opens InkWriter with a 25-minute sprint.
+  InkWriter logs words written per day; Year in books shows the year's total.
+
+### Fixed
+- Formatting of the app registry (CI).
 
 ## 1.6.5.9-inkhome (pre-release)
 

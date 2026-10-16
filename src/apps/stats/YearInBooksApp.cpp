@@ -12,6 +12,7 @@
 
 #include "MappedInputManager.h"
 #include "ReadingStatsTracker.h"
+#include "apps/inkwriter/WritingStats.h"
 #include "components/UITheme.h"
 #include "fontIds.h"
 #include "util/ScreenshotUtil.h"
@@ -143,7 +144,10 @@ void YearInBooksActivity::drawCard() {
   }
   if (y.busiestMonth > 0) row(tr(STR_YEAR_BUSIEST_MONTH), I18N.get(MONTHS[y.busiestMonth - 1]));
   if (y.favouriteWeekday >= 0) row(tr(STR_YEAR_FAVOURITE_DAY), I18N.get(WEEKDAYS[y.favouriteWeekday]));
-  if (y.totalMs == 0) renderer.drawCenteredText(UI_12_FONT_ID, top, tr(STR_YEAR_EMPTY), true);
+  // Inkhome: words written in InkWriter this year.
+  const uint64_t written = inkwriter::wordsWritten(daysFromCivil(year, 1, 1), daysFromCivil(year, 12, 31));
+  if (written > 0) row(tr(STR_YEAR_WORDS), std::to_string(written));
+  if (y.totalMs == 0 && written == 0) renderer.drawCenteredText(UI_12_FONT_ID, top, tr(STR_YEAR_EMPTY), true);
 
   renderer.drawCenteredText(SMALL_FONT_ID, height - PADDING - renderer.getLineHeight(SMALL_FONT_ID),
                             tr(STR_YEAR_FOOTER), true);

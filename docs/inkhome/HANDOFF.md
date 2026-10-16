@@ -14,7 +14,7 @@ upstream files to small marked hunks).
 
 ## Where things stand (2026-10-12, evening)
 
-Published pre-releases up to 1.6.5.10 (Wallpaper picker). All 20
+Published pre-releases up to 1.6.5.10 (Wallpaper picker and the ten follow-up features). All 20
 features the owner asked for are built (see PLAN.md section 4
 for the three that were reshaped or declined).
 
@@ -32,9 +32,10 @@ works on the device. Checklist: `docs/inkhome/TESTING.md`.
 
 ## Next, in order
 
-1. All planned features are built. Wait for the owner's hardware results
-   (TESTING.md), especially InkWriter's heap numbers. Flash is at 94% of the
-   slot (release 93.3%), so ask before adding anything large.
+1. All requested features are built. Wait for the owner's hardware results
+   (TESTING.md sections 24 to 33), especially the Bluetooth heap numbers.
+   Flash is at 95% of the slot (release 94.5%, about 350 KB left), so ask
+   before adding anything large.
 
 ## How to work in this repo
 

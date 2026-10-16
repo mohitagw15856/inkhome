@@ -248,6 +248,42 @@ to hand before step 1.
 - [ ] Delete the chosen picture from the card: the sleep screen still works
       (it rotates).
 
+## 29. Clock and Mandarin sleep screens
+- [ ] Settings, Display, Sleep screen = Clock: sleep shows "Asleep since",
+      the time, the date and the battery. Without a set clock it says how to
+      set one.
+- [ ] Sleep screen = Mandarin word: one word per sleep; the next sleep shows
+      the next word. Characters are sharp enough to read.
+
+## 30. Highlights
+- [ ] In a book, menu, Highlight a passage: Confirm on the first word, move
+      to the last word (the passage fills in black), Confirm: "Saved to
+      notes". Back before the second Confirm cancels the start word.
+- [ ] The card has /notes/inkhome/highlights/<book>.md with the passage.
+
+## 31. Bluetooth page turner
+- [ ] Pair the remote from Apps, InkWriter, Keyboard. Then Settings,
+      Controls, Bluetooth page turner on. Open a book: within a few seconds
+      the remote turns pages both ways. Serial shows the free memory.
+- [ ] Close the book: serial shows "Bluetooth off". Reading long books with
+      it on stays stable (please report any crash with the serial log).
+
+## 32. Shake, tilt and battery saver
+- [ ] Settings, Controls, Shake = Look up a word (a dictionary must be set):
+      shaking in a book opens the word picker.
+- [ ] Tilt sensitivity High: a lighter flick turns; Low needs a firmer one.
+- [ ] Battery saver on, battery under 20% and unplugged: tilt stops working
+      and the device sleeps after 3 minutes; plugged in, normal again.
+
+## 33. Home goal, Send a note, writing stats
+- [ ] With the clock set, Home's header shows "N min to today's reading
+      goal", then "Today's reading goal reached" once read enough.
+- [ ] File Transfer, open the page on a phone, Send a note: a title, a link
+      and some text arrive in Apps, Inbox as a Markdown file that opens.
+- [ ] Apps, Focus, Writing sprint: InkWriter opens; a draft starts with a
+      25-minute sprint. Write some words; Year in books shows "Words written
+      in InkWriter".
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log

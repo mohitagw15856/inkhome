@@ -11,6 +11,8 @@
 #include "CrossPointState.h"
 #include "MappedInputManager.h"
 #include "RecentBooksStore.h"
+#include "apps/inkwriter/InkWriterApp.h"
+#include "apps/inkwriter/WritingStats.h"
 #include "apps/stats/ReadingStatsTracker.h"
 #include "components/UITheme.h"
 #include "fontIds.h"
@@ -97,6 +99,11 @@ void FocusActivity::onEnter() {
     rows[rowCount].actionValue = static_cast<int16_t>(rowCount);
     ++rowCount;
   }
+  // Inkhome: a 25-minute writing sprint in InkWriter.
+  rows[rowCount] = fui::ListItem{};
+  rows[rowCount].label = tr(STR_FOCUS_WRITE);
+  rows[rowCount].actionValue = static_cast<int16_t>(rowCount);
+  ++rowCount;
   if (running) {
     rows[rowCount] = fui::ListItem{};
     rows[rowCount].label = tr(STR_FOCUS_STOP);
@@ -113,7 +120,13 @@ const char* FocusActivity::headerTitle() const { return tr(STR_FOCUS_TITLE); }
 void FocusActivity::activateIndex(const int index) {
   if (index < 0 || index >= rowCount) return;
   app.clearTapFlash();
-  if (index >= LENGTH_COUNT) {
+  if (index == LENGTH_COUNT) {
+    inkwriter::setPendingSprint(25);
+    auto writer = inkwriter::create(renderer, mappedInput);
+    if (writer) activityManager.replaceActivity(std::move(writer));
+    return;
+  }
+  if (index > LENGTH_COUNT) {
     stop();
     finish();
     return;

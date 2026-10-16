@@ -6,6 +6,7 @@
 
 #include "apps/inkwriter/core/Editor.h"
 #include "apps/inkwriter/core/Session.h"
+#include "apps/inkwriter/core/WordLog.h"
 #include "apps/inkwriter/core/WrapRows.h"
 
 using namespace inkwriter;
@@ -105,4 +106,19 @@ TEST(InkWriter, WrapsAtSpacesAndFindsCursor) {
   EXPECT_EQ(cursorRow(rows, 0, 11), 1u);  // end of line stays on its last row
   EXPECT_EQ(cursorRow(rows, 1, 0), 2u);
   EXPECT_EQ(cursorRow(rows, 2, 12), 4u);
+}
+
+TEST(InkWriter, WordLogAddsPerDayAndRoundTrips) {
+  WordLog log;
+  log.add(20000, 120);
+  log.add(19999, 30);
+  log.add(20000, 80);
+  log.add(0, 50);  // no clock: ignored
+  ASSERT_EQ(log.days().size(), 2u);
+  EXPECT_EQ(log.days()[0].day, 19999u);
+  EXPECT_EQ(log.days()[1].words, 200u);
+  EXPECT_EQ(log.total(20000, 20000), 200u);
+  EXPECT_EQ(log.total(0, 30000), 230u);
+  const WordLog again = WordLog::parse(log.serialise() + "garbage\n");
+  EXPECT_EQ(again.total(0, 30000), 230u);
 }

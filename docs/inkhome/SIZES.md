@@ -26,8 +26,10 @@ in each module's header comment.
 | Text darkness and InkQuest (engine and built-in story) | 5,880,799 | +25,482 | 58,216 |
 | PocketWiki (archive reader, puff, layout) | 5,900,045 | +19,246 | 58,928 |
 | InkWriter and the NimBLE Bluetooth stack | 6,161,291 | +261,246 | 67,816 |
+| Wallpaper picker | 6,169,509 | +8,218 | 67,816 |
+| The ten 1.6.5.10 features (Mandarin glyphs about 51 KB of it) | 6,244,401 | +74,892 | 67,872 |
 
-`gh_release` env (what users install), 1.6.5.9: **6,113,201 bytes, 93.3%** of
-the partition. Headroom about 440 KB.
+`gh_release` env (what users install), 1.6.5.10: **6,196,237 bytes, 94.5%** of
+the partition. Headroom about 350 KB.
 
 Tilt default and OTA changes did not move the size measurably.
