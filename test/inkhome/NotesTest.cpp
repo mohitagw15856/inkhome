@@ -20,3 +20,8 @@ TEST(Notes, MarkdownListsMarks) {
   EXPECT_NE(md.find("- **12%** \"It was on a dreary night\""), std::string::npos);
   EXPECT_NE(md.find("- **50%** (midpoint)"), std::string::npos);
 }
+
+TEST(Notes, HighlightEntryQuotesOnOneLine) {
+  EXPECT_EQ(inkhome::notes::highlightEntry("It was the best\nof times", 12), "> It was the best of times\n\n*12%*\n\n");
+  EXPECT_EQ(inkhome::notes::highlightsHeader("Emma"), "# Emma\n*Highlights*\n\n");
+}

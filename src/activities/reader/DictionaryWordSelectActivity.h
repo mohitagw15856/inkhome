@@ -4,6 +4,7 @@
 #include <I18n.h>
 
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "activities/Activity.h"
@@ -26,6 +27,14 @@ class DictionaryWordSelectActivity final : public Activity {
   void loop() override;
   void render(RenderLock&&) override;
 
+  // Inkhome: highlight mode. Confirm marks the first word, then the last;
+  // the passage between is saved to the book's highlights notes.
+  void setHighlightMode(std::string title, int percent) {
+    highlightMode = true;
+    bookTitle = std::move(title);
+    bookPercent = percent;
+  }
+
  private:
   // Screen box of one selectable word. `text` points into the owned Page's
   // TextBlock arena (NUL-terminated), valid for this activity's lifetime.
@@ -45,6 +54,7 @@ class DictionaryWordSelectActivity final : public Activity {
   int wordAt(int x, int y) const;
   void moveVertical(int direction);
   void performLookup();
+  void confirmHighlight();  // Inkhome
   bool drawHighlightWithSnapshot();
   void drawHints() const;
 
@@ -81,4 +91,11 @@ class DictionaryWordSelectActivity final : public Activity {
   int16_t snapshotW = 0;
   int16_t snapshotH = 0;
   int snapshotIdx = -1;
+
+  // Inkhome: highlight mode state.
+  bool highlightMode = false;
+  int anchor = -1;  // first word of the passage, once chosen
+  bool finishAfterPopup = false;
+  std::string bookTitle;
+  int bookPercent = 0;
 };
