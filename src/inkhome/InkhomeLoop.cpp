@@ -15,7 +15,9 @@ namespace inkhome {
 void tick(const bool readerActive, const bool userActivity) {
   // The glyph painter reads this on the render task; a byte write is enough.
   glyphBitmap::textDarkness = SETTINGS.textDarkness > 2 ? 2 : SETTINGS.textDarkness;
+#ifndef SIMULATOR  // the simulator's tilt stub has no sensitivity
   halTiltSensor.setSensitivity(SETTINGS.tiltSensitivity);
+#endif
   stats::tick(readerActive, userActivity);
   focus::tick(readerActive);
   motion::tick(readerActive, userActivity);
