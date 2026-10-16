@@ -11,6 +11,7 @@
 
 #include "MappedInputManager.h"
 #include "activities/ActivityManager.h"
+#include "inkhome/PageTurner.h"
 
 namespace ReaderUtils {
 
@@ -64,8 +65,11 @@ struct PageTurnResult {
 
 inline PageTurnResult detectPageTurn(const MappedInputManager& input) {
   const bool usePress = SETTINGS.longPressButtonBehavior == SETTINGS.OFF;
-  const bool tiltNext = SETTINGS.tiltPageTurn && halTiltSensor.wasTiltedForward();
-  const bool tiltPrev = SETTINGS.tiltPageTurn && halTiltSensor.wasTiltedBack();
+  // Inkhome: a Bluetooth page turner counts like a tilt.
+  const bool remoteNext = inkhome::pageturner::takeNext();
+  const bool remotePrev = inkhome::pageturner::takePrev();
+  const bool tiltNext = (SETTINGS.tiltPageTurn && halTiltSensor.wasTiltedForward()) || remoteNext;
+  const bool tiltPrev = (SETTINGS.tiltPageTurn && halTiltSensor.wasTiltedBack()) || remotePrev;
   const bool swapFront = input.isNavDirectionSwapped();
   const auto prevButton = swapFront ? MappedInputManager::Button::Right : MappedInputManager::Button::Left;
   const auto nextButton = swapFront ? MappedInputManager::Button::Left : MappedInputManager::Button::Right;

@@ -39,6 +39,7 @@
 #include "inkhome/BatterySaver.h"
 #include "inkhome/InkhomeLoop.h"
 #include "inkhome/NoSdCardActivity.h"
+#include "inkhome/PageTurner.h"
 #include "inkhome/SdState.h"
 #include "platform/UsbSerialJtagHandoff.h"
 #include "util/ButtonNavigator.h"
@@ -656,8 +657,9 @@ void loop() {
 
   // Check for any user activity (button press or release) or active background work
   static unsigned long lastActivityTime = millis();
-  const bool userActivity =
-      gpio.wasAnyPressed() || gpio.wasAnyReleased() || gpio.wasTouchActivity() || halTiltSensor.hadActivity();
+  const bool userActivity = gpio.wasAnyPressed() || gpio.wasAnyReleased() || gpio.wasTouchActivity() ||
+                            halTiltSensor.hadActivity() ||
+                            inkhome::pageturner::recentlyUsed();  // Inkhome: Bluetooth page turner
   if (userActivity || activityManager.preventAutoSleep()) {
     lastActivityTime = millis();         // Reset inactivity timer
     powerManager.setPowerSaving(false);  // Restore normal CPU frequency on user activity
