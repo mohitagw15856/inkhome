@@ -3,6 +3,16 @@
 Inkhome versions are `<upstream-version>.<n>-inkhome`. Upstream changes are
 in CrossPoint's own release notes.
 
+## 1.6.5.11-inkhome (pre-release)
+
+### Fixed
+- Wallpaper: choosing a stock firmware picture said "could not be shown" and
+  would not set it. Pictures (.xth/.xtg) were loaded whole, about 96 KB in
+  one block, which an app usually cannot get; they now stream from the card
+  through a 4 KB buffer, for the preview and the sleep screen alike. If a
+  preview still fails, Confirm uses the picture anyway and the serial log
+  says why.
+
 ## 1.6.5.10-inkhome (pre-release)
 
 ### Added

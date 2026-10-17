@@ -20,6 +20,7 @@ constexpr const char* FOLDERS[] = {"/Pushed Images", "/sleep", "/.sleep"};
 constexpr size_t MAX_CANDIDATES = 64;
 constexpr size_t HEADER_BYTES = 22;
 constexpr size_t MAX_IMAGE_BYTES = 160 * 1024;
+constexpr size_t STREAM_BYTES = 4096;  // two halves for the 2-bit planes
 
 constexpr char PIN_DIR[] = "/.crosspoint/apps/wallpaper";
 constexpr char PIN_PATH[] = "/.crosspoint/apps/wallpaper/pinned.txt";
@@ -98,42 +99,44 @@ bool setPinned(const std::string& path) {
 
 bool drawXth(const GfxRenderer& renderer, const std::string& path, const sleep::Overlays& overlays) {
   HalFile file;
-  if (!Storage.openFileForRead("XTH", path.c_str(), file)) return false;
+  if (!Storage.openFileForRead("XTH", path.c_str(), file)) {
+    LOG_ERR("XTH", "Cannot open %s", path.c_str());
+    return false;
+  }
   xtc::XtgPageHeader header{};
-  if (file.read(&header, sizeof(header)) != static_cast<int>(sizeof(header))) return false;
+  if (file.read(&header, sizeof(header)) != static_cast<int>(sizeof(header))) {
+    LOG_ERR("XTH", "%s: short header", path.c_str());
+    return false;
+  }
   const bool twoBit = header.magic == xtc::XTH_MAGIC;
   if (!twoBit && header.magic != xtc::XTG_MAGIC) {
-    LOG_ERR("XTH", "%s is not an XTH/XTG image", path.c_str());
+    LOG_ERR("XTH", "%s is not an XTH/XTG image (magic %08lx)", path.c_str(), static_cast<unsigned long>(header.magic));
+    return false;
+  }
+  if (header.compression != 0) {
+    LOG_ERR("XTH", "%s: compressed images are not supported (%u)", path.c_str(), header.compression);
     return false;
   }
   const int width = header.width;
   const int height = header.height;
   const size_t colBytes = (static_cast<size_t>(height) + 7) / 8;
-  const size_t expected = twoBit ? static_cast<size_t>(width) * colBytes * 2
-                                 : ((static_cast<size_t>(width) + 7) / 8) * static_cast<size_t>(height);
-  if (width == 0 || height == 0 || expected > MAX_IMAGE_BYTES) {
-    LOG_ERR("XTH", "%s: unsupported size %dx%d", path.c_str(), width, height);
-    return false;
-  }
-  auto data = makeUniqueNoThrow<uint8_t[]>(expected);
-  if (!data) {
-    LOG_ERR("XTH", "OOM: %u bytes for %s", static_cast<unsigned>(expected), path.c_str());
-    return false;
-  }
-  if (!file.seek(HEADER_BYTES) || file.read(data.get(), expected) != static_cast<int>(expected)) return false;
-  file.close();
-
-  const uint8_t* pixels = data.get();
+  const size_t rowBytes = (static_cast<size_t>(width) + 7) / 8;
   const size_t planeSize = static_cast<size_t>(width) * colBytes;
-  auto value = [&](const int x, const int y) -> uint8_t {
-    if (twoBit) {
-      const size_t at = static_cast<size_t>(width - 1 - x) * colBytes + static_cast<size_t>(y / 8);
-      const int shift = 7 - (y % 8);
-      return static_cast<uint8_t>((((pixels[at] >> shift) & 1) << 1) | ((pixels[at + planeSize] >> shift) & 1));
-    }
-    const size_t at = static_cast<size_t>(y) * ((width + 7) / 8) + static_cast<size_t>(x / 8);
-    return ((pixels[at] >> (7 - (x % 8))) & 1) ? 0 : 3;  // XTG: 1 = white
-  };
+  const size_t expected = twoBit ? planeSize * 2 : rowBytes * static_cast<size_t>(height);
+  if (width == 0 || height == 0 || expected > MAX_IMAGE_BYTES || file.fileSize() < HEADER_BYTES + expected) {
+    LOG_ERR("XTH", "%s: unsupported size %dx%d (file %u bytes)", path.c_str(), width, height,
+            static_cast<unsigned>(file.fileSize()));
+    return false;
+  }
+
+  // The picture streams from the card through one small buffer, so it works
+  // with a fragmented heap (a whole 480x800 picture would need 96 KB at once).
+  auto buffer = makeUniqueNoThrow<uint8_t[]>(STREAM_BYTES);
+  if (!buffer) {
+    LOG_ERR("XTH", "OOM: %u byte stream buffer", static_cast<unsigned>(STREAM_BYTES));
+    return false;
+  }
+  uint8_t* const buf = buffer.get();
 
   // Centre on the panel; a larger picture is cropped evenly.
   const int screenW = renderer.getScreenWidth();
@@ -145,11 +148,51 @@ bool drawXth(const GfxRenderer& renderer, const std::string& path, const sleep::
   const int x1 = offX < 0 ? x0 + screenW : width;
   const int y1 = offY < 0 ? y0 + screenH : height;
 
-  // Draws pixels whose value passes `include` in the given colour.
+  bool readOk = true;
+  auto readAt = [&](const size_t offset, uint8_t* dst, const size_t n) {
+    if (!readOk) return false;
+    readOk = file.seek(HEADER_BYTES + offset) && file.read(dst, n) == static_cast<int>(n);
+    if (!readOk) LOG_ERR("XTH", "%s: read failed at %u", path.c_str(), static_cast<unsigned>(offset));
+    return readOk;
+  };
+
+  // Draws pixels whose value (0 white .. 3 black) passes `include`.
   auto drawWhere = [&](auto include, const bool black) {
-    for (int y = y0; y < y1; ++y) {
-      for (int x = x0; x < x1; ++x) {
-        if (include(value(x, y), x + offX, y + offY)) renderer.drawPixel(x + offX, y + offY, black);
+    if (twoBit) {
+      // Two planes of columns, stored right to left, 8 vertical pixels a byte.
+      const size_t cols = std::max<size_t>(1, STREAM_BYTES / 2 / colBytes);
+      for (size_t c = 0; c < static_cast<size_t>(width); c += cols) {
+        const size_t n = std::min(cols, static_cast<size_t>(width) - c);
+        if (!readAt(c * colBytes, buf, n * colBytes) ||
+            !readAt(planeSize + c * colBytes, buf + STREAM_BYTES / 2, n * colBytes)) {
+          return;
+        }
+        for (size_t i = 0; i < n; ++i) {
+          const int x = width - 1 - static_cast<int>(c + i);
+          if (x < x0 || x >= x1) continue;
+          const uint8_t* hi = buf + i * colBytes;
+          const uint8_t* lo = buf + STREAM_BYTES / 2 + i * colBytes;
+          for (int y = y0; y < y1; ++y) {
+            const int shift = 7 - (y % 8);
+            const uint8_t v = static_cast<uint8_t>((((hi[y / 8] >> shift) & 1) << 1) | ((lo[y / 8] >> shift) & 1));
+            if (include(v, x + offX, y + offY)) renderer.drawPixel(x + offX, y + offY, black);
+          }
+        }
+      }
+      return;
+    }
+    // XTG: rows of 8 pixels a byte, 1 = white.
+    const size_t rows = std::max<size_t>(1, STREAM_BYTES / rowBytes);
+    for (int r = y0; r < y1; r += static_cast<int>(rows)) {
+      const size_t n = std::min(rows, static_cast<size_t>(y1 - r));
+      if (!readAt(static_cast<size_t>(r) * rowBytes, buf, n * rowBytes)) return;
+      for (size_t i = 0; i < n; ++i) {
+        const int y = r + static_cast<int>(i);
+        const uint8_t* row = buf + i * rowBytes;
+        for (int x = x0; x < x1; ++x) {
+          const uint8_t v = ((row[x / 8] >> (7 - (x % 8))) & 1) ? 0 : 3;
+          if (include(v, x + offX, y + offY)) renderer.drawPixel(x + offX, y + offY, black);
+        }
       }
     }
   };
@@ -157,6 +200,7 @@ bool drawXth(const GfxRenderer& renderer, const std::string& path, const sleep::
   renderer.clearScreen();
   if (!twoBit || overlays.any()) {
     drawWhere([](uint8_t v, int x, int y) { return ditherBlack(v, x, y); }, true);
+    if (!readOk) return false;
     sleep::draw(renderer, overlays);
     renderer.displayBuffer(HalDisplay::HALF_REFRESH);
     LOG_DBG("XTH", "Sleep picture %s (black and white)", path.c_str());
@@ -166,6 +210,7 @@ bool drawXth(const GfxRenderer& renderer, const std::string& path, const sleep::
   // Same passes as XtcReaderActivity's 2-bit pages: BW base, then the LSB and
   // MSB grey planes, then restore the BW frame for the wake-up refresh.
   drawWhere([](uint8_t v, int, int) { return v >= 1; }, true);
+  if (!readOk) return false;
   renderer.displayGrayscaleBase(HalDisplay::HALF_REFRESH);
   renderer.clearScreen(0x00);
   drawWhere([](uint8_t v, int, int) { return v == 1; }, false);

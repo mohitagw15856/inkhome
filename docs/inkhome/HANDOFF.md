@@ -14,7 +14,7 @@ upstream files to small marked hunks).
 
 ## Where things stand (2026-10-12, evening)
 
-Published pre-releases up to 1.6.5.10 (Wallpaper picker and the ten follow-up features). All 20
+Published pre-releases up to 1.6.5.11 (Wallpaper picture fix). All 20
 features the owner asked for are built (see PLAN.md section 4
 for the three that were reshaped or declined).
 
