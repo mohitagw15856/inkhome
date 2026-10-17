@@ -128,7 +128,9 @@ void PreviewActivity::loop() {
     finish();
     return;
   }
-  if (mappedInput.wasReleased(Button::Confirm) && !failed) {
+  // Confirm uses the picture even when the preview failed: the sleep screen
+  // falls back to rotating if it cannot draw it either.
+  if (mappedInput.wasReleased(Button::Confirm)) {
     if (!chosen) {
       chosen = inkhome::wallpaper::setPinned(path);
       if (chosen) useCustomSleepMode();
@@ -157,9 +159,10 @@ void PreviewActivity::render(RenderLock&&) {
   }
   if (failed) {
     renderer.clearScreen();
-    renderer.drawCenteredText(UI_12_FONT_ID, renderer.getScreenHeight() / 2, tr(STR_WALL_FAILED), true,
+    renderer.drawCenteredText(UI_12_FONT_ID, renderer.getScreenHeight() / 2 - 20, tr(STR_WALL_FAILED), true,
                               EpdFontFamily::BOLD);
-    const auto labels = mappedInput.mapLabels(tr(STR_BACK), "", "", "");
+    renderer.drawCenteredText(UI_10_FONT_ID, renderer.getScreenHeight() / 2 + 10, tr(STR_WALL_FAILED_HINT), true);
+    const auto labels = mappedInput.mapLabels(tr(STR_BACK), tr(STR_WALL_USE_ANYWAY), "", "");
     GUI.drawButtonHints(renderer, labels.btn1, labels.btn2, labels.btn3, labels.btn4);
     renderer.displayBuffer(HalDisplay::HALF_REFRESH);
   }

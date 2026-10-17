@@ -19,8 +19,8 @@ bool pickXth(std::string& outPath, bool bmpAvailable);
 // Draws and displays the picture, centred (cropped if larger than the panel).
 // Greyscale uses the same passes as CrossPoint's XTCH reader; with overlays
 // on it renders black and white with dithered greys and draws them on top.
-// Peak heap: the whole image (about 100 KB for a full-screen .xth), freed on
-// return. False (nothing displayed) on a bad file or low memory.
+// Streams from the card through a 4 KB buffer (peak heap 4 KB). False
+// (nothing displayed) on a bad file; the reason goes to the serial log.
 bool drawXth(const GfxRenderer& renderer, const std::string& path, const sleep::Overlays& overlays);
 
 // True for .xth/.xtg file names.
