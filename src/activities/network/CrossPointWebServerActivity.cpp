@@ -16,6 +16,7 @@
 #include "activities/network/CalibreConnectActivity.h"
 #include "components/UITheme.h"
 #include "fontIds.h"
+#include "inkhome/BleMemory.h"
 #include "util/QrUtils.h"
 #include "util/TaskWatchdog.h"
 
@@ -63,6 +64,7 @@ int barsForRssi(int rssi, int currentBars) {
 
 void CrossPointWebServerActivity::onEnter() {
   Activity::onEnter();
+  inkhome::blemem::releaseForWifi();  // Inkhome: idle Bluetooth memory goes to Wi-Fi (also AP mode)
 
   LOG_DBG("WEBACT", "Free heap at onEnter: %d bytes", ESP.getFreeHeap());
 

@@ -15,6 +15,7 @@
 #include "activities/util/KeyboardEntryActivity.h"
 #include "components/UITheme.h"
 #include "fontIds.h"
+#include "inkhome/BleMemory.h"
 
 namespace fui = freeink::ui;
 
@@ -87,6 +88,7 @@ void WifiSelectionActivity::onPromptEvent(const fui::ActionEvent& event, void* u
 
 void WifiSelectionActivity::onEnter() {
   Activity::onEnter();
+  inkhome::blemem::releaseForWifi();  // Inkhome: idle Bluetooth memory goes to Wi-Fi
 
   // Load saved WiFi credentials - SD card operations need lock as we use SPI
   // for both

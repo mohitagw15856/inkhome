@@ -12,9 +12,11 @@ stock firmware. Read `README.md`, `SCOPE.md` and `PLAN.md` for the rules
 (British English, no em dashes, no hard-coded screen sizes, RAM budget, keep
 upstream files to small marked hunks).
 
-## Where things stand (2026-10-12, evening)
+## Where things stand (2026-10-29)
 
-Published pre-releases up to 1.6.5.11 (Wallpaper picture fix). All 20
+Published pre-releases up to 1.6.5.11 (Wallpaper picture fix); 1.6.5.12
+(Wi-Fi fix: Bluetooth memory released on Wi-Fi screens) is committed on
+`claude/brave-hawking-rd155e`, not yet released. All 20
 features the owner asked for are built (see PLAN.md section 4
 for the three that were reshaped or declined).
 
@@ -32,8 +34,12 @@ works on the device. Checklist: `docs/inkhome/TESTING.md`.
 
 ## Next, in order
 
-1. All requested features are built. Wait for the owner's hardware results
-   (TESTING.md sections 24 to 33), especially the Bluetooth heap numbers.
+1. The owner reported Wi-Fi not connecting. The 1.6.5.12 fix (section 34
+   of TESTING.md) is unverified: wait for the serial lines it asks for. If
+   Wi-Fi still fails with the memory released, the cause is elsewhere; ask
+   for the full serial log of the Wi-Fi screen.
+2. Wait for the owner's hardware results (TESTING.md sections 24 to 34),
+   especially the Bluetooth heap numbers.
    Flash is at 95% of the slot (release 94.5%, about 350 KB left), so ask
    before adding anything large.
 
