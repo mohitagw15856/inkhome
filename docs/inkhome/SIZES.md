@@ -28,6 +28,7 @@ in each module's header comment.
 | InkWriter and the NimBLE Bluetooth stack | 6,161,291 | +261,246 | 67,816 |
 | Wallpaper picker | 6,169,509 | +8,218 | 67,816 |
 | The ten 1.6.5.10 features (Mandarin glyphs about 51 KB of it) | 6,244,401 | +74,892 | 67,872 |
+| Bluetooth memory released on Wi-Fi screens (1.6.5.12) | 6,246,581 | +2,180 | 67,872 |
 
 `gh_release` env (what users install), 1.6.5.10: **6,196,237 bytes, 94.5%** of
 the partition. Headroom about 350 KB.

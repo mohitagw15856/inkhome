@@ -284,6 +284,17 @@ to hand before step 1.
       25-minute sprint. Write some words; Year in books shows "Words written
       in InkWriter".
 
+## 34. Wi-Fi beside Bluetooth (1.6.5.12)
+- [ ] Settings, File Transfer, Join network: the scan lists your network and
+      joining works. Serial shows "BLE: Bluetooth memory released for Wi-Fi:
+      free heap N before, M after". Please send both numbers.
+- [ ] Settings, Check for Updates and Apps, DailyDrop, Fetch today's drop:
+      both reach the network. Each Wi-Fi screen still restarts the device
+      on exit.
+- [ ] After a Wi-Fi screen, open a book with the Bluetooth page turner on:
+      the remote still turns pages (the restart gave Bluetooth its memory
+      back).
+
 ## Reporting
 If anything hangs, connect USB and capture the serial log
 (`pio device monitor -b 115200`) before restarting; the start of the log

@@ -5,6 +5,7 @@
 #include <Logging.h>
 
 #include "CrossPointSettings.h"
+#include "inkhome/BleMemory.h"
 
 namespace inkhome::pageturner {
 
@@ -48,6 +49,10 @@ void tick(const bool readerActive) {
     if (attempted && millis() - lastAttemptMs < RETRY_MS) return;
     attempted = true;
     lastAttemptMs = millis();
+    if (blemem::releasedForWifi()) {
+      LOG_INF("TURN", "Bluetooth memory went to Wi-Fi this boot; restart to use the page turner");
+      return;
+    }
     const uint32_t before = ESP.getFreeHeap();
     if (before < MIN_FREE_HEAP) {
       LOG_INF("TURN", "Free heap %lu too low for Bluetooth", static_cast<unsigned long>(before));

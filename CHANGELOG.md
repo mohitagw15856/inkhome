@@ -3,6 +3,18 @@
 Inkhome versions are `<upstream-version>.<n>-inkhome`. Upstream changes are
 in CrossPoint's own release notes.
 
+## 1.6.5.12-inkhome (pre-release)
+
+### Fixed
+- Wi-Fi: joining a network (File Transfer, updates, Calibre, DailyDrop and
+  the rest) could fail or time out since 1.6.5.9. Linking the Bluetooth
+  stack made the Arduino core keep the BLE controller memory (about 36 KB)
+  reserved from boot, even with Bluetooth never started, and Wi-Fi no
+  longer fit beside it. Every Wi-Fi screen now hands that memory to the
+  heap on entry while Bluetooth is idle; the screens already restart the
+  device on exit, so Bluetooth is back afterwards. The serial log shows the
+  free memory before and after ("BLE: Bluetooth memory released for Wi-Fi").
+
 ## 1.6.5.11-inkhome (pre-release)
 
 ### Fixed
