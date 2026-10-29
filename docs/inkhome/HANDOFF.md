@@ -84,6 +84,8 @@ Notes:
   (or `uv pip install ...`).
 - If the simulator build reports `MissingPackageManifestError`, delete
   `$TMPDIR/inkhome-sim/inkhome/.pio/libdeps/simulator*` and rerun.
+- The cppcheck job is pinned to `ubuntu-24.04`: `ubuntu-latest` moved to 26.04,
+  which has no `libpcre3` package (pioarduino's cppcheck binary needs it).
 - CI's cppcheck still occasionally flags a parameter that could be
   `const GfxRenderer&`; make renderer parameters `const` when only `const`
   methods are used.
